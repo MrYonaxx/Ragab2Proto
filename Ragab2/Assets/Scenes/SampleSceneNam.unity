@@ -526,9 +526,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5058ebc7a169084d9853a0c17076aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedAcceleration: 20
-  speedMax: 200
-  aerialFriction: 180
+  speedAcceleration: 30
+  speedMax: 300
+  aerialFriction: 10
   gravityAcceleration: 1.5
   gravityMax: 300
   initialJumpForce: 200

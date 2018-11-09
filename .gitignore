@@ -2,3 +2,9 @@
 Ragab2/Library/
 
 Ragab2/Temp/
+
+Ragab2/\.vs/
+
+*.csproj
+
+*.sln

@@ -19,7 +19,7 @@ public class RagabMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         CheckInput();
-        UpdatePosition();
+        //UpdatePosition();
 	}
 
 
@@ -29,32 +29,40 @@ public class RagabMovement : MonoBehaviour {
         {
             MoveRight();
         }
-        if (Input.GetKey("left"))
+        else if (Input.GetKey("left"))
         {
             MoveLeft();
+        }
+        else
+        {
+            NoMove();
         }
     }
 
     private void MoveRight()
     {
         actualSpeed = speed;
+        ragabRigidbody.velocity = new Vector2(actualSpeed * Time.deltaTime, 0);
     }
 
     private void MoveLeft()
     {
         actualSpeed = -speed;
+        ragabRigidbody.velocity = new Vector2(actualSpeed * Time.deltaTime, 0);
     }
 
     private void NoMove()
     {
         actualSpeed = 0;
+        ragabRigidbody.velocity = new Vector2(0, 0);
+
     }
 
 
     private void UpdatePosition()
     {
-        ragabRigidbody.AddForce(new Vector2(actualSpeed * Time.deltaTime, 0));
-        //actualSpeed = 0;
+        ragabRigidbody.AddForce(new Vector2(actualSpeed * Time.deltaTime, 0), ForceMode2D.Impulse);
+        actualSpeed = 0;
     }
 
 }

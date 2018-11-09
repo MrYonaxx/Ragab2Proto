@@ -6,21 +6,41 @@ public class RagabMovement : MonoBehaviour {
 
 
     private Rigidbody2D ragabRigidbody;
+
     [SerializeField]
     private float speed = 5;
 
-    private float actualSpeed = 0;
+    [Header("Jump")]
+    [SerializeField]
+    private float gravity = 200;
+    [SerializeField]
+    private float initialJumpForce = 100;
+    [SerializeField]
+    private float additionalJumpForce = 50;
+
+
+    [Header("Debug")]
+    public bool isJumping = false;
+    public bool isGrounded = false;
+
+
+
+
+    private float actualSpeedX = 0;
+    private float actualSpeedY = 0;
 
 	// Use this for initialization
 	void Start () {
+        Application.targetFrameRate = 60;
         ragabRigidbody = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         CheckInput();
-        //UpdatePosition();
-	}
+        ApplyGravity();
+        UpdatePosition();
+    }
 
 
     private void CheckInput()
@@ -33,36 +53,92 @@ public class RagabMovement : MonoBehaviour {
         {
             MoveLeft();
         }
-        else
+        else 
         {
             NoMove();
         }
+
+        if (Input.GetKey("up"))
+        {
+            Jump();
+        }
+
     }
 
     private void MoveRight()
     {
-        actualSpeed = speed;
-        ragabRigidbody.velocity = new Vector2(actualSpeed * Time.deltaTime, 0);
+        if(actualSpeedX < speed)
+        {
+            actualSpeedX += speed;
+        }
     }
 
     private void MoveLeft()
     {
-        actualSpeed = -speed;
-        ragabRigidbody.velocity = new Vector2(actualSpeed * Time.deltaTime, 0);
+        if (actualSpeedX > -speed)
+        {
+            actualSpeedX -= speed;
+        }
     }
 
     private void NoMove()
     {
-        actualSpeed = 0;
-        ragabRigidbody.velocity = new Vector2(0, 0);
-
+        if (actualSpeedX != 0)
+        {
+            actualSpeedX = 0;
+        }
     }
+
+
+
+    private void Jump()
+    {
+        if(isJumping == true)
+        {
+            if (actualSpeedY > 0)
+            {
+                actualSpeedY += additionalJumpForce;
+            }
+        }
+        if (isJumping == false && isGrounded == true)
+        {
+            actualSpeedY += initialJumpForce;
+            isJumping = true;
+        }
+    }
+
+
+    private void ApplyGravity()
+    {
+        if (actualSpeedY > -gravity)
+        {
+            actualSpeedY -= gravity;
+        }
+    }
+
 
 
     private void UpdatePosition()
     {
-        ragabRigidbody.AddForce(new Vector2(actualSpeed * Time.deltaTime, 0), ForceMode2D.Impulse);
-        actualSpeed = 0;
+        ragabRigidbody.velocity = new Vector2(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime);
     }
 
+
+    private void OnCollisionEnter2D(Collision2D theCollision)
+    {
+        if (theCollision.gameObject.name == "Sol")
+        {
+            isGrounded = true;
+            isJumping = false;
+        }
+
+    }
+
+    private void OnCollisionExit2D(Collision2D theCollision)
+    {
+        if (theCollision.gameObject.name == "Sol")
+        {
+            isGrounded = false;
+        }
+    }
 }

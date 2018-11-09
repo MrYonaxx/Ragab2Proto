@@ -526,9 +526,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5058ebc7a169084d9853a0c17076aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
-  gravity: 200
-  initialJumpForce: 1200
-  additionalJumpForce: 180
+  speed: 200
+  aerialFriction: 180
+  gravity: 100
+  initialJumpForce: 1000
+  additionalJumpForce: 30
   isJumping: 0
   isGrounded: 0

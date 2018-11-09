@@ -12,6 +12,9 @@ public class RagabMovement : MonoBehaviour {
 
     [Header("Jump")]
     [SerializeField]
+    private float aerialFriction = 50;
+
+    [SerializeField]
     private float gravity = 200;
     [SerializeField]
     private float initialJumpForce = 100;
@@ -69,7 +72,15 @@ public class RagabMovement : MonoBehaviour {
     {
         if(actualSpeedX < speed)
         {
+            if (isJumping == true)
+            {
+                actualSpeedX -= aerialFriction;
+            }
             actualSpeedX += speed;
+        }
+        else
+        {
+            actualSpeedX = speed;
         }
     }
 
@@ -77,7 +88,15 @@ public class RagabMovement : MonoBehaviour {
     {
         if (actualSpeedX > -speed)
         {
+            if (isJumping == true)
+            {
+                actualSpeedX += aerialFriction;
+            }
             actualSpeedX -= speed;
+        }
+        else
+        {
+            actualSpeedX = -speed;
         }
     }
 
@@ -88,6 +107,7 @@ public class RagabMovement : MonoBehaviour {
             actualSpeedX = 0;
         }
     }
+
 
 
 

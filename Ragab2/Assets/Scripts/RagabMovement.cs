@@ -8,7 +8,9 @@ public class RagabMovement : MonoBehaviour {
     private Rigidbody2D ragabRigidbody;
 
     [SerializeField]
-    private float speed = 200;
+    private float speedAcceleration = 50;
+    [SerializeField]
+    private float speedMax = 200;
     [SerializeField]
     private float aerialFriction = 180;
 
@@ -82,41 +84,52 @@ public class RagabMovement : MonoBehaviour {
     // ============================================
     private void MoveRight()
     {
-        if(actualSpeedX < speed)
+        if(actualSpeedX < speedMax)
         {
             if (isJumping == true)
             {
                 actualSpeedX -= aerialFriction;
             }
-            actualSpeedX += speed;
+            actualSpeedX += speedAcceleration;
         }
         else
         {
-            actualSpeedX = speed;
+            actualSpeedX = speedMax;
         }
     }
 
     private void MoveLeft()
     {
-        if (actualSpeedX > -speed)
+        if (actualSpeedX > -speedMax)
         {
             if (isJumping == true)
             {
                 actualSpeedX += aerialFriction;
             }
-            actualSpeedX -= speed;
+            actualSpeedX -= speedAcceleration;
         }
         else
         {
-            actualSpeedX = -speed;
+            actualSpeedX = -speedMax;
         }
     }
 
     private void NoMove()
     {
-        if (actualSpeedX != 0)
+        if (isGrounded == true)
         {
-            actualSpeedX = 0;
+            if (-speedAcceleration < actualSpeedX && actualSpeedX < speedAcceleration)
+            {
+                actualSpeedX = 0;
+            }
+            else if (actualSpeedX <= -speedAcceleration)
+            {
+                actualSpeedX += speedAcceleration;
+            }
+            else if (speedAcceleration <= actualSpeedX)
+            {
+                actualSpeedX -= speedAcceleration;
+            }
         }
     }
 
@@ -158,11 +171,6 @@ public class RagabMovement : MonoBehaviour {
         {
             actualSpeedY = -gravityMax;
         }
-        /*if (actualGravityAcceleration < gravityMax)
-        {
-            actualGravityAcceleration += gravityAcceleration;
-            actualSpeedY -= gravity;
-        }*/
     }
 
 

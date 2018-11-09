@@ -528,8 +528,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 200
   aerialFriction: 180
-  gravity: 100
-  initialJumpForce: 1000
-  additionalJumpForce: 30
+  gravityAcceleration: 2
+  gravityMax: 300
+  initialJumpForce: 200
+  additionalJumpForce: 20
   isJumping: 0
   isGrounded: 0

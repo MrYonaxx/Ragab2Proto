@@ -8,26 +8,31 @@ public class RagabMovement : MonoBehaviour {
     private Rigidbody2D ragabRigidbody;
 
     [SerializeField]
-    private float speed = 5;
+    private float speed = 200;
+    [SerializeField]
+    private float aerialFriction = 180;
 
     [Header("Jump")]
-    [SerializeField]
-    private float aerialFriction = 50;
+
 
     [SerializeField]
-    private float gravity = 200;
+    private float gravityAcceleration = 20;
+    [SerializeField]
+    private float gravityMax = 200;
     [SerializeField]
     private float initialJumpForce = 100;
     [SerializeField]
-    private float additionalJumpForce = 50;
+    private float additionalJumpForce = 500;
 
 
     [Header("Debug")]
     public bool isJumping = false;
     public bool isGrounded = false;
 
+    private bool jumpAvailable = true;
 
 
+    private float actualGravityAcceleration = 0;
 
     private float actualSpeedX = 0;
     private float actualSpeedY = 0;
@@ -65,9 +70,16 @@ public class RagabMovement : MonoBehaviour {
         {
             Jump();
         }
+        else if (Input.GetKeyUp("up"))
+        {
+            jumpAvailable = true;
+        }
 
     }
 
+    // ============================================
+    // Mouvement du Personnage
+    // ============================================
     private void MoveRight()
     {
         if(actualSpeedX < speed)
@@ -111,6 +123,10 @@ public class RagabMovement : MonoBehaviour {
 
 
 
+    // ============================================
+    // Saut du Personnage
+    // ============================================
+
     private void Jump()
     {
         if(isJumping == true)
@@ -120,21 +136,39 @@ public class RagabMovement : MonoBehaviour {
                 actualSpeedY += additionalJumpForce;
             }
         }
-        if (isJumping == false && isGrounded == true)
+        if (jumpAvailable == true)
         {
+            actualGravityAcceleration = 0;
+            actualSpeedY = 0;
             actualSpeedY += initialJumpForce;
             isJumping = true;
+            jumpAvailable = false;
         }
     }
 
 
     private void ApplyGravity()
     {
-        if (actualSpeedY > -gravity)
+        if (-gravityMax < actualSpeedY)
         {
-            actualSpeedY -= gravity;
+            actualGravityAcceleration += gravityAcceleration;
+            actualSpeedY -= actualGravityAcceleration;
         }
+        else
+        {
+            actualSpeedY = -gravityMax;
+        }
+        /*if (actualGravityAcceleration < gravityMax)
+        {
+            actualGravityAcceleration += gravityAcceleration;
+            actualSpeedY -= gravity;
+        }*/
     }
+
+
+
+
+
 
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class RagabGround : MonoBehaviour
+public class RagabGroundDetection : MonoBehaviour
 {
 
     [SerializeField]

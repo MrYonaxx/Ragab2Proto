@@ -245,6 +245,14 @@ namespace Ragab
             }
         }
 
+        public void BounceRoof()
+        {
+            //characterState = State.Falling;
+            //actualGravityAcceleration = gravityMax;
+            if (actualSpeedY > 0)
+                actualSpeedY = -actualSpeedY;
+        }
+
         #endregion
 
     } // Character class

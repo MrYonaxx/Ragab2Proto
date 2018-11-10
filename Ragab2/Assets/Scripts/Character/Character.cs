@@ -14,9 +14,9 @@ namespace Ragab
     public enum State
     {
         Grouded,
-        Crouching,
         Jumping,
-        Falling
+        Falling,
+        Sliding
     };
 
 
@@ -61,6 +61,10 @@ namespace Ragab
         [SerializeField]
         public State characterState;
 
+        [Header("Animations")]
+        [SerializeField]
+        protected CharacterAnimation characterAnimation;
+
 
         [Header("Debug")]
         public GameObject trailDebug = null;
@@ -74,6 +78,11 @@ namespace Ragab
         protected float actualSpeedY = 0;
 
         protected int direction = 1;
+
+        public int Direction
+        {
+            get { return direction; }
+        }
 
         #endregion
 
@@ -108,6 +117,7 @@ namespace Ragab
 
         protected void Update()
         {
+
             CheckState();
 
             ApplyGravity();
@@ -115,6 +125,9 @@ namespace Ragab
 
             if (activateDebugTrail)
                 Instantiate(trailDebug, this.transform.position, Quaternion.identity);
+
+            if (characterAnimation != null)
+                characterAnimation.CheckAnimation(actualSpeedX);
         }
 
 
@@ -124,7 +137,7 @@ namespace Ragab
 
         }
 
-        public void SetOnGround(bool b)
+        public virtual void SetOnGround(bool b)
         {
             if (b == true)
             {
@@ -203,11 +216,6 @@ namespace Ragab
             actualSpeedY = 0;
             actualSpeedY += initialJumpForce;
             characterState = State.Jumping;     
-        }
-
-        public virtual void NuanceJump()
-        {
-            actualSpeedY += additionalJumpForce;
         }
 
 

@@ -22,7 +22,7 @@ namespace Ragab
         \* ======================================== */
 
         [SerializeField]
-        Character characterToControl;
+        RagabMovement characterToControl;
         
         #endregion
 
@@ -64,6 +64,9 @@ namespace Ragab
                 case State.Falling:
                     InputFalling();
                     break;
+                case State.Sliding:
+                    InputSliding();
+                    break;
             }
         }
 
@@ -90,6 +93,11 @@ namespace Ragab
             if (Input.GetButtonDown("Jump"))
             {
                 characterToControl.Jump();
+            }
+
+            if (Input.GetButtonDown("Fire2"))
+            {
+                characterToControl.Sliding();
             }
         }
 
@@ -143,9 +151,22 @@ namespace Ragab
                 characterToControl.NoMoveOnAir();
             }
 
-            if (Input.GetButton("Jump"))
+            if (Input.GetButtonDown("Jump") && characterToControl.JumpAvailable == true)
+            {
+                characterToControl.Jump();
+            }
+            else if (Input.GetButton("Jump"))
             {
                 characterToControl.NuanceJump();
+            }
+        }
+
+
+        private void InputSliding()
+        {
+            if (Input.GetButtonUp("Fire2"))
+            {
+                characterToControl.StopSliding();
             }
         }
 

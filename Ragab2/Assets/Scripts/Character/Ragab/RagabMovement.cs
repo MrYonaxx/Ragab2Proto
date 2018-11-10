@@ -16,6 +16,16 @@ namespace Ragab
         [SerializeField]
         protected float secondBeforeJumpDisabled = 0.05f;
 
+        [Header("Slide")]
+        [SerializeField]
+        protected float slideSpeed = 500;
+
+        private bool jumpAvailable = true;
+
+        public bool JumpAvailable
+        {
+            get { return jumpAvailable; }
+        }
 
 
         #endregion
@@ -28,10 +38,40 @@ namespace Ragab
 
 
 
+        public virtual void NuanceJump()
+        {
+            actualSpeedY += additionalJumpForce;
+        }
 
 
 
+        public override void SetOnGround(bool b)
+        {
+            if (b == true)
+            {
+                jumpAvailable = true;
+                characterState = State.Grouded;
+            }
+            else
+            {
+                if (characterState != State.Jumping)
+                {
+                    characterState = State.Falling;
+                    StartCoroutine(WaitBeforeDisableJump(secondBeforeJumpDisabled));
+                }
+            }
+        }
 
+        public void Sliding()
+        {
+            characterState = State.Sliding;
+            actualSpeedX = slideSpeed * direction;
+        }
+
+        public void StopSliding()
+        {
+            characterState = State.Grouded;
+        }
 
 
 
@@ -45,16 +85,22 @@ namespace Ragab
             {
                 StartCoroutine(WaitBeforeDisableJump(secondBeforeJumpDisabled));
             }
-        }
+        }*/
 
         private IEnumerator WaitBeforeDisableJump(float second)
         {
             yield return new WaitForSeconds(second);
             jumpAvailable = false;
-        }*/
+        }
 
 
-
+        public override void Jump()
+        {
+            actualSpeedY = 0;
+            actualSpeedY += initialJumpForce;
+            characterState = State.Jumping;
+            jumpAvailable = false;
+        }
 
     }
 

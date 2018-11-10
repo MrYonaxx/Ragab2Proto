@@ -628,7 +628,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.09, y: 0.1}
+  m_Size: {x: 0.08, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1274988416
 GameObject:
@@ -1043,6 +1043,8 @@ GameObject:
   - component: {fileID: 1893455956}
   - component: {fileID: 1893455955}
   - component: {fileID: 1893455959}
+  - component: {fileID: 1893455961}
+  - component: {fileID: 1893455960}
   m_Layer: 0
   m_Name: Ragab
   m_TagString: Untagged
@@ -1177,9 +1179,43 @@ MonoBehaviour:
   initialJumpForce: 600
   additionalJumpForce: 35
   characterState: 3
+  characterAnimation: {fileID: 1893455961}
   trailDebug: {fileID: 1352453806181616, guid: 4abb12dc80357a049ad8d45d9d0e09c1, type: 2}
   activateDebugTrail: 0
   secondBeforeJumpDisabled: 0.05
+  slideSpeed: 500
+--- !u!95 &1893455960
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1893455954}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 51518c8f2014a774090ee4c67cba76ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1893455961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1893455954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93c750d61267fc498ae988b6c971d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1893455960}
+  spriteRenderer: {fileID: 1893455957}
+  characterToAnimate: {fileID: 1893455959}
 --- !u!1 &1907548380
 GameObject:
   m_ObjectHideFlags: 0

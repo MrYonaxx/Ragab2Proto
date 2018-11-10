@@ -61,7 +61,7 @@ namespace Ragab
                 if(actualSpeedX == 0)
                     animator.Play("Anim_Idle");
                 else
-                    animator.Play("Anim_Walk");
+                    animator.Play("Anim_Idle");
             }
 
             if (characterToAnimate.characterState == State.Falling)
@@ -71,6 +71,7 @@ namespace Ragab
 
             if (characterToAnimate.characterState == State.Sliding)
             {
+                Debug.Log("Wouhou");
                 animator.Play("Anim_Slide");
             }
 

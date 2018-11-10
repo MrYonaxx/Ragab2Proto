@@ -7,14 +7,13 @@
 
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 namespace Ragab
 {
     /// <summary>
-    /// Definition of the RagabAction class
+    /// Definition of the BaseProjectile class
     /// </summary>
-    public class RagabAction : MonoBehaviour
+    public class BaseProjectile : MonoBehaviour
     {
         #region Attributes 
 
@@ -23,17 +22,12 @@ namespace Ragab
         \* ======================================== */
 
         [SerializeField]
-        BaseProjectile projectilePrefab;
+        protected float speed = 20;
         [SerializeField]
-        int maxNumberProjectile = 20;
-
-
-        List<BaseProjectile> listObject;
-
+        protected float longevity = 5;
         [SerializeField]
-        Transform viseur;
-
-
+        protected float damage = 1;
+        
         #endregion
 
         #region GettersSetters 
@@ -41,7 +35,7 @@ namespace Ragab
         /* ======================================== *\
          *           GETTERS AND SETTERS            *
         \* ======================================== */
-
+        
 
         #endregion
 
@@ -51,6 +45,15 @@ namespace Ragab
          *                FUNCTIONS                 *
         \* ======================================== */
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        protected void Awake()
+        {
+            StartCoroutine(LongevityCoroutine());
+        }
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -58,24 +61,27 @@ namespace Ragab
         /// </summary>
         protected virtual void Start()
         {
-            listObject = new List<BaseProjectile>(maxNumberProjectile);
+            
         }
-
-
-        public void Shoot()
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Update is called once per frame.
+        /// </summary>
+        protected void Update()
         {
-
+            
         }
 
-        public void Aim(Vector2 angle)
+
+        private IEnumerator LongevityCoroutine()
         {
-            float angleAim = Mathf.Atan2(angle.x, -angle.y) * Mathf.Rad2Deg;
-            viseur.localRotation = Quaternion.Euler(new Vector3(0,0,angleAim));
+            yield return new WaitForSeconds(longevity);
+            this.gameObject.SetActive(false);
         }
-
         
         #endregion
 
-    } // RagabAction class
+    } // BaseProjectile class
 
 } // #PROJECTNAME# namespace

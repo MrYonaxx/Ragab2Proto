@@ -128,6 +128,7 @@ namespace Ragab
 
             if (characterAnimation != null)
                 characterAnimation.CheckAnimation(actualSpeedX);
+
         }
 
 

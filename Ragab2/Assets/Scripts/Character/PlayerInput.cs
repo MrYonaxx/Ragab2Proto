@@ -6,10 +6,17 @@
 ******************************************************************/
 
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 namespace Ragab
 {
+    [System.Serializable]
+    public class UnityEventFloat : UnityEvent<Vector2>
+    {
+
+    }
+
     /// <summary>
     /// Definition of the PlayerInput class
     /// </summary>
@@ -23,7 +30,13 @@ namespace Ragab
 
         [SerializeField]
         RagabMovement characterToControl;
-        
+
+        [SerializeField]
+        UnityEventFloat eventAim;
+
+        [SerializeField]
+        UnityEvent eventShoot;
+
         #endregion
 
         #region GettersSetters 
@@ -31,7 +44,7 @@ namespace Ragab
         /* ======================================== *\
          *           GETTERS AND SETTERS            *
         \* ======================================== */
-        
+
 
         #endregion
 
@@ -40,7 +53,7 @@ namespace Ragab
         /* ======================================== *\
          *                FUNCTIONS                 *
         \* ======================================== */
-        
+
         ////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Update is called once per frame.
@@ -99,6 +112,15 @@ namespace Ragab
             {
                 characterToControl.Sliding();
             }
+
+            // Aim
+            if (Input.GetAxis("AimHorizontal") > 0.2f || Input.GetAxis("AimHorizontal") < -0.2f || Input.GetAxis("AimVertical") > 0.2f || Input.GetAxis("AimVertical") < -0.2f)
+            {
+                eventAim.Invoke(new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical")));
+
+            }
+
+
         }
 
 
@@ -167,6 +189,11 @@ namespace Ragab
             if (Input.GetButtonUp("Fire2"))
             {
                 characterToControl.StopSliding();
+            }
+
+            if (Input.GetButtonDown("Jump") && characterToControl.JumpAvailable == true)
+            {
+                characterToControl.Jump();
             }
         }
 

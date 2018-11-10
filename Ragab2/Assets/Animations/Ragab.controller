@@ -77,7 +77,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Anim_walk
+  m_Name: Anim_Walk
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -231,15 +231,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102483103641956974}
-    m_Position: {x: 276, y: 84, z: 0}
+    m_Position: {x: 276, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102441633286161784}
     m_Position: {x: 276, y: 24, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102799959301500020}
-    m_Position: {x: 311, y: 89, z: 0}
+    m_Position: {x: 516, y: 72, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102445461563526468}
+<<<<<<< Updated upstream
     m_Position: {x: 346, y: 154, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102849951367468406}
@@ -253,12 +254,15 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102745945005733934}
     m_Position: {x: 486, y: 414, z: 0}
+=======
+    m_Position: {x: 348, y: 180, z: 0}
+>>>>>>> Stashed changes
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_AnyStatePosition: {x: 48, y: 36, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

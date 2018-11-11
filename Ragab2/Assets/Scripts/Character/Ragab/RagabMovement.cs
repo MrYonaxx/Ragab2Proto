@@ -96,6 +96,7 @@ namespace Ragab
 
         public override void Jump()
         {
+            Debug.Log("Hey !");
             actualSpeedY = 0;
             actualSpeedY += initialJumpForce;
             characterState = State.Jumping;

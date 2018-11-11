@@ -32,6 +32,8 @@ namespace Ragab
 
         [SerializeField]
         Transform viseur;
+        [SerializeField]
+        Transform curseur;
 
 
         #endregion
@@ -69,8 +71,19 @@ namespace Ragab
 
         public void Aim(Vector2 angle)
         {
+            /*float length = Mathf.Sqrt(angle.x * angle.x + angle.y * angle.y);
+            if(length > 0.7f)
+            {
+                angle = new Vector2(angle.x / length, angle.y / length);
+                Debug.Log(angle);
+            }*/
+            //angle.Normalize();
+            //angle = Vector2.ClampMagnitude(angle, 0.2f);
             float angleAim = Mathf.Atan2(angle.x, -angle.y) * Mathf.Rad2Deg;
             viseur.localRotation = Quaternion.Euler(new Vector3(0,0,angleAim));
+
+            //curseur.position = new Vector2(this.transform.position.x, this.transform.position.y) + angle;
+            //viseur.localRotation.SetLookRotation(curseur.position);
         }
 
         

@@ -35,6 +35,9 @@ namespace Ragab
         UnityEventFloat eventAim;
 
         [SerializeField]
+        UnityEvent eventNoAim;
+
+        [SerializeField]
         UnityEvent eventShoot;
 
         #endregion
@@ -94,7 +97,6 @@ namespace Ragab
             }
             else if (Input.GetAxis("Horizontal") < -0.2f)
             {
-                Debug.Log("Hey");
                 characterToControl.SetDirection(-1);
                 characterToControl.Move();
             }
@@ -117,7 +119,10 @@ namespace Ragab
             if (Input.GetAxis("AimHorizontal") > 0.2f || Input.GetAxis("AimHorizontal") < -0.2f || Input.GetAxis("AimVertical") > 0.2f || Input.GetAxis("AimVertical") < -0.2f)
             {
                 eventAim.Invoke(new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical")));
-
+            }
+            else
+            {
+                eventNoAim.Invoke();
             }
 
 
@@ -152,6 +157,18 @@ namespace Ragab
             {
                 characterToControl.characterState = State.Falling;
             }
+
+
+
+            // Aim
+            if (Input.GetAxis("AimHorizontal") > 0.2f || Input.GetAxis("AimHorizontal") < -0.2f || Input.GetAxis("AimVertical") > 0.2f || Input.GetAxis("AimVertical") < -0.2f)
+            {
+                eventAim.Invoke(new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical")));
+            }
+            else
+            {
+                eventNoAim.Invoke();
+            }
         }
 
 
@@ -181,6 +198,18 @@ namespace Ragab
             {
                 characterToControl.NuanceJump();
             }
+
+
+
+            // Aim
+            if (Input.GetAxis("AimHorizontal") > 0.2f || Input.GetAxis("AimHorizontal") < -0.2f || Input.GetAxis("AimVertical") > 0.2f || Input.GetAxis("AimVertical") < -0.2f)
+            {
+                eventAim.Invoke(new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical")));
+            }
+            else
+            {
+                eventNoAim.Invoke();
+            }
         }
 
 
@@ -194,6 +223,18 @@ namespace Ragab
             if (Input.GetButtonDown("Jump") && characterToControl.JumpAvailable == true)
             {
                 characterToControl.Jump();
+            }
+
+
+
+            // Aim
+            if (Input.GetAxis("AimHorizontal") > 0.2f || Input.GetAxis("AimHorizontal") < -0.2f || Input.GetAxis("AimVertical") > 0.2f || Input.GetAxis("AimVertical") < -0.2f)
+            {
+                eventAim.Invoke(new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical")));
+            }
+            else
+            {
+                eventNoAim.Invoke();
             }
         }
 

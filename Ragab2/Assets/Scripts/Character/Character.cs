@@ -32,6 +32,7 @@ namespace Ragab
         \* ======================================== */
 
         private Rigidbody2D characterRigidbody;
+        private BoxCollider2D characterCollider;
 
         [Header("Movement")] // =============================================
 
@@ -113,6 +114,7 @@ namespace Ragab
         protected void Start()
         {
             characterRigidbody = GetComponent<Rigidbody2D>();
+            characterCollider = GetComponent<BoxCollider2D>();
         }
 
         protected void Update()
@@ -122,6 +124,8 @@ namespace Ragab
 
             ApplyGravity();
             UpdatePosition();
+            //characterRigidbody.velocity = new Vector2(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime);
+            transform.position += new Vector3(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime, 0);
 
             if (activateDebugTrail)
                 Instantiate(trailDebug, this.transform.position, Quaternion.identity);
@@ -185,7 +189,60 @@ namespace Ragab
         // Update the position of the player
         private void UpdatePosition()
         {
-            characterRigidbody.velocity = new Vector2(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime);
+            //return;
+            if (actualSpeedY < 0)
+            {
+                int layerMask = 1 << 8;
+
+                Vector2 bottomLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.min.y);
+                Debug.Log(bottomLeft);
+                RaycastHit2D raycastY = Physics2D.Raycast(bottomLeft,
+                                  new Vector2(0, actualSpeedY * Time.deltaTime),
+                                              Mathf.Abs(actualSpeedY * Time.deltaTime),
+                                              layerMask);
+                Debug.DrawRay(bottomLeft, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
+                if (raycastY.collider != null)
+                {
+                    Debug.Log(raycastY.collider.gameObject.name);
+                    SetOnGround(true);
+                    float distance = raycastY.point.y - transform.position.y;
+                    actualSpeedY = distance / Time.deltaTime;
+                    return;
+                }
+
+                Vector2 bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y);
+                Debug.Log(bottomRight);
+                raycastY = Physics2D.Raycast(bottomRight,
+                                  new Vector2(0, actualSpeedY * Time.deltaTime),
+                                              Mathf.Abs(actualSpeedY * Time.deltaTime),
+                                              layerMask);
+                Debug.DrawRay(bottomRight, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
+                if (raycastY.collider != null)
+                {
+                    Debug.Log(raycastY.collider.gameObject.name);
+                    SetOnGround(true);
+                    float distance = raycastY.point.y - transform.position.y;
+                    actualSpeedY = distance / Time.deltaTime;
+                    return;
+                }
+            }
+
+            /*RaycastHit2D raycastX = Physics2D.Raycast(this.transform.position,
+                  new Vector2(0, actualSpeedX * Time.deltaTime),
+                              Mathf.Abs(actualSpeedX * Time.deltaTime),
+                              layerMask);
+            //Debug.DrawRay(this.transform.position, new Vector2(0, actualSpeedY), Color.green);
+            if (raycastY.collider != null)
+            {
+                float distance = raycastX.point.x - transform.position.x;
+                actualSpeedX = distance / Time.deltaTime;
+            }*/
+
+            //transform.Translate(new Vector3(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime, 0));
+
+            // ====================================================================================================
+            //characterRigidbody.velocity = new Vector2(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime);
+            // ====================================================================================================
         }
 
         #endregion
@@ -216,7 +273,7 @@ namespace Ragab
         {
             actualSpeedY = 0;
             actualSpeedY += initialJumpForce;
-            characterState = State.Jumping;     
+            characterState = State.Jumping;
         }
 
 

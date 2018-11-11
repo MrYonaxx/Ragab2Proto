@@ -270,10 +270,9 @@ namespace Ragab
                                                  new Vector2(actualSpeedX * Time.deltaTime, 0),
                                                  Mathf.Abs(actualSpeedX * Time.deltaTime),
                                                  layerMask);
-                    Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.red);
+                    //Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.red);
                     if (raycastX.collider != null)
                     {
-                        Debug.Log("Zbla");
                         float distance = raycastX.point.x - bottomLeft.x;
                         actualSpeedX = distance / Time.deltaTime;
                         return;
@@ -293,10 +292,9 @@ namespace Ragab
                                           new Vector2(actualSpeedX * Time.deltaTime, 0),
                                           Mathf.Abs(actualSpeedX * Time.deltaTime),
                                           layerMask);
-                    Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.green);
+                    //Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.green);
                     if (raycastX.collider != null)
                     {
-                        Debug.Log("ZblaDroite");
                         float distance = raycastX.point.x - bottomRight.x;
                         actualSpeedX = distance / Time.deltaTime;
                         return;

@@ -27,8 +27,8 @@ namespace Ragab
         [SerializeField]
         SpriteRenderer spriteRenderer;
 
-        [SerializeField]
-        Character characterToAnimate;
+        /*[SerializeField]
+        Character characterToAnimate;*/
 
         #endregion
 
@@ -49,14 +49,14 @@ namespace Ragab
         
 
 
-        public void CheckAnimation(float actualSpeedX)
+        public void CheckAnimation(State actualState, int actualDirection, float actualSpeedX)
         {
-            if (characterToAnimate.Direction == 1)
+            if (actualDirection == 1)
                 spriteRenderer.flipX = false;
             else
                 spriteRenderer.flipX = true;
 
-            if (characterToAnimate.characterState == State.Grouded)
+            if (actualState == State.Grouded)
             {
                 if(actualSpeedX == 0)
                     animator.Play("Anim_Idle");
@@ -64,17 +64,17 @@ namespace Ragab
                     animator.Play("Anim_Walk");
             }
 
-            if (characterToAnimate.characterState == State.Falling)
+            if (actualState == State.Falling)
             {
                 animator.Play("Anim_Jump");
             }
 
-            if (characterToAnimate.characterState == State.Sliding)
+            if (actualState == State.Sliding)
             {
                 animator.Play("Anim_Slide");
             }
 
-            if (characterToAnimate.characterState == State.Jumping)
+            if (actualState == State.Jumping)
             {
                 animator.Play("Anim_Jump");
             }

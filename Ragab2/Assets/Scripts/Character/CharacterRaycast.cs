@@ -11,19 +11,11 @@ using System.Collections;
 namespace Ragab
 {
 
-    public enum State
-    {
-        Grouded,
-        Jumping,
-        Falling,
-        Sliding
-    };
-
 
     /// <summary>
     /// Definition of the Character class
     /// </summary>
-    public class Character : MonoBehaviour
+    public class CharacterRaycast : MonoBehaviour
     {
         #region Attributes 
 
@@ -113,6 +105,7 @@ namespace Ragab
 
         protected void Start()
         {
+            Application.targetFrameRate = 144;
             characterRigidbody = GetComponent<Rigidbody2D>();
             characterCollider = GetComponent<BoxCollider2D>();
         }
@@ -123,8 +116,11 @@ namespace Ragab
             CheckState();
 
             ApplyGravity();
-            UpdatePosition();
-            characterRigidbody.velocity = new Vector2(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime);
+            UpdatePositionY();
+            transform.position += new Vector3(0, actualSpeedY * Time.deltaTime, 0);
+            UpdatePositionX();
+            //characterRigidbody.velocity = new Vector2(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime);
+            transform.position += new Vector3(actualSpeedX * Time.deltaTime, 0, 0);
 
             if (activateDebugTrail)
                 Instantiate(trailDebug, this.transform.position, Quaternion.identity);
@@ -186,15 +182,15 @@ namespace Ragab
 
 
         // Update the position of the player
-        private void UpdatePosition()
+        private void UpdatePositionY()
         {
-            return;
+            int layerMask = 1 << 8;
+            Vector2 bottomLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.min.y);
+            Vector2 bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y);
+
             if (actualSpeedY < 0)
             {
-                int layerMask = 1 << 8;
 
-                Vector2 bottomLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.min.y);
-                Debug.Log(bottomLeft);
                 RaycastHit2D raycastY = Physics2D.Raycast(bottomLeft,
                                   new Vector2(0, actualSpeedY * Time.deltaTime),
                                               Mathf.Abs(actualSpeedY * Time.deltaTime),
@@ -202,15 +198,14 @@ namespace Ragab
                 Debug.DrawRay(bottomLeft, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
                 if (raycastY.collider != null)
                 {
-                    Debug.Log(raycastY.collider.gameObject.name);
+                    //Debug.Log(raycastY.collider.gameObject.name);
                     SetOnGround(true);
                     float distance = raycastY.point.y - transform.position.y;
                     actualSpeedY = distance / Time.deltaTime;
                     return;
                 }
 
-                Vector2 bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y);
-                Debug.Log(bottomRight);
+
                 raycastY = Physics2D.Raycast(bottomRight,
                                   new Vector2(0, actualSpeedY * Time.deltaTime),
                                               Mathf.Abs(actualSpeedY * Time.deltaTime),
@@ -218,30 +213,53 @@ namespace Ragab
                 Debug.DrawRay(bottomRight, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
                 if (raycastY.collider != null)
                 {
-                    Debug.Log(raycastY.collider.gameObject.name);
+                    //Debug.Log(raycastY.collider.gameObject.name);
                     SetOnGround(true);
                     float distance = raycastY.point.y - transform.position.y;
                     actualSpeedY = distance / Time.deltaTime;
                     return;
                 }
             }
+        }
 
-            /*RaycastHit2D raycastX = Physics2D.Raycast(this.transform.position,
-                  new Vector2(0, actualSpeedX * Time.deltaTime),
-                              Mathf.Abs(actualSpeedX * Time.deltaTime),
-                              layerMask);
-            //Debug.DrawRay(this.transform.position, new Vector2(0, actualSpeedY), Color.green);
-            if (raycastY.collider != null)
+
+        private void UpdatePositionX()
+        {
+            int layerMask = 1 << 8;
+
+            float offsetY = 0.01f;
+            Vector2 bottomLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.min.y + offsetY);
+            Vector2 bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y + offsetY);
+
+            if (actualSpeedX < 0)
             {
-                float distance = raycastX.point.x - transform.position.x;
-                actualSpeedX = distance / Time.deltaTime;
-            }*/
+                RaycastHit2D raycastX = Physics2D.Raycast(bottomLeft,
+                                                          new Vector2(actualSpeedX * Time.deltaTime, 0),
+                                                          Mathf.Abs(actualSpeedX * Time.deltaTime),
+                                                          layerMask);
+                Debug.DrawRay(bottomLeft, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.green);
+                if (raycastX.collider != null)
+                {
+                    Debug.Log("Zbla");
+                    float distance = raycastX.point.x - bottomLeft.x;
+                    actualSpeedX = distance / Time.deltaTime;
+                }
+            }
+            else if (actualSpeedX > 0)
+            {
+                RaycastHit2D raycastX = Physics2D.Raycast(bottomRight,
+                                          new Vector2(actualSpeedX * Time.deltaTime, 0),
+                                          Mathf.Abs(actualSpeedX * Time.deltaTime),
+                                          layerMask);
+                Debug.DrawRay(bottomRight, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.green);
+                if (raycastX.collider != null)
+                {
+                    Debug.Log("ZblaDroite");
+                    float distance = raycastX.point.x - bottomRight.x;
+                    actualSpeedX = distance / Time.deltaTime;
+                }
+            }
 
-            //transform.Translate(new Vector3(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime, 0));
-
-            // ====================================================================================================
-            //characterRigidbody.velocity = new Vector2(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime);
-            // ====================================================================================================
         }
 
         #endregion

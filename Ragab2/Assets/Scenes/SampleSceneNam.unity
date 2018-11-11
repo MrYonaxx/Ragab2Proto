@@ -301,6 +301,10 @@ MonoBehaviour:
   gravityMax: 8
   initialJumpForce: 10
   additionalJumpForce: 0.7
+  offsetRaycastX: 0.0001
+  offsetRaycastY: 0.0001
+  numberRaycastVertical: 2
+  numberRaycastHorizontal: 5
   characterState: 0
   characterAnimation: {fileID: 40398435}
   trailDebug: {fileID: 0}

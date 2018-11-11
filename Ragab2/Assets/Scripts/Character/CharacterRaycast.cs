@@ -52,6 +52,9 @@ namespace Ragab
 
         [Header("Collision")]
         [SerializeField]
+        protected float maxAngle = 40;
+
+        [SerializeField]
         protected float offsetRaycastX = 0.0001f;
         [SerializeField]
         protected float offsetRaycastY = 0.0001f;
@@ -127,9 +130,9 @@ namespace Ragab
 
             ApplyGravity();
             UpdatePositionY();
-            transform.position += new Vector3(0, actualSpeedY * Time.deltaTime, 0);
+            //transform.position += new Vector3(0, actualSpeedY * Time.deltaTime, 0);
             UpdatePositionX();
-            transform.position += new Vector3(actualSpeedX * Time.deltaTime, 0, 0);
+            transform.position += new Vector3(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime, 0);
 
             if (activateDebugTrail)
                 Instantiate(trailDebug, this.transform.position, Quaternion.identity);
@@ -211,7 +214,7 @@ namespace Ragab
                                                  new Vector2(0, actualSpeedY * Time.deltaTime),
                                                  Mathf.Abs(actualSpeedY * Time.deltaTime),
                                                  layerMask);
-                    Debug.DrawRay(originRaycast, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
+                    //Debug.DrawRay(originRaycast, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
                     if (raycastY.collider != null)
                     {
                         //Debug.Log(raycastY.collider.gameObject.name);
@@ -232,7 +235,7 @@ namespace Ragab
                                                  new Vector2(0, actualSpeedY * Time.deltaTime),
                                                  Mathf.Abs(actualSpeedY * Time.deltaTime),
                                                  layerMask);
-                    Debug.DrawRay(originRaycast, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
+                    //Debug.DrawRay(originRaycast, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
                     if (raycastY.collider != null)
                     {
                         //Debug.Log(raycastY.collider.gameObject.name);
@@ -273,6 +276,7 @@ namespace Ragab
                     //Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.red);
                     if (raycastX.collider != null)
                     {
+
                         float distance = raycastX.point.x - bottomLeft.x;
                         actualSpeedX = distance / Time.deltaTime;
                         return;
@@ -295,8 +299,16 @@ namespace Ragab
                     //Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.green);
                     if (raycastX.collider != null)
                     {
-                        float distance = raycastX.point.x - bottomRight.x;
-                        actualSpeedX = distance / Time.deltaTime;
+                        float slopeAngle = Vector2.Angle(raycastX.normal, Vector2.up);
+                        if (i == 0 && slopeAngle <= maxAngle)
+                        {
+                            ClimbSlope(slopeAngle);
+                        }
+                        else
+                        {
+                            float distance = raycastX.point.x - bottomRight.x;
+                            actualSpeedX = distance / Time.deltaTime;
+                        }
                         return;
                     }
                     originRaycast += new Vector2(0, Mathf.Abs(upperRight.y - bottomRight.y) / (numberRaycastHorizontal - 1));
@@ -305,6 +317,15 @@ namespace Ragab
 
             }
 
+        }
+
+
+        private void ClimbSlope(float angle)
+        {
+            if (characterState == State.Jumping)
+                return;
+            actualSpeedY = Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX);
+            actualSpeedX = Mathf.Cos(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX) * Mathf.Sign(actualSpeedX);
         }
 
         #endregion

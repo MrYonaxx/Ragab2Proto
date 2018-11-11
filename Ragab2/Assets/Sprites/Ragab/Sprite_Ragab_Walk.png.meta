@@ -91,8 +91,8 @@ TextureImporter:
       name: Sprite_Ragab_Walk_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 0
+        x: 19
+        y: 7
         width: 11
         height: 30
       alignment: 7
@@ -102,7 +102,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0db17f8f9012829428561d46979fb927
+      spriteID: e5d03e3b45530c24d9c23bc185532a70
       vertices: []
       indices: 
       edges: []
@@ -111,8 +111,8 @@ TextureImporter:
       name: Sprite_Ragab_Walk_1
       rect:
         serializedVersion: 2
-        x: 57
-        y: 0
+        x: 61
+        y: 7
         width: 24
         height: 31
       alignment: 7
@@ -122,7 +122,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d88a48e23290eac4f929fb15a897911d
+      spriteID: f364197404dfa6a48808eac09fa8378c
       vertices: []
       indices: 
       edges: []
@@ -131,8 +131,8 @@ TextureImporter:
       name: Sprite_Ragab_Walk_2
       rect:
         serializedVersion: 2
-        x: 115
-        y: 0
+        x: 119
+        y: 7
         width: 11
         height: 30
       alignment: 7
@@ -142,7 +142,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7040c8198a349174ab4454e19af88725
+      spriteID: a7443932ebb4e83439b1958e26e6244b
       vertices: []
       indices: 
       edges: []
@@ -151,8 +151,8 @@ TextureImporter:
       name: Sprite_Ragab_Walk_3
       rect:
         serializedVersion: 2
-        x: 157
-        y: 0
+        x: 161
+        y: 7
         width: 25
         height: 31
       alignment: 7
@@ -162,7 +162,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f02e8146813cb0c4eb9b916d0a1f2e08
+      spriteID: bf922dcf356b525498b5e41c7602df14
       vertices: []
       indices: 
       edges: []

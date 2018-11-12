@@ -11,7 +11,11 @@ using System.Collections;
 
 namespace Ragab
 {
+    [System.Serializable]
+    public class UnityEventVector3 : UnityEvent<Vector3>
+    {
 
+    }
     /// <summary>
     /// Definition of the PlayerInput class
     /// </summary>
@@ -33,7 +37,7 @@ namespace Ragab
         UnityEvent eventNoAim;
 
         [SerializeField]
-        UnityEvent eventShoot;
+        UnityEventVector3 eventShoot;
 
         [SerializeField]
         UnityEvent eventSlide;
@@ -125,9 +129,9 @@ namespace Ragab
             }
 
 
-            if (Input.GetButtonDown("Fire3"))
+            if (Input.GetButton("Fire3"))
             {
-                eventShoot.Invoke();
+                eventShoot.Invoke(characterToControl.GetSpeed());
             }
 
 
@@ -174,9 +178,9 @@ namespace Ragab
                 eventNoAim.Invoke();
             }
 
-            if (Input.GetButtonDown("Fire3"))
+            if (Input.GetButton("Fire3"))
             {
-                eventShoot.Invoke();
+                eventShoot.Invoke(characterToControl.GetSpeed());
             }
         }
 
@@ -220,9 +224,9 @@ namespace Ragab
                 eventNoAim.Invoke();
             }
 
-            if (Input.GetButtonDown("Fire3"))
+            if (Input.GetButton("Fire3"))
             {
-                eventShoot.Invoke();
+                eventShoot.Invoke(characterToControl.GetSpeed());
             }
         }
 
@@ -256,9 +260,9 @@ namespace Ragab
                 eventNoAim.Invoke();
             }
 
-            if (Input.GetButtonDown("Fire3"))
+            if (Input.GetButton("Fire3"))
             {
-                eventShoot.Invoke();
+                eventShoot.Invoke(characterToControl.GetSpeed());
             }
         }
 

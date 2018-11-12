@@ -26,6 +26,8 @@ namespace Ragab
         BaseProjectile projectilePrefab;
         [SerializeField]
         int maxNumberProjectile = 20;
+        [SerializeField]
+        float timeInterval = 0.1f;
 
         int indexProjectile = 0;
         List<BaseProjectile> listObject = new List<BaseProjectile>(20);
@@ -34,6 +36,8 @@ namespace Ragab
         Transform viseur;
         [SerializeField]
         Transform curseur;
+
+        bool canShoot = true;
 
 
         #endregion
@@ -69,23 +73,28 @@ namespace Ragab
         }
 
 
-        public void Shoot()
+        public void Shoot(Vector3 playerSpeed)
         {
+            if (canShoot == false)
+                return;
             if (listObject[indexProjectile] == null)
             {
-                BaseProjectile fire = Instantiate(projectilePrefab, this.transform.position, viseur.localRotation);
+                BaseProjectile fire = Instantiate(projectilePrefab, this.transform.position + new Vector3(0,0.64f,0), viseur.localRotation);
+                fire.SetInitialSpeed(playerSpeed);
                 listObject[indexProjectile] = fire;
             }
             else
             {
-                listObject[indexProjectile].transform.position = this.transform.position;
+                listObject[indexProjectile].transform.position = this.transform.position + new Vector3(0, 0.64f, 0);
                 listObject[indexProjectile].transform.localRotation = viseur.localRotation;
+                listObject[indexProjectile].SetInitialSpeed(playerSpeed);
                 listObject[indexProjectile].gameObject.SetActive(true);
 
             }
             indexProjectile += 1;
             if (indexProjectile > maxNumberProjectile-1)
                 indexProjectile = 0;
+            StartCoroutine(WaitInterval());
 
         }
 
@@ -106,6 +115,13 @@ namespace Ragab
             //viseur.localRotation.SetLookRotation(curseur.position);
         }
 
+
+        private IEnumerator WaitInterval()
+        {
+            canShoot = false;
+            yield return new WaitForSeconds(timeInterval);
+            canShoot = true;
+        }
         
         #endregion
 

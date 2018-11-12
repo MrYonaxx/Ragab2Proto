@@ -18,7 +18,7 @@ namespace Ragab
 
         [Header("Slide")]
         [SerializeField]
-        protected float slideSpeed = 500;
+        protected float slideSpeed = 12;
         // à changer
         [SerializeField]
         protected BoxCollider2D defaultCollider;
@@ -38,6 +38,10 @@ namespace Ragab
         // Functions
         // =============================================
 
+        public Vector3 GetSpeed()
+        {
+            return new Vector3(Mathf.Abs(actualSpeedX), Mathf.Abs(actualSpeedY), 0);
+        }
 
 
         public void ChangeCollider(BoxCollider2D newCollider)
@@ -116,6 +120,12 @@ namespace Ragab
             actualSpeedY += initialJumpForce;
             characterState = State.Jumping;
             jumpAvailable = false;
+        }
+
+
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+            Debug.Log("touche");
         }
 
     }

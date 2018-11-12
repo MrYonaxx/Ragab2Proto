@@ -27,6 +27,13 @@ namespace Ragab
         protected float longevity = 5;
         [SerializeField]
         protected float damage = 1;
+
+        [SerializeField]
+        protected float bulletFriction = 2;
+
+        int layerMask = 1 << 8;
+
+        Vector3 initialSpeed;
         
         #endregion
 
@@ -71,7 +78,17 @@ namespace Ragab
         /// </summary>
         protected void Update()
         {
-            transform.Translate(Vector3.right * speed * Time.deltaTime);
+            // note pour opti, faire en sorte que ragab update la vitesse des balles
+            if (this.gameObject.activeInHierarchy)
+            {
+                transform.Translate(((Vector3.right * speed) + initialSpeed) * Time.deltaTime);
+                initialSpeed /= bulletFriction;
+            }
+        }
+
+        public void SetInitialSpeed(Vector3 playerSpeed)
+        {
+            initialSpeed = playerSpeed;
         }
 
 
@@ -84,7 +101,8 @@ namespace Ragab
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("touche");
+            if (collision.gameObject.tag == "Ground")
+                this.gameObject.SetActive(false);
         }
 
         #endregion

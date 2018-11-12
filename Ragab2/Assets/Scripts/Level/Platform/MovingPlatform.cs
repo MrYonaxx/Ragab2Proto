@@ -24,8 +24,10 @@ namespace Ragab
         float speed = 0.5f;
 
         [SerializeField]
-        float time = 2;
-        
+        Transform[] waymarkers;
+
+        int i;
+
         #endregion
 
         #region GettersSetters 
@@ -33,7 +35,7 @@ namespace Ragab
         /* ======================================== *\
          *           GETTERS AND SETTERS            *
         \* ======================================== */
-        
+
 
         #endregion
 
@@ -43,8 +45,17 @@ namespace Ragab
          *                FUNCTIONS                 *
         \* ======================================== */
 
+        private void Update()
+        {
+            transform.position = Vector3.MoveTowards(transform.position, waymarkers[i].position, speed * Time.deltaTime);
+            if (transform.position == waymarkers[i].position)
+            {
+                i += 1;
+                if (i == waymarkers.Length)
+                    i = 0;
+            }
+        }
 
-        
         #endregion
 
     } // MovingPlatform class

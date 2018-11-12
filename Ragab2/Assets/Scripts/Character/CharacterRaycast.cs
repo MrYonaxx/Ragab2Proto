@@ -243,9 +243,14 @@ namespace Ragab
             bool isFalling = true;
 
             if (actualSpeedY < 0)
+            {
                 originRaycast = bottomLeft;
+            }
             else
+            {
                 originRaycast = upperLeft;
+                transform.parent = null;
+            }
 
             for (int i = 0; i < numberRaycastVertical; i++)
             {
@@ -256,6 +261,16 @@ namespace Ragab
                     // === Collision ==== //
 
                     isFalling = false;
+
+                    if (raycastY.transform.gameObject.tag == "MovingPlatform" && actualSpeedY < 0)
+                    {
+                        this.transform.SetParent(raycastY.transform);
+                    }
+                    else
+                    {
+                        transform.parent = null;
+                    }
+
 
                     float slopeAngle = Vector2.Angle(raycastY.normal, Vector2.up);
                     if (slopeAngle > maxAngle)

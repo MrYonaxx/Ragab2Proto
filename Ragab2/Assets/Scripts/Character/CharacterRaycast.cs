@@ -135,7 +135,7 @@ namespace Ragab
 
         protected void Start()
         {
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 120;
             characterRigidbody = GetComponent<Rigidbody2D>();
             characterCollider = GetComponent<BoxCollider2D>();
         }
@@ -254,7 +254,20 @@ namespace Ragab
                 if (raycastY.collider != null)
                 {
                     // === Collision ==== //
+
                     isFalling = false;
+
+                    float slopeAngle = Vector2.Angle(raycastY.normal, Vector2.up);
+                    if (slopeAngle > maxAngle)
+                    {
+                        Debug.Log("je glisse");
+                        isFalling = true;
+                        //DescendSlope(slopeAngle);
+                        //return;
+                    }
+
+
+
 
                     if (actualSpeedY < 0)
                         SetOnGround(true);
@@ -263,7 +276,6 @@ namespace Ragab
                     distance -= offsetRaycastY * Mathf.Sign(actualSpeedY);
                     if(Mathf.Abs(actualSpeedY) > Mathf.Abs(distance / Time.deltaTime))
                         actualSpeedY = distance / Time.deltaTime;
-
 
                     /*float slopeAngle = Vector2.Angle(raycastY.normal, Vector2.up);
                     if (slopeAngle != 0 && slopeAngle <= maxAngle && Mathf.Sign(raycastY.normal.x) == Mathf.Sign(actualSpeedX))
@@ -430,13 +442,16 @@ namespace Ragab
 
         private void DescendSlope(float angle)
         {
-            climbingSlopes = true;
+
+            actualSpeedX = actualSpeedY; // Mathf.Abs(speedAcceleration) * -direction;
+            //actualSpeedY = Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(speedAcceleration);
+            /*climbingSlopes = true;
             if (characterState != State.Jumping)
             {
                 actualSpeedX = Mathf.Cos(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX) * Mathf.Sign(actualSpeedX);
                 actualSpeedY -= Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX);
                 SetOnGround(true);
-            }
+            }*/
         }
 
         #endregion

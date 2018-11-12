@@ -27,8 +27,8 @@ namespace Ragab
         [SerializeField]
         int maxNumberProjectile = 20;
 
-
-        List<BaseProjectile> listObject;
+        int indexProjectile = 0;
+        List<BaseProjectile> listObject = new List<BaseProjectile>(20);
 
         [SerializeField]
         Transform viseur;
@@ -60,12 +60,32 @@ namespace Ragab
         /// </summary>
         protected virtual void Start()
         {
-            listObject = new List<BaseProjectile>(maxNumberProjectile);
+            indexProjectile = 0;
+            //listObject = new List<BaseProjectile>(maxNumberProjectile);
+            for(int i = 0; i < maxNumberProjectile; i++)
+            {
+                listObject.Add(null);
+            }
         }
 
 
         public void Shoot()
         {
+            if (listObject[indexProjectile] == null)
+            {
+                BaseProjectile fire = Instantiate(projectilePrefab, this.transform.position, viseur.localRotation);
+                listObject[indexProjectile] = fire;
+            }
+            else
+            {
+                listObject[indexProjectile].transform.position = this.transform.position;
+                listObject[indexProjectile].transform.localRotation = viseur.localRotation;
+                listObject[indexProjectile].gameObject.SetActive(true);
+
+            }
+            indexProjectile += 1;
+            if (indexProjectile > maxNumberProjectile-1)
+                indexProjectile = 0;
 
         }
 

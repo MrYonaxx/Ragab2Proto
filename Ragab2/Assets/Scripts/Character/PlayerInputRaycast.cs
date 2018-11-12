@@ -125,6 +125,12 @@ namespace Ragab
             }
 
 
+            if (Input.GetButtonDown("Fire3"))
+            {
+                eventShoot.Invoke();
+            }
+
+
         }
 
 
@@ -147,7 +153,6 @@ namespace Ragab
             }
 
 
-
             if (Input.GetButton("Jump"))
             {
                 characterToControl.NuanceJump();
@@ -167,6 +172,11 @@ namespace Ragab
             else
             {
                 eventNoAim.Invoke();
+            }
+
+            if (Input.GetButtonDown("Fire3"))
+            {
+                eventShoot.Invoke();
             }
         }
 
@@ -209,6 +219,11 @@ namespace Ragab
             {
                 eventNoAim.Invoke();
             }
+
+            if (Input.GetButtonDown("Fire3"))
+            {
+                eventShoot.Invoke();
+            }
         }
 
 
@@ -239,6 +254,11 @@ namespace Ragab
             else
             {
                 eventNoAim.Invoke();
+            }
+
+            if (Input.GetButtonDown("Fire3"))
+            {
+                eventShoot.Invoke();
             }
         }
 

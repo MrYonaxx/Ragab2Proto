@@ -49,9 +49,10 @@ namespace Ragab
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
-        protected void Awake()
+        protected void OnEnable()
         {
             StartCoroutine(LongevityCoroutine());
+            transform.transform.eulerAngles -= new Vector3(0, 0, 90);
         }
 
 
@@ -70,7 +71,7 @@ namespace Ragab
         /// </summary>
         protected void Update()
         {
-            
+            transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
 
 
@@ -79,7 +80,13 @@ namespace Ragab
             yield return new WaitForSeconds(longevity);
             this.gameObject.SetActive(false);
         }
-        
+
+
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+            Debug.Log("touche");
+        }
+
         #endregion
 
     } // BaseProjectile class

@@ -83,6 +83,9 @@ namespace Ragab
         protected float actualSpeedX = 0;
         protected float actualSpeedY = 0;
 
+        protected float bonusSpeedX = 0;
+        protected float bonusSpeedY = 0;
+
         protected int direction = 1;
 
         public int Direction
@@ -145,6 +148,7 @@ namespace Ragab
             CheckState();
 
             ApplyGravity();
+            ApplySpeedBonus();
 
             UpdateCollision();
 
@@ -204,6 +208,14 @@ namespace Ragab
         }
 
 
+        private void ApplySpeedBonus()
+        {
+            actualSpeedX += bonusSpeedX;
+            actualSpeedY += bonusSpeedY;
+            bonusSpeedX = 0;
+            bonusSpeedY = 0;
+        }
+
         private void ApplyGravity()
         {
             actualSpeedY -= gravityForce;
@@ -249,9 +261,17 @@ namespace Ragab
 
                     float distance = raycastY.point.y - originRaycast.y;
                     distance -= offsetRaycastY * Mathf.Sign(actualSpeedY);
-                    actualSpeedY = distance / Time.deltaTime;
+                    if(Mathf.Abs(actualSpeedY) > Mathf.Abs(distance / Time.deltaTime))
+                        actualSpeedY = distance / Time.deltaTime;
 
-                    return;
+
+                    /*float slopeAngle = Vector2.Angle(raycastY.normal, Vector2.up);
+                    if (slopeAngle != 0 && slopeAngle <= maxAngle && Mathf.Sign(raycastY.normal.x) == Mathf.Sign(actualSpeedX))
+                    {
+                        DescendSlope(slopeAngle);
+                    }*/
+
+                    //return;
                     // === Collision ==== //
 
                 }
@@ -404,6 +424,17 @@ namespace Ragab
             {
                 actualSpeedY = Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX);
                 actualSpeedX = Mathf.Cos(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX) * Mathf.Sign(actualSpeedX);
+                SetOnGround(true);
+            }
+        }
+
+        private void DescendSlope(float angle)
+        {
+            climbingSlopes = true;
+            if (characterState != State.Jumping)
+            {
+                actualSpeedX = Mathf.Cos(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX) * Mathf.Sign(actualSpeedX);
+                actualSpeedY -= Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX);
                 SetOnGround(true);
             }
         }

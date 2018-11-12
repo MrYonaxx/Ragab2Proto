@@ -78,11 +78,13 @@ namespace Ragab
         {
             characterState = State.Sliding;
             actualSpeedX = slideSpeed * direction;
+            bonusSpeedY += -(slideSpeed * 2);
         }
 
         public void StopSliding()
         {
             //CheckIfCanStopSlide();
+            bonusSpeedY = 0;
             characterState = State.Grouded;
             ChangeCollider(defaultCollider);
         }

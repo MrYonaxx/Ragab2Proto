@@ -351,7 +351,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 114826154436837572, guid: 4be7eccc6bb3bbd4a93cca4973fed756,
     type: 2}
   maxNumberProjectile: 20
-  timeInterval: 0.2
+  timeInterval: 0.1
   viseur: {fileID: 603786031}
   curseur: {fileID: 0}
 --- !u!95 &40398434
@@ -790,7 +790,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 67f36588389510941956eada4010a402, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -810,8 +810,11 @@ GameObject:
   - component: {fileID: 234738232}
   - component: {fileID: 234738231}
   - component: {fileID: 234738230}
+  - component: {fileID: 234738234}
+  - component: {fileID: 234738233}
+  - component: {fileID: 234738235}
   m_Layer: 8
-  m_Name: Sol (21)
+  m_Name: RobotCrapo
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -823,7 +826,7 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 234738229}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -840,7 +843,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 0.2, y: 0.32}
   m_EdgeRadius: 0
 --- !u!212 &234738231
 SpriteRenderer:
@@ -857,7 +860,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3053dbb26c91ebe498bdc2b1ca2ca202, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -895,12 +898,89 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 234738229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.61, y: -4.15, z: 0}
+  m_LocalPosition: {x: 20.77, y: 0.15, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &234738233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 234738229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cad159fd7f64f2840b0c6369a23814a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedAcceleration: 1
+  speedMax: 5
+  aerialFriction: 0.01
+  aerialInertia: 0.3
+  gravityForce: 0
+  gravityMax: 8
+  initialJumpForce: 10
+  additionalJumpForce: 0.7
+  maxAngle: 40
+  offsetRaycastX: 0.0001
+  offsetRaycastY: 0.0001
+  numberRaycastVertical: 2
+  numberRaycastHorizontal: 2
+  characterState: 0
+  characterAnimation: {fileID: 0}
+  trailDebug: {fileID: 0}
+  activateDebugTrail: 1
+  eventHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 234738235}
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!50 &234738234
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 234738229}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &234738235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 234738229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ea4c0f6f82a4544a82ae2d65715671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashTime: 10
 --- !u!1 &290204842
 GameObject:
   m_ObjectHideFlags: 0

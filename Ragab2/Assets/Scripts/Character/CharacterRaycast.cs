@@ -29,25 +29,25 @@ namespace Ragab
         [Header("Movement")] // =============================================
 
         [SerializeField]
-        protected float speedAcceleration = 40;
+        protected float speedAcceleration = 1;
         [SerializeField]
-        protected float speedMax = 400;
+        protected float speedMax = 5;
         [SerializeField]
-        protected float aerialFriction = 0.7f;
+        protected float aerialFriction = 0.01f;
         [SerializeField]
-        protected float aerialInertia = 20;
+        protected float aerialInertia = 0.3f;
 
 
         [Header("Jump")]  // =============================================
 
         [SerializeField]
-        protected float gravityForce = 50;
+        protected float gravityForce = 1;
         [SerializeField]
-        protected float gravityMax = 400;
+        protected float gravityMax = 8;
         [SerializeField]
-        protected float initialJumpForce = 600;
+        protected float initialJumpForce = 10;
         [SerializeField]
-        protected float additionalJumpForce = 35;
+        protected float additionalJumpForce = 0.7f;
 
 
         [Header("Collision")]
@@ -74,7 +74,7 @@ namespace Ragab
 
         [Header("Debug")]
         public GameObject trailDebug = null;
-        public bool activateDebugTrail = true;
+        public bool activateDebugTrail = false;
 
 
         protected float actualAerialDecceleration = 0;
@@ -133,7 +133,7 @@ namespace Ragab
 
 
 
-        protected void Start()
+        protected virtual void Start()
         {
             Application.targetFrameRate = 120;
             characterRigidbody = GetComponent<Rigidbody2D>();

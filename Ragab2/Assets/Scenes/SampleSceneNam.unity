@@ -410,8 +410,8 @@ MonoBehaviour:
   numberRaycastHorizontal: 5
   characterState: 0
   characterAnimation: {fileID: 40398435}
-  trailDebug: {fileID: 0}
-  activateDebugTrail: 0
+  trailDebug: {fileID: 1352453806181616, guid: 4abb12dc80357a049ad8d45d9d0e09c1, type: 2}
+  activateDebugTrail: 1
   secondBeforeJumpDisabled: 0.05
   slideSpeed: 12
   defaultCollider: {fileID: 40398438}
@@ -1423,7 +1423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &603786031
 Transform:
   m_ObjectHideFlags: 0

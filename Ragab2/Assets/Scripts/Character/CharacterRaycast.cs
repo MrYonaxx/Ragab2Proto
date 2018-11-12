@@ -23,8 +23,8 @@ namespace Ragab
          *               ATTRIBUTES                 *
         \* ======================================== */
 
-        private Rigidbody2D characterRigidbody;
-        private BoxCollider2D characterCollider;
+        protected Rigidbody2D characterRigidbody;
+        protected BoxCollider2D characterCollider;
 
         [Header("Movement")] // =============================================
 
@@ -90,6 +90,18 @@ namespace Ragab
             get { return direction; }
         }
 
+
+
+        // ======== Collisions =========== //
+        bool climbingSlopes = false;
+
+        int layerMask;
+        Vector2 bottomLeft;
+        Vector2 upperLeft;
+        Vector2 bottomRight;
+        Vector2 upperRight;
+
+
         #endregion
 
         #region GettersSetters 
@@ -116,6 +128,8 @@ namespace Ragab
          *                FUNCTIONS                 *
         \* ======================================== */
 
+
+
         protected void Start()
         {
             Application.targetFrameRate = 60;
@@ -123,19 +137,16 @@ namespace Ragab
             characterCollider = GetComponent<BoxCollider2D>();
         }
 
+
+
         protected void Update()
         {
 
             CheckState();
 
             ApplyGravity();
-            UpdatePositionY();
-            //transform.position += new Vector3(0, actualSpeedY * Time.deltaTime, 0);
-            UpdatePositionX();
-            transform.position += new Vector3(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime, 0);
 
-            if (activateDebugTrail)
-                Instantiate(trailDebug, this.transform.position, Quaternion.identity);
+            UpdateCollision();
 
             if (characterAnimation != null)
                 characterAnimation.CheckAnimation(characterState, direction, actualSpeedX);
@@ -144,10 +155,23 @@ namespace Ragab
 
 
 
-        public void ChangeState(State newState)
+        private void UpdateCollision()
         {
+            layerMask = 1 << 8;
+
+            bottomLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.min.y);
+            upperLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.max.y);
+            bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y);
+            upperRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.max.y);
+
+            UpdatePositionX();
+            UpdatePositionY();
+
+            transform.position += new Vector3(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime, 0);
 
         }
+
+
 
         public virtual void SetOnGround(bool b)
         {
@@ -196,68 +220,71 @@ namespace Ragab
         // Update the position of the player
         private void UpdatePositionY()
         {
-            int layerMask = 1 << 8;
-            Vector2 bottomLeft = new Vector2(characterCollider.bounds.min.x + offsetRaycastX, characterCollider.bounds.min.y);
-            Vector2 upperLeft = new Vector2(characterCollider.bounds.min.x + offsetRaycastX, characterCollider.bounds.max.y);
-            Vector2 bottomRight = new Vector2(characterCollider.bounds.max.x - offsetRaycastX, characterCollider.bounds.min.y);
-            Vector2 upperRight = new Vector2(characterCollider.bounds.max.x - offsetRaycastX, characterCollider.bounds.max.y);
+            if(actualSpeedY == 0)
+            {
+                return;
+            }
 
             RaycastHit2D raycastY;
             Vector2 originRaycast;
 
+            bool isFalling = true;
+
             if (actualSpeedY < 0)
-            {
                 originRaycast = bottomLeft;
-                for (int i = 0; i < numberRaycastVertical; i++)
-                {
-                    raycastY = Physics2D.Raycast(originRaycast,
-                                                 new Vector2(0, actualSpeedY * Time.deltaTime),
-                                                 Mathf.Abs(actualSpeedY * Time.deltaTime),
-                                                 layerMask);
-                    //Debug.DrawRay(originRaycast, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
-                    if (raycastY.collider != null)
-                    {
-                        //Debug.Log(raycastY.collider.gameObject.name);
-                        SetOnGround(true);
-                        float distance = raycastY.point.y - transform.position.y;
-                        actualSpeedY = distance / Time.deltaTime;
-                        return;
-                    }
-                    originRaycast += new Vector2(Mathf.Abs(bottomRight.x - bottomLeft.x) / (numberRaycastVertical-1), 0);
-                }
-            }
-            else if (actualSpeedY > 0)
-            {
+            else
                 originRaycast = upperLeft;
-                for (int i = 0; i < numberRaycastVertical; i++)
+
+            for (int i = 0; i < numberRaycastVertical; i++)
+            {
+                raycastY = ShootRaycast(originRaycast, new Vector2(0, actualSpeedY * Time.deltaTime), (actualSpeedY * Time.deltaTime), offsetRaycastY);
+
+                if (raycastY.collider != null)
                 {
-                    raycastY = Physics2D.Raycast(originRaycast,
-                                                 new Vector2(0, actualSpeedY * Time.deltaTime),
-                                                 Mathf.Abs(actualSpeedY * Time.deltaTime),
-                                                 layerMask);
-                    //Debug.DrawRay(originRaycast, new Vector2(0, actualSpeedY * Time.deltaTime), Color.green);
-                    if (raycastY.collider != null)
-                    {
-                        //Debug.Log(raycastY.collider.gameObject.name);
-                        //SetOnGround(true);
-                        float distance = raycastY.point.y - upperLeft.y;
-                        actualSpeedY = distance / Time.deltaTime;
-                        //Debug.Log("Ouille je me cogne la tête");
-                        return;
-                    }
-                    originRaycast += new Vector2(Mathf.Abs(upperRight.x - upperLeft.x) / (numberRaycastVertical - 1), 0);
+                    // === Collision ==== //
+                    isFalling = false;
+
+                    if (actualSpeedY < 0)
+                        SetOnGround(true);
+
+                    float distance = raycastY.point.y - originRaycast.y;
+                    distance -= offsetRaycastY * Mathf.Sign(actualSpeedY);
+                    actualSpeedY = distance / Time.deltaTime;
+
+                    return;
+                    // === Collision ==== //
+
                 }
+
+                if (actualSpeedY < 0)
+                    originRaycast += new Vector2(Mathf.Abs(bottomRight.x - bottomLeft.x) / (numberRaycastVertical-1), 0);
+                else
+                    originRaycast += new Vector2(Mathf.Abs(upperRight.x - upperLeft.x) / (numberRaycastVertical - 1), 0);
             }
+
+            if(actualSpeedY < 0 && isFalling == true)
+                SetOnGround(false);  
         }
+
+
+
+        private RaycastHit2D ShootRaycast(Vector2 origin, Vector2 direction, float length, float offset)
+        {
+            Debug.DrawRay(origin, direction, Color.green);
+            return Physics2D.Raycast(origin, direction, Mathf.Abs(length) + offset, layerMask);
+        }
+
+
+
 
 
         private void UpdatePositionX()
         {
             int layerMask = 1 << 8;
-            Vector2 bottomLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.min.y + offsetRaycastY);
-            Vector2 upperLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.max.y - offsetRaycastY);
-            Vector2 bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y + offsetRaycastY);
-            Vector2 upperRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.max.y - offsetRaycastY);
+            Vector2 bottomLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.min.y);
+            Vector2 upperLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.max.y);
+            Vector2 bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y);
+            Vector2 upperRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.max.y);
 
             RaycastHit2D raycastX;
             Vector2 originRaycast;
@@ -271,15 +298,44 @@ namespace Ragab
                 {
                     raycastX = Physics2D.Raycast(originRaycast,
                                                  new Vector2(actualSpeedX * Time.deltaTime, 0),
-                                                 Mathf.Abs(actualSpeedX * Time.deltaTime),
+                                                 Mathf.Abs(actualSpeedX * Time.deltaTime) + offsetRaycastX,
                                                  layerMask);
-                    //Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.red);
+                    Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.red);
                     if (raycastX.collider != null)
                     {
 
-                        float distance = raycastX.point.x - bottomLeft.x;
-                        actualSpeedX = distance / Time.deltaTime;
-                        return;
+
+
+
+                        // Déplacement vers la gauche
+
+
+                        float slopeAngle = Vector2.Angle(raycastX.normal, Vector2.up);
+                        if (i == 0 && slopeAngle <= maxAngle)
+                        {
+                            Debug.Log("Climb");
+                            float distance = raycastX.point.x - bottomLeft.x;
+                            distance += offsetRaycastX;
+                            float bonusX = distance / Time.deltaTime;
+                            ClimbSlope(slopeAngle);
+                            actualSpeedX += bonusX;
+
+                        }
+                        else
+                        {
+                            float distance = raycastX.point.x - bottomLeft.x;
+                            distance += offsetRaycastX;
+                            actualSpeedX = distance / Time.deltaTime;
+                            return;
+                        }
+
+
+
+                        // Déplacement vers la gauche
+
+
+
+
                     }
                     originRaycast += new Vector2(0, Mathf.Abs(upperLeft.y - bottomLeft.y) / (numberRaycastHorizontal - 1));
                 }
@@ -294,22 +350,43 @@ namespace Ragab
                 {
                     raycastX = Physics2D.Raycast(originRaycast,
                                           new Vector2(actualSpeedX * Time.deltaTime, 0),
-                                          Mathf.Abs(actualSpeedX * Time.deltaTime),
+                                          Mathf.Abs(actualSpeedX * Time.deltaTime) + offsetRaycastX,
                                           layerMask);
-                    //Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.green);
+                    Debug.DrawRay(originRaycast, new Vector2(actualSpeedX * Time.deltaTime, 0), Color.red);
                     if (raycastX.collider != null)
                     {
+
+
+
+
+                        // Déplacement vers la droite
+
+
                         float slopeAngle = Vector2.Angle(raycastX.normal, Vector2.up);
                         if (i == 0 && slopeAngle <= maxAngle)
                         {
+                            float distance = raycastX.point.x - bottomRight.x;
+                            distance -= offsetRaycastX;
+                            float bonusX = distance / Time.deltaTime;
                             ClimbSlope(slopeAngle);
+                            actualSpeedX += bonusX;
                         }
                         else
                         {
+                            climbingSlopes = false;
                             float distance = raycastX.point.x - bottomRight.x;
-                            actualSpeedX = distance / Time.deltaTime;
+                            distance -= offsetRaycastX;
+                            actualSpeedX = distance/ Time.deltaTime;
+                            return;
                         }
-                        return;
+
+
+
+                        // Déplacement vers la droite
+
+
+
+
                     }
                     originRaycast += new Vector2(0, Mathf.Abs(upperRight.y - bottomRight.y) / (numberRaycastHorizontal - 1));
                 }
@@ -322,10 +399,13 @@ namespace Ragab
 
         private void ClimbSlope(float angle)
         {
-            if (characterState == State.Jumping)
-                return;
-            actualSpeedY = Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX);
-            actualSpeedX = Mathf.Cos(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX) * Mathf.Sign(actualSpeedX);
+            climbingSlopes = true;
+            if (characterState != State.Jumping)
+            {
+                actualSpeedY = Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX);
+                actualSpeedX = Mathf.Cos(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX) * Mathf.Sign(actualSpeedX);
+                SetOnGround(true);
+            }
         }
 
         #endregion

@@ -35,6 +35,9 @@ namespace Ragab
         [SerializeField]
         UnityEvent eventShoot;
 
+        [SerializeField]
+        UnityEvent eventSlide;
+
         #endregion
 
         #region GettersSetters 
@@ -107,6 +110,7 @@ namespace Ragab
 
             if (Input.GetButtonDown("Fire2"))
             {
+                eventSlide.Invoke();
                 characterToControl.Sliding();
             }
 
@@ -210,6 +214,10 @@ namespace Ragab
 
         private void InputSliding()
         {
+            if (Input.GetButton("Fire2"))
+            {
+                characterToControl.Sliding();
+            }
             if (Input.GetButtonUp("Fire2"))
             {
                 characterToControl.StopSliding();
@@ -217,6 +225,7 @@ namespace Ragab
 
             if (Input.GetButtonDown("Jump") && characterToControl.JumpAvailable == true)
             {
+                characterToControl.StopSliding();
                 characterToControl.Jump();
             }
 

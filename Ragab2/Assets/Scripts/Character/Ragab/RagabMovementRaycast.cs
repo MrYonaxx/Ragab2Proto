@@ -19,6 +19,9 @@ namespace Ragab
         [Header("Slide")]
         [SerializeField]
         protected float slideSpeed = 500;
+        // à changer
+        [SerializeField]
+        protected BoxCollider2D defaultCollider;
 
         private bool jumpAvailable = true;
 
@@ -26,6 +29,7 @@ namespace Ragab
         {
             get { return jumpAvailable; }
         }
+
 
 
         #endregion
@@ -36,7 +40,13 @@ namespace Ragab
 
 
 
+        public void ChangeCollider(BoxCollider2D newCollider)
+        {
+            characterCollider.enabled = false;
+            characterCollider = newCollider;
+            characterCollider.enabled = true;
 
+        }
 
         public virtual void NuanceJump()
         {
@@ -50,10 +60,12 @@ namespace Ragab
             if (b == true)
             {
                 jumpAvailable = true;
-                characterState = State.Grouded;
+                if (characterState != State.Sliding)
+                    characterState = State.Grouded;
             }
             else
             {
+                StopSliding();
                 if (characterState != State.Jumping)
                 {
                     characterState = State.Falling;
@@ -70,7 +82,9 @@ namespace Ragab
 
         public void StopSliding()
         {
+            //CheckIfCanStopSlide();
             characterState = State.Grouded;
+            ChangeCollider(defaultCollider);
         }
 
 

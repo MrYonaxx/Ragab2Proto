@@ -42,6 +42,13 @@ namespace Ragab
         [SerializeField]
         UnityEvent eventSlide;
 
+        [SerializeField]
+        UnityEvent eventTraceDash;
+
+
+        [SerializeField]
+        UnityEvent eventStopTraceDash;
+
         #endregion
 
         #region GettersSetters 
@@ -85,6 +92,9 @@ namespace Ragab
                 case State.Sliding:
                     InputSliding();
                     break;
+                case State.TraceDashing:
+                    InputTraceDashing();
+                    break;
             }
         }
 
@@ -112,7 +122,7 @@ namespace Ragab
                 characterToControl.Jump();
             }
 
-            if (Input.GetButtonDown("Fire2"))
+            if (Input.GetButton("Fire2"))
             {
                 eventSlide.Invoke();
                 characterToControl.Sliding();
@@ -132,6 +142,12 @@ namespace Ragab
             if (Input.GetButton("Fire3"))
             {
                 eventShoot.Invoke(characterToControl.GetSpeed());
+            }
+
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                eventTraceDash.Invoke();
             }
 
 
@@ -249,6 +265,30 @@ namespace Ragab
             }
 
 
+
+            // Aim
+            if (Input.GetAxis("AimHorizontal") > 0.2f || Input.GetAxis("AimHorizontal") < -0.2f || Input.GetAxis("AimVertical") > 0.2f || Input.GetAxis("AimVertical") < -0.2f)
+            {
+                eventAim.Invoke(new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical")));
+            }
+            else
+            {
+                eventNoAim.Invoke();
+            }
+
+            if (Input.GetButton("Fire3"))
+            {
+                eventShoot.Invoke(characterToControl.GetSpeed());
+            }
+        }
+
+
+        private void InputTraceDashing()
+        {
+            if(Input.GetButtonDown("Fire1"))
+            {
+                eventStopTraceDash.Invoke();
+            }
 
             // Aim
             if (Input.GetAxis("AimHorizontal") > 0.2f || Input.GetAxis("AimHorizontal") < -0.2f || Input.GetAxis("AimVertical") > 0.2f || Input.GetAxis("AimVertical") < -0.2f)

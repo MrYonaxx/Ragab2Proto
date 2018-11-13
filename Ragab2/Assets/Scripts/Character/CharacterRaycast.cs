@@ -11,6 +11,14 @@ using System.Collections;
 namespace Ragab
 {
 
+    public enum State
+    {
+        Grouded,
+        Jumping,
+        Falling,
+        Sliding,
+        TraceDashing
+    };
 
     /// <summary>
     /// Definition of the Character class
@@ -115,11 +123,13 @@ namespace Ragab
 
         public void SetDirection(int dir)
         {
-            /*if(dir != 1 || dir != -1)
-            {
-                return;
-            }*/
             direction = dir;
+        }
+
+        public void SetSpeed(Vector2 newSpeed)
+        {
+            actualSpeedX = newSpeed.x;
+            actualSpeedY = newSpeed.y;
         }
 
 
@@ -218,6 +228,9 @@ namespace Ragab
 
         private void ApplyGravity()
         {
+            if (characterState == State.TraceDashing)
+                return;
+
             actualSpeedY -= gravityForce;
 
             if (actualSpeedY < -gravityMax)

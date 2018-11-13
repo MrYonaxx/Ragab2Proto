@@ -21,7 +21,11 @@ namespace Ragab
         /* ======================================== *\
          *               ATTRIBUTES                 *
         \* ======================================== */
+        [Header("Ragab Movement")]
+        [SerializeField]
+        RagabMovementRaycast characterToMove;
 
+        [Header("Ragab Shoot")]
         [SerializeField]
         BaseProjectile projectilePrefab;
         [SerializeField]
@@ -36,6 +40,11 @@ namespace Ragab
         Transform viseur;
         [SerializeField]
         Transform curseur;
+
+
+        [Header("Ragab Dash")]
+        [SerializeField]
+        protected float traceSpeed = 4;
 
         bool canShoot = true;
 
@@ -109,7 +118,7 @@ namespace Ragab
             }*/
             //angle.Normalize();
             //angle = Vector2.ClampMagnitude(angle, 0.2f);
-            float angleAim = Mathf.Atan2(angle.x, -angle.y) * Mathf.Rad2Deg;
+            float angleAim = Mathf.Atan2(angle.y, angle.x) * Mathf.Rad2Deg;
             viseur.localRotation = Quaternion.Euler(new Vector3(0,0,angleAim));
 
             //curseur.position = new Vector2(this.transform.position.x, this.transform.position.y) + angle;
@@ -124,6 +133,21 @@ namespace Ragab
             canShoot = true;
         }
         
+
+        public void TraceDash()
+        {
+            characterToMove.characterState = State.TraceDashing;
+            characterToMove.SetSpeed( new Vector2 (traceSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
+                                                    traceSpeed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
+            //Vector3.right* speed;
+        }
+
+        public void StopTraceDash()
+        {
+            characterToMove.characterState = State.Falling;
+            //Vector3.right* speed;
+        }
+
         #endregion
 
     } // RagabAction class

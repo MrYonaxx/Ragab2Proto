@@ -32,6 +32,8 @@ namespace Ragab
 
 
 
+
+
         #endregion
 
         // =============================================
@@ -70,7 +72,7 @@ namespace Ragab
             else
             {
                 StopSliding();
-                if (characterState != State.Jumping)
+                if (characterState != State.Jumping && characterState != State.TraceDashing)
                 {
                     characterState = State.Falling;
                     StartCoroutine(WaitBeforeDisableJump(secondBeforeJumpDisabled));

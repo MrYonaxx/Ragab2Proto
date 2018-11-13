@@ -11,13 +11,7 @@ using System.Collections;
 namespace Ragab
 {
 
-    public enum State
-    {
-        Grouded,
-        Jumping,
-        Falling,
-        Sliding
-    };
+
 
 
     /// <summary>

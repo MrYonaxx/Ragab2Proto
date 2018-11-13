@@ -59,7 +59,7 @@ namespace Ragab
         protected void OnEnable()
         {
             StartCoroutine(LongevityCoroutine());
-            transform.transform.eulerAngles -= new Vector3(0, 0, 90);
+            //transform.transform.eulerAngles -= new Vector3(0, 0, 90);
         }
 
 

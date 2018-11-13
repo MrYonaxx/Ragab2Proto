@@ -78,6 +78,11 @@ namespace Ragab
             {
                 animator.Play("Anim_Jump");
             }
+
+            if (actualState == State.TraceDashing)
+            {
+                animator.Play("Anim_Airdash");
+            }
         }
         
         #endregion

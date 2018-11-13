@@ -56,7 +56,7 @@ namespace Ragab
 
         public virtual void NuanceJump()
         {
-            actualSpeedY += additionalJumpForce;
+            actualSpeedY += additionalJumpForce * SlowMotionManager.Instance.playerTime;
         }
 
 

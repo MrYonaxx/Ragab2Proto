@@ -137,6 +137,7 @@ namespace Ragab
         public void TraceDash()
         {
             characterToMove.characterState = State.TraceDashing;
+            SlowMotionManager.Instance.SetSlowMotion(0.25f);
             characterToMove.SetSpeed( new Vector2 (traceSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
                                                     traceSpeed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
             //Vector3.right* speed;
@@ -144,6 +145,7 @@ namespace Ragab
 
         public void StopTraceDash()
         {
+            SlowMotionManager.Instance.SetSlowMotion(1f);
             characterToMove.characterState = State.Falling;
             //Vector3.right* speed;
         }

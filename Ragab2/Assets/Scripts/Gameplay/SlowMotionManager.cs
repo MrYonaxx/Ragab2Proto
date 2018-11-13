@@ -20,8 +20,12 @@ namespace Ragab
         /* ======================================== *\
          *               ATTRIBUTES                 *
         \* ======================================== */
-        
-        
+
+        public static SlowMotionManager Instance = null;
+
+        public float playerTime = 1f;
+        public float enemyTime = 1f;
+
         #endregion
 
         #region GettersSetters 
@@ -43,10 +47,27 @@ namespace Ragab
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
-        protected void Awake()
+        private void Awake()
         {
-            
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
+
+
+        public void SetSlowMotion(float newValue)
+        {
+            playerTime = newValue;
+        }
+
+
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////

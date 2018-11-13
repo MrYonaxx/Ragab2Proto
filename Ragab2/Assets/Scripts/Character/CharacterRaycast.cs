@@ -178,10 +178,17 @@ namespace Ragab
             bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y);
             upperRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.max.y);
 
+            /*if (characterState != State.TraceDashing)
+            {
+                actualSpeedX *= SlowMotionManager.Instance.playerTime;
+                //actualSpeedY *= SlowMotionManager.Instance.playerTime;
+            }*/
+
             UpdatePositionX();
             UpdatePositionY();
 
-            transform.position += new Vector3(actualSpeedX * Time.deltaTime, actualSpeedY * Time.deltaTime, 0);
+            transform.position += new Vector3(actualSpeedX * SlowMotionManager.Instance.playerTime * Time.deltaTime, 
+                                              actualSpeedY * SlowMotionManager.Instance.playerTime * Time.deltaTime, 0);
 
         }
 
@@ -486,14 +493,20 @@ namespace Ragab
         private void CollisionY()
         {
             if (characterState == State.TraceDashing)
+            {
                 characterState = State.Falling;
+                SlowMotionManager.Instance.SetSlowMotion(1f);
+            }
         }
 
 
         private void CollisionX()
         {
             if (characterState == State.TraceDashing)
+            {
                 characterState = State.Falling;
+                SlowMotionManager.Instance.SetSlowMotion(1f);
+            }
         }
 
         #endregion

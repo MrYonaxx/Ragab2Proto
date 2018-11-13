@@ -302,8 +302,11 @@ namespace Ragab
 
                     float distance = raycastY.point.y - originRaycast.y;
                     distance -= offsetRaycastY * Mathf.Sign(actualSpeedY);
-                    if(Mathf.Abs(actualSpeedY) > Mathf.Abs(distance / Time.deltaTime))
+                    if (Mathf.Abs(actualSpeedY) > Mathf.Abs(distance / Time.deltaTime))
+                    {
                         actualSpeedY = distance / Time.deltaTime;
+                        CollisionY();
+                    }
 
                     /*float slopeAngle = Vector2.Angle(raycastY.normal, Vector2.up);
                     if (slopeAngle != 0 && slopeAngle <= maxAngle && Mathf.Sign(raycastY.normal.x) == Mathf.Sign(actualSpeedX))
@@ -333,9 +336,6 @@ namespace Ragab
             Debug.DrawRay(origin, direction, Color.green);
             return Physics2D.Raycast(origin, direction, Mathf.Abs(length) + offset, layerMask);
         }
-
-
-
 
 
         private void UpdatePositionX()
@@ -369,7 +369,7 @@ namespace Ragab
 
                         // Déplacement vers la gauche
 
-
+                        CollisionX();
                         float slopeAngle = Vector2.Angle(raycastX.normal, Vector2.up);
                         if (i == 0 && slopeAngle <= maxAngle)
                         {
@@ -421,7 +421,7 @@ namespace Ragab
 
                         // Déplacement vers la droite
 
-
+                        CollisionX();
                         float slopeAngle = Vector2.Angle(raycastX.normal, Vector2.up);
                         if (i == 0 && slopeAngle <= maxAngle)
                         {
@@ -480,6 +480,20 @@ namespace Ragab
                 actualSpeedY -= Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(actualSpeedX);
                 SetOnGround(true);
             }*/
+        }
+
+
+        private void CollisionY()
+        {
+            if (characterState == State.TraceDashing)
+                characterState = State.Falling;
+        }
+
+
+        private void CollisionX()
+        {
+            if (characterState == State.TraceDashing)
+                characterState = State.Falling;
         }
 
         #endregion

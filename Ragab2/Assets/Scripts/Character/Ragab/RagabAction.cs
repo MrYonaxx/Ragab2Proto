@@ -89,15 +89,15 @@ namespace Ragab
             if (listObject[indexProjectile] == null)
             {
                 BaseProjectile fire = Instantiate(projectilePrefab, this.transform.position + new Vector3(0,0.64f,0), viseur.localRotation);
-                //fire.transform.SetParent(this.transform);
-                fire.SetInitialSpeed(playerSpeed);
+                fire.transform.SetParent(this.transform);
+                //fire.SetInitialSpeed(playerSpeed);
                 listObject[indexProjectile] = fire;
             }
             else
             {
                 listObject[indexProjectile].transform.position = this.transform.position + new Vector3(0, 0.64f, 0);
                 listObject[indexProjectile].transform.localRotation = viseur.localRotation;
-                listObject[indexProjectile].SetInitialSpeed(playerSpeed);
+                //listObject[indexProjectile].SetInitialSpeed(playerSpeed);
                 listObject[indexProjectile].gameObject.SetActive(true);
 
             }

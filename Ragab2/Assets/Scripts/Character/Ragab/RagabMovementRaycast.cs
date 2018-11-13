@@ -63,6 +63,12 @@ namespace Ragab
 
         public override void SetOnGround(bool b)
         {
+
+            if (characterState == State.TraceDashing)
+            {
+                return;
+            }
+
             if (b == true)
             {
                 jumpAvailable = true;
@@ -72,7 +78,7 @@ namespace Ragab
             else
             {
                 StopSliding();
-                if (characterState != State.Jumping && characterState != State.TraceDashing)
+                if (characterState != State.Jumping)
                 {
                     characterState = State.Falling;
                     StartCoroutine(WaitBeforeDisableJump(secondBeforeJumpDisabled));

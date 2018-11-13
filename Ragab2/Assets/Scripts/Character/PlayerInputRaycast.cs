@@ -198,6 +198,11 @@ namespace Ragab
             {
                 eventShoot.Invoke(characterToControl.GetSpeed());
             }
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                eventTraceDash.Invoke();
+            }
         }
 
 
@@ -244,6 +249,11 @@ namespace Ragab
             {
                 eventShoot.Invoke(characterToControl.GetSpeed());
             }
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                eventTraceDash.Invoke();
+            }
         }
 
 
@@ -279,6 +289,13 @@ namespace Ragab
             if (Input.GetButton("Fire3"))
             {
                 eventShoot.Invoke(characterToControl.GetSpeed());
+            }
+
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                characterToControl.StopSliding();
+                eventTraceDash.Invoke();
             }
         }
 

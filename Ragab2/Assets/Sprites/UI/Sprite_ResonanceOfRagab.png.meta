@@ -1,9 +1,7 @@
 fileFormatVersion: 2
-guid: ac4678577bcd73c42b3b7d3aab342ebe
+guid: b3eff4e7bcbcb004bbef280fd387a4e4
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Sprite_Ragab_Shoot_Diagonaldown_0
-    21300002: Sprite_Ragab_Shoot_Diagonaldown_1
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -42,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -139,51 +137,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Sprite_Ragab_Shoot_Diagonaldown_0
-      rect:
-        serializedVersion: 2
-        x: 11
-        y: 0
-        width: 28
-        height: 30
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 64f8cf43e9f344a4188291398c7bb69f
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprite_Ragab_Shoot_Diagonaldown_1
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 0
-        width: 28
-        height: 30
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f12fefc8f5b682241a76a81e3d18feca
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: af548f99585275e4d9eb5b99f89366b1
+    spriteID: 14f4890bff838484d94d95306f9e3bb6
     vertices: []
     indices: 
     edges: []

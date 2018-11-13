@@ -80,6 +80,7 @@ namespace Ragab
             if (listObject[indexProjectile] == null)
             {
                 BaseProjectile fire = Instantiate(projectilePrefab, this.transform.position + new Vector3(0,0.64f,0), viseur.localRotation);
+                //fire.transform.SetParent(this.transform);
                 fire.SetInitialSpeed(playerSpeed);
                 listObject[indexProjectile] = fire;
             }

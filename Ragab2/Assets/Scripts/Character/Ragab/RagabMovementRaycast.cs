@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Ragab
 {
@@ -22,6 +23,10 @@ namespace Ragab
         // à changer
         [SerializeField]
         protected BoxCollider2D defaultCollider;
+
+        [Header("Event Movement")]
+        [SerializeField]
+        UnityEvent slideCollisionEvent;
 
         private bool jumpAvailable = true;
 
@@ -54,11 +59,31 @@ namespace Ragab
 
         }
 
+
+        public override void Jump()
+        {
+            actualSpeedY = 0;
+            actualSpeedY += initialJumpForce;
+            characterState = State.Jumping;
+            jumpAvailable = false;
+
+            StoreSpeed(initialJumpForce);
+        }
+
         public virtual void NuanceJump()
         {
             actualSpeedY += additionalJumpForce * SlowMotionManager.Instance.playerTime;
+
+            StoreSpeed(initialJumpForce);
         }
 
+        // pour problème de FPS
+        public void StoreSpeed(float normalValue)
+        {
+            if (normalValue > normalValue * SlowMotionManager.Instance.playerTime)
+                FPSspeedStoredY += normalValue - normalValue * SlowMotionManager.Instance.playerTime;
+
+        }
 
 
         public override void SetOnGround(bool b)
@@ -101,20 +126,6 @@ namespace Ragab
             ChangeCollider(defaultCollider);
         }
 
-
-
-
-
-        /*public void SetGrounded(bool b)
-        {
-            isGrounded = b;
-            // Place une sécurité pour sauter même si le perso tombe un peu
-            if (b == false && isJumping == false)
-            {
-                StartCoroutine(WaitBeforeDisableJump(secondBeforeJumpDisabled));
-            }
-        }*/
-
         private IEnumerator WaitBeforeDisableJump(float second)
         {
             yield return new WaitForSeconds(second);
@@ -122,13 +133,26 @@ namespace Ragab
         }
 
 
-        public override void Jump()
+
+        protected override void CollisionY()
         {
-            actualSpeedY = 0;
-            actualSpeedY += initialJumpForce;
-            characterState = State.Jumping;
-            jumpAvailable = false;
+            if (characterState == State.TraceDashing)
+            {
+                characterState = State.Falling;
+                slideCollisionEvent.Invoke();
+            }
         }
+
+
+        protected override void CollisionX()
+        {
+            if (characterState == State.TraceDashing)
+            {
+                characterState = State.Falling;
+                slideCollisionEvent.Invoke();
+            }
+        }
+
 
 
         void OnTriggerEnter2D(Collider2D collision)

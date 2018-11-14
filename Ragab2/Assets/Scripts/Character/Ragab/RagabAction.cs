@@ -45,6 +45,10 @@ namespace Ragab
         [Header("Ragab Dash")]
         [SerializeField]
         protected float traceSpeed = 4;
+        [SerializeField]
+        protected List<float> bulletTimeRatio = new List<float>();
+
+        int comboTrace = 0;
 
         bool canShoot = true;
 
@@ -136,17 +140,25 @@ namespace Ragab
 
         public void TraceDash()
         {
+            comboTrace += 1;
+            if(comboTrace == bulletTimeRatio.Count)
+            {
+                comboTrace -= 1;
+            }
             characterToMove.characterState = State.TraceDashing;
-            SlowMotionManager.Instance.SetSlowMotion(0.25f);
+            SlowMotionManager.Instance.SetSlowMotionGradually(bulletTimeRatio[comboTrace]);
             characterToMove.SetSpeed( new Vector2 (traceSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
                                                     traceSpeed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
+            //this.transform.eulerAngles = new Vector3(0, 0, viseur.eulerAngles.z);
             //Vector3.right* speed;
         }
 
         public void StopTraceDash()
         {
-            SlowMotionManager.Instance.SetSlowMotion(1f);
+            comboTrace = -1;
+            SlowMotionManager.Instance.SetSlowMotionGradually(1f);
             characterToMove.characterState = State.Falling;
+            //this.transform.eulerAngles = new Vector3(0, 0, 0);
             //Vector3.right* speed;
         }
 

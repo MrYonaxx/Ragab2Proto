@@ -94,6 +94,10 @@ namespace Ragab
         protected float bonusSpeedX = 0;
         protected float bonusSpeedY = 0;
 
+        // à supprimer
+        protected float FPSspeedStoredY = 0;
+        // à supprimer
+
         protected int direction = 1;
 
         public int Direction
@@ -132,6 +136,19 @@ namespace Ragab
             actualSpeedY = newSpeed.y;
         }
 
+        public virtual void SetOnGround(bool b)
+        {
+            if (b == true)
+            {
+                characterState = State.Grouded;
+            }
+            else
+            {
+                if (characterState != State.Jumping)
+                    characterState = State.Falling;
+            }
+        }
+
 
         #endregion
 
@@ -145,7 +162,7 @@ namespace Ragab
 
         protected virtual void Start()
         {
-            Application.targetFrameRate = 120;
+            Application.targetFrameRate = 60;
             characterRigidbody = GetComponent<Rigidbody2D>();
             characterCollider = GetComponent<BoxCollider2D>();
         }
@@ -164,47 +181,6 @@ namespace Ragab
 
             if (characterAnimation != null)
                 characterAnimation.CheckAnimation(characterState, direction, actualSpeedX);
-
-        }
-
-
-
-        private void UpdateCollision()
-        {
-            layerMask = 1 << 8;
-
-            bottomLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.min.y);
-            upperLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.max.y);
-            bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y);
-            upperRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.max.y);
-
-            /*if (characterState != State.TraceDashing)
-            {
-                actualSpeedX *= SlowMotionManager.Instance.playerTime;
-                //actualSpeedY *= SlowMotionManager.Instance.playerTime;
-            }*/
-
-            UpdatePositionX();
-            UpdatePositionY();
-
-            transform.position += new Vector3(actualSpeedX * SlowMotionManager.Instance.playerTime * Time.deltaTime, 
-                                              actualSpeedY * SlowMotionManager.Instance.playerTime * Time.deltaTime, 0);
-
-        }
-
-
-
-        public virtual void SetOnGround(bool b)
-        {
-            if (b == true)
-            {
-                characterState = State.Grouded;
-            }
-            else
-            {
-                if (characterState != State.Jumping)
-                    characterState = State.Falling;
-            }
         }
 
         public void CheckState()
@@ -238,16 +214,33 @@ namespace Ragab
             if (characterState == State.TraceDashing)
                 return;
 
-            actualSpeedY -= gravityForce;
+            actualSpeedY -= gravityForce * SlowMotionManager.Instance.playerTime;
 
             if (actualSpeedY < -gravityMax)
             {
                 actualSpeedY = -gravityMax;
             }
-
         }
 
 
+
+
+        private void UpdateCollision()
+        {
+            layerMask = 1 << 8;
+
+            bottomLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.min.y);
+            upperLeft = new Vector2(characterCollider.bounds.min.x, characterCollider.bounds.max.y);
+            bottomRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.min.y);
+            upperRight = new Vector2(characterCollider.bounds.max.x, characterCollider.bounds.max.y);
+
+            UpdatePositionX();
+            UpdatePositionY();
+
+            transform.position += new Vector3(actualSpeedX * SlowMotionManager.Instance.playerTime * Time.deltaTime,
+                                              actualSpeedY * SlowMotionManager.Instance.playerTime * Time.deltaTime, 0);
+
+        }
 
         // Update the position of the player
         private void UpdatePositionY()
@@ -380,7 +373,7 @@ namespace Ragab
                         float slopeAngle = Vector2.Angle(raycastX.normal, Vector2.up);
                         if (i == 0 && slopeAngle <= maxAngle)
                         {
-                            Debug.Log("Climb");
+                            //Debug.Log("Climb");
                             float distance = raycastX.point.x - bottomLeft.x;
                             distance += offsetRaycastX;
                             float bonusX = distance / Time.deltaTime;
@@ -490,23 +483,15 @@ namespace Ragab
         }
 
 
-        private void CollisionY()
+        protected virtual void CollisionY()
         {
-            if (characterState == State.TraceDashing)
-            {
-                characterState = State.Falling;
-                SlowMotionManager.Instance.SetSlowMotion(1f);
-            }
+
         }
 
 
-        private void CollisionX()
+        protected virtual void CollisionX()
         {
-            if (characterState == State.TraceDashing)
-            {
-                characterState = State.Falling;
-                SlowMotionManager.Instance.SetSlowMotion(1f);
-            }
+
         }
 
         #endregion

@@ -27,8 +27,13 @@ namespace Ragab
         [SerializeField]
         SpriteRenderer spriteRenderer;
 
-        /*[SerializeField]
-        Character characterToAnimate;*/
+        [Header("TraceDash")]
+        [SerializeField]
+        Transform objectToRotate;
+
+        bool isTraceDashing = false;
+
+        int direction = 0;
 
         #endregion
 
@@ -46,11 +51,12 @@ namespace Ragab
         /* ======================================== *\
          *                FUNCTIONS                 *
         \* ======================================== */
-        
+
 
 
         public void CheckAnimation(State actualState, int actualDirection, float actualSpeedX)
         {
+            direction = actualDirection;
             if (actualDirection == 1)
                 spriteRenderer.flipX = false;
             else
@@ -85,6 +91,19 @@ namespace Ragab
             }
         }
         
+
+        public void SetSpriteRotation()
+        {
+            objectToRotate.eulerAngles = new Vector3(0, 0, 0);
+        }
+
+        public void SetSpriteRotation(Transform newRotation)
+        {
+            objectToRotate.eulerAngles = newRotation.eulerAngles;
+            if (direction == -1)
+                objectToRotate.eulerAngles += new Vector3(0, 0, 180);
+        }
+
         #endregion
 
     } // CharacterAnimation class

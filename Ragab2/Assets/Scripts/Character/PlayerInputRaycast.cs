@@ -304,7 +304,7 @@ namespace Ragab
         {
             if(Input.GetButtonDown("Fire1"))
             {
-                eventStopTraceDash.Invoke();
+                eventTraceDash.Invoke();
             }
 
             // Aim
@@ -320,6 +320,12 @@ namespace Ragab
             if (Input.GetButton("Fire3"))
             {
                 eventShoot.Invoke(characterToControl.GetSpeed());
+            }
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                eventStopTraceDash.Invoke();
+                characterToControl.Jump();
             }
         }
 

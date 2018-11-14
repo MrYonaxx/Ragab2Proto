@@ -10,6 +10,8 @@ namespace Ragab
         [Header("Settings")]
 
         [SerializeField]
+        UnityEngine.Camera camera;
+        [SerializeField]
         Transform focusTarget;
         [SerializeField]
         float smoothCamera = 2;
@@ -30,10 +32,16 @@ namespace Ragab
         [SerializeField]
         float clampUp = 6;
 
+        [Header("Orthographic Transition")]
+        [SerializeField]
+        int timeTransition = 10;
+
 
         Vector3 velocity = Vector3.zero;
 
         Vector3 actualFocusPosition;
+
+        private IEnumerator orthographicCoroutine = null;
 
 
         private void Update()
@@ -75,6 +83,33 @@ namespace Ragab
             actualFocusPosition = focusTarget.position + new Vector3(pos.x * AimCameraMultiplier, pos.y * AimCameraMultiplier, 0);
         }
 
+
+
+
+        public void ChangeOrthographicSize(float newValue)
+        {
+            if(orthographicCoroutine != null)
+            {
+                StopCoroutine(orthographicCoroutine);
+            }
+            orthographicCoroutine = OrthographicSizeTransition(newValue);
+            StartCoroutine(orthographicCoroutine);
+        }
+
+        private IEnumerator OrthographicSizeTransition(float newValue)
+        {
+            float time = timeTransition;
+            float rate = (camera.orthographicSize - newValue) / timeTransition;
+            while (time != 0)
+            {
+                camera.orthographicSize -= rate;
+                time -= 1;
+                yield return null;
+            }
+
+            camera.orthographicSize = newValue;
+            orthographicCoroutine = null;
+        }
 
 
     }

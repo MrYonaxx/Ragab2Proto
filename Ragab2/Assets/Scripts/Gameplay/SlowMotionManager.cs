@@ -6,6 +6,7 @@
 ******************************************************************/
 
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 namespace Ragab
@@ -26,6 +27,18 @@ namespace Ragab
         public float playerTime = 1f;
         public float enemyTime = 1f;
 
+        [SerializeField]
+        private float transitionTime = 10;
+
+        private IEnumerator slowMotionCoroutine = null;
+
+
+        [Header("Event")]
+        [SerializeField]
+        UnityEvent eventSlowMotionActive;
+        [SerializeField]
+        UnityEvent eventSlowMotionUnactive;
+
         #endregion
 
         #region GettersSetters 
@@ -33,7 +46,7 @@ namespace Ragab
         /* ======================================== *\
          *           GETTERS AND SETTERS            *
         \* ======================================== */
-        
+
 
         #endregion
 
@@ -60,33 +73,53 @@ namespace Ragab
             }
         }
 
+        private void CheckIfSlowMotion(float value)
+        {
+            if (value >= 1)
+            {
+                eventSlowMotionUnactive.Invoke();
+            }
+            else
+            {
+                eventSlowMotionActive.Invoke();
+            }
+        }
 
         public void SetSlowMotion(float newValue)
         {
+            CheckIfSlowMotion(newValue);
+
+            if (slowMotionCoroutine != null)
+            {
+                StopCoroutine(slowMotionCoroutine);
+            }
             playerTime = newValue;
         }
 
-
-
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
-        /// </summary>
-        protected virtual void Start()
+        public void SetSlowMotionGradually(float newValue)
         {
-            //Time.timeScale = 0.1f;
-            //Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            CheckIfSlowMotion(newValue);
+
+            if (slowMotionCoroutine != null)
+            {
+                StopCoroutine(slowMotionCoroutine);
+            }
+            slowMotionCoroutine = SlowMoTransition(newValue);
+            StartCoroutine(slowMotionCoroutine);
         }
-        
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Update is called once per frame.
-        /// </summary>
-        protected void Update()
+
+        private IEnumerator SlowMoTransition(float newValue)
         {
-            
+            float time = transitionTime;
+            float rate = (playerTime - newValue) / transitionTime;
+            while (time != 0)
+            {
+                playerTime -= rate;
+                time -= 1;
+                yield return null;
+            }
+            playerTime = newValue;
+            slowMotionCoroutine = null;
         }
         
         #endregion

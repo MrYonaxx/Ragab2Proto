@@ -149,8 +149,6 @@ namespace Ragab
             SlowMotionManager.Instance.SetSlowMotionGradually(bulletTimeRatio[comboTrace]);
             characterToMove.SetSpeed( new Vector2 (traceSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
                                                     traceSpeed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
-            //this.transform.eulerAngles = new Vector3(0, 0, viseur.eulerAngles.z);
-            //Vector3.right* speed;
         }
 
         public void StopTraceDash()
@@ -158,8 +156,6 @@ namespace Ragab
             comboTrace = -1;
             SlowMotionManager.Instance.SetSlowMotionGradually(1f);
             characterToMove.characterState = State.Falling;
-            //this.transform.eulerAngles = new Vector3(0, 0, 0);
-            //Vector3.right* speed;
         }
 
         #endregion

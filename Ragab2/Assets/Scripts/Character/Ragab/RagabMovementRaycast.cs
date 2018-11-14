@@ -27,6 +27,8 @@ namespace Ragab
         [Header("Event Movement")]
         [SerializeField]
         UnityEvent slideCollisionEvent;
+        [SerializeField]
+        UnityEvent eventSlideStop;
 
         private bool jumpAvailable = true;
 
@@ -124,6 +126,8 @@ namespace Ragab
             bonusSpeedY = 0;
             characterState = State.Grouded;
             ChangeCollider(defaultCollider);
+            Debug.Log("oups");
+            eventSlideStop.Invoke();
         }
 
         private IEnumerator WaitBeforeDisableJump(float second)

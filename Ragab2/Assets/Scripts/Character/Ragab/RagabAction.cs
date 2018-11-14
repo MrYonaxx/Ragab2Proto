@@ -48,7 +48,7 @@ namespace Ragab
         [SerializeField]
         protected List<float> bulletTimeRatio = new List<float>();
 
-        int comboTrace = 0;
+        int comboTrace = -1;
 
         bool canShoot = true;
 

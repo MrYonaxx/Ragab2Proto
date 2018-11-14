@@ -69,6 +69,31 @@ namespace Ragab
             changeVolumeCoroutine = null;
         }
 
+
+        public void ChangePitchGradually(float newValue)
+        {
+            if (changeVolumeCoroutine != null)
+            {
+                StopCoroutine(changeVolumeCoroutine);
+            }
+            changeVolumeCoroutine = PitchCoroutine(newValue);
+            StartCoroutine(changeVolumeCoroutine);
+        }
+
+        private IEnumerator PitchCoroutine(float newValue)
+        {
+            int time = volumeTransitionTime;
+            float rate = (audiosource.pitch - newValue) / volumeTransitionTime;
+            while (time != 0)
+            {
+                time -= 1;
+                audiosource.pitch -= rate;
+                yield return null;
+            }
+            audiosource.volume = newValue;
+            changeVolumeCoroutine = null;
+        }
+
         #endregion
 
     } // SoundManager class

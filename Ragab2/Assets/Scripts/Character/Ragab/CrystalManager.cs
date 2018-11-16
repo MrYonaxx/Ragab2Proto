@@ -45,6 +45,12 @@ namespace Ragab
         [Header("Draw")]
         [SerializeField]
         TextMeshProUGUI textDebug;
+        [SerializeField]
+        RectTransform[] crystals;
+        [SerializeField]
+        RectTransform lowerTimerDash;
+        [SerializeField]
+        RectTransform upperTimerDash;
 
         [SerializeField]
         UnityEvent eventCrystalBreak;
@@ -56,6 +62,8 @@ namespace Ragab
         float actualCrystalNumber = 3;
         float actualCrystalAmount = 100;
 
+        bool traceDashing = false;
+
         #endregion
 
         #region GettersSetters 
@@ -64,6 +72,10 @@ namespace Ragab
          *           GETTERS AND SETTERS            *
         \* ======================================== */
 
+        public float getCrystalNumber()
+        {
+            return actualCrystalNumber;
+        }
 
         #endregion
 
@@ -82,19 +94,73 @@ namespace Ragab
 
         public void DrawCrystals()
         {
+            if (traceDashing == true)
+            {
+                DrawTraceDashTimer();
+            }
+            else
+            {
+                HideTraceDashTimer();
+                //upperTimerDash.anchoredPosition = new Vector2(0, 0);
+                //lowerTimerDash.anchoredPosition = new Vector2(0, lowerTimerDash.rect.width);
+            }
             textDebug.text = actualCrystalNumber.ToString() + " - " + actualCrystalAmount.ToString();
+            if (actualCrystalNumber == crystalNumber + 1)
+            {
+                for (int i = 0; i < crystalNumber; i++)
+                {
+                    crystals[i].anchoredPosition = new Vector2(0, 0);
+                }
+            } else {
+                for (int i = 0; i < crystalNumber; i++)
+                {
+                    if(i < actualCrystalNumber-1)
+                    {
+                        crystals[i].anchoredPosition = new Vector2(0, 0);
+                    }
+                    else if (actualCrystalNumber-1 < i)
+                    {
+                        crystals[i].anchoredPosition = new Vector2(0, -crystals[i].rect.height);
+                    }
+                    else
+                    {
+                        crystals[i].anchoredPosition = new Vector2(0, -crystals[i].rect.height + (crystals[i].rect.height * (actualCrystalAmount / crystalAmount)));
+                    }
+                }
+            }
+        }
+
+
+        private void DrawTraceDashTimer()
+        {
+            upperTimerDash.anchoredPosition = new Vector2(upperTimerDash.rect.width + (upperTimerDash.rect.width * (actualCrystalAmount / crystalAmount)), 0);
+            lowerTimerDash.anchoredPosition = new Vector2(-lowerTimerDash.rect.width * (actualCrystalAmount / crystalAmount), 0);
+        }
+
+        private void HideTraceDashTimer()
+        {
+            if(upperTimerDash.anchoredPosition.x < upperTimerDash.rect.width * 2)
+                upperTimerDash.anchoredPosition += new Vector2(50, 0);
+            if(lowerTimerDash.anchoredPosition.x > -lowerTimerDash.rect.width)
+                lowerTimerDash.anchoredPosition += new Vector2(-50, 0);
         }
 
         public void StartRecovery()
         {
-            if(consumptionCoroutine != null)
+
+            if (recoveryCoroutine != null)
+            {
+                return;
+            }
+
+            if (consumptionCoroutine != null)
             {
                 StopCoroutine(consumptionCoroutine);
                 consumptionCoroutine = null;
             }
 
 
-
+            traceDashing = false;
             recoveryCoroutine = Recovery(timeBeforeRecovery, recoveryAmount);
             StartCoroutine(recoveryCoroutine);
         }
@@ -114,6 +180,7 @@ namespace Ragab
                 recoveryCoroutine = null;
             }
 
+            traceDashing = false;
             consumptionCoroutine = Consumption(slideConsumption);
             StartCoroutine(consumptionCoroutine);
         }
@@ -121,6 +188,7 @@ namespace Ragab
 
         public void StartConsumptionTraceDashing()
         {
+
             if (consumptionCoroutine != null)
             {
                 return;
@@ -132,13 +200,18 @@ namespace Ragab
                 recoveryCoroutine = null;
             }
 
-            actualCrystalAmount = crystalAmount;
-            actualCrystalNumber -= 1;
 
+            traceDashing = true;
             consumptionCoroutine = Consumption(traceDashConsumption);
             StartCoroutine(consumptionCoroutine);
 
 
+        }
+
+        public void ConsumeCrystal()
+        {
+            actualCrystalAmount = crystalAmount;
+            actualCrystalNumber -= 1;
         }
 
 

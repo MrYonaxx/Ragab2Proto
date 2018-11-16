@@ -13,7 +13,7 @@ namespace Ragab
     /// <summary>
     /// Definition of the ScreenShake class
     /// </summary>
-    public class Shake : MonoBehaviour
+    public class Shake : Feedback
     {
         #region Attributes 
 
@@ -47,6 +47,11 @@ namespace Ragab
         #endregion
 
         #region Functions 
+
+        public override void StartFeedback()
+        {
+            ShakeScreen();
+        }
 
         public void ShakeScreen()
         {

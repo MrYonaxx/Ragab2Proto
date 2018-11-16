@@ -23,7 +23,7 @@ namespace Ragab
         \* ======================================== */
         [Header("Ragab Movement")]
         [SerializeField]
-        RagabMovementRaycast characterToMove;
+        RagabMovement characterToMove;
 
         [Header("Ragab Shoot")]
         [SerializeField]
@@ -38,8 +38,6 @@ namespace Ragab
 
         [SerializeField]
         Transform viseur;
-        [SerializeField]
-        Transform curseur;
 
 
         [Header("Ragab Dash")]
@@ -47,11 +45,17 @@ namespace Ragab
         protected float traceSpeed = 4;
         [SerializeField]
         protected List<float> bulletTimeRatio = new List<float>();
+        [SerializeField]
+        protected float aimingBulletTimeRatio = 0;
 
         int comboTrace = -1;
 
         bool canShoot = true;
 
+
+        [Header("Feedbacks")]
+        [SerializeField]
+        CameraScript cameraAim;
 
         #endregion
 
@@ -112,31 +116,50 @@ namespace Ragab
 
         }
 
-        public void Aim(Vector2 angle)
-        {
-            /*float length = Mathf.Sqrt(angle.x * angle.x + angle.y * angle.y);
-            if(length > 0.7f)
-            {
-                angle = new Vector2(angle.x / length, angle.y / length);
-                Debug.Log(angle);
-            }*/
-            //angle.Normalize();
-            //angle = Vector2.ClampMagnitude(angle, 0.2f);
-            float angleAim = Mathf.Atan2(angle.y, angle.x) * Mathf.Rad2Deg;
-            viseur.localRotation = Quaternion.Euler(new Vector3(0,0,angleAim));
-
-            //curseur.position = new Vector2(this.transform.position.x, this.transform.position.y) + angle;
-            //viseur.localRotation.SetLookRotation(curseur.position);
-        }
-
-
         private IEnumerator WaitInterval()
         {
             canShoot = false;
             yield return new WaitForSeconds(timeInterval);
             canShoot = true;
         }
-        
+
+
+
+
+        public void Aim(Vector2 angle)
+        {
+
+            float angleAim = Mathf.Atan2(angle.y, angle.x) * Mathf.Rad2Deg;
+            viseur.localRotation = Quaternion.Euler(new Vector3(0,0,angleAim));
+
+            cameraAim.FocusOnAim(angle);
+
+        }
+
+        public void NoAim()
+        {
+            cameraAim.FocusDefault();
+        }
+
+
+
+
+
+
+
+
+
+        public void TraceDashAim()
+        {
+            SlowMotionManager.Instance.SetSlowMotionGradually(aimingBulletTimeRatio);
+            characterToMove.characterState = State.TraceDashingAiming;
+        }
+
+        public void ReleaseTraceDashAim()
+        {
+            SlowMotionManager.Instance.SetSlowMotion(1f);
+            TraceDash();
+        }
 
         public void TraceDash()
         {
@@ -149,14 +172,19 @@ namespace Ragab
             SlowMotionManager.Instance.SetSlowMotionGradually(bulletTimeRatio[comboTrace]);
             characterToMove.SetSpeed( new Vector2 (traceSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
                                                     traceSpeed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
+
+            characterToMove.CharacterAnimation.SetSpriteRotation(viseur);
         }
 
         public void StopTraceDash()
         {
             comboTrace = -1;
             SlowMotionManager.Instance.SetSlowMotionGradually(1f);
+
             characterToMove.characterState = State.Falling;
+            characterToMove.CharacterAnimation.SetSpriteRotation();
         }
+
 
         #endregion
 

@@ -14,7 +14,7 @@ namespace Ragab
     /// <summary>
     /// Definition of the Enemy class
     /// </summary>
-    public class Enemy : CharacterRaycast
+    public class Enemy : Character
     {
         #region Attributes 
 
@@ -25,6 +25,8 @@ namespace Ragab
         [Header("Event")]
         [SerializeField]
         UnityEvent eventHit;
+
+        private IEnumerator currentPattern = null;
 
         #endregion
 
@@ -42,6 +44,15 @@ namespace Ragab
         /* ======================================== *\
          *                FUNCTIONS                 *
         \* ======================================== */
+
+
+        protected void EnemyIA()
+        {
+            //int pattern = Random.Range();
+
+        }
+
+
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

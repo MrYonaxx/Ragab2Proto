@@ -45,7 +45,12 @@ namespace Ragab
         {
             feedbacks[feedbackID].StartFeedback();
         }
-        
+
+        public void StopFeedback(int feedbackID)
+        {
+            feedbacks[feedbackID].StopFeedback();
+        }
+
         #endregion
 
     } // FeedbackManager class

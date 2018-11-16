@@ -47,7 +47,12 @@ namespace Ragab
         {
 
         }
-        
+
+        public virtual void StopFeedback()
+        {
+
+        }
+
         #endregion
 
     } // Feedback class

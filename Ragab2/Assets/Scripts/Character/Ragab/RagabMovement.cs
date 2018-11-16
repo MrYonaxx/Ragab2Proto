@@ -301,6 +301,7 @@ namespace Ragab
             ragabArm.SetActive(true);
             CharacterAnimation.SetSpriteRotation(viseur);
             crystals.StartConsumptionTraceDashing();
+            feedbacks.PlayFeedback(1);
         }
 
         public void StopTraceDash()
@@ -315,6 +316,7 @@ namespace Ragab
                 ragabArm.SetActive(false);
                 characterAnimation.SetSpriteRotation();
                 crystals.StartRecovery();
+                feedbacks.StopFeedback(1);
             }
         }
 

@@ -165,7 +165,6 @@ namespace Ragab
 
         protected virtual void Start()
         {
-            Application.targetFrameRate = 60;
             characterRigidbody = GetComponent<Rigidbody2D>();
             characterCollider = GetComponent<BoxCollider2D>();
         }

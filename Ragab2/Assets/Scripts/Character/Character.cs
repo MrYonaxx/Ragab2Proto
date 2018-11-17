@@ -18,7 +18,8 @@ namespace Ragab
         Falling,
         Sliding,
         TraceDashing,
-        TraceDashingAiming
+        TraceDashingAiming,
+        Knockback
     };
 
     /// <summary>
@@ -141,6 +142,8 @@ namespace Ragab
 
         public virtual void SetOnGround(bool b)
         {
+            if (characterState == State.Knockback)
+                return;
             if (b == true)
             {
                 characterState = State.Grouded;
@@ -171,7 +174,7 @@ namespace Ragab
 
 
 
-        protected void Update()
+        protected virtual void Update()
         {
 
             CheckState();

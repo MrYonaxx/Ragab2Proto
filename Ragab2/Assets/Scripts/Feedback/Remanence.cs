@@ -47,13 +47,15 @@ namespace Ragab
 
         #region Functions 
 
-        public override void StartFeedback()
+        public override void StartFeedback(string param = null)
         {
             RemanenceStart();
         }
 
         public override void StopFeedback()
         {
+            if (remanenceCoroutine == null)
+                return;
             StopCoroutine(remanenceCoroutine);
             remanenceCoroutine = null;
         }

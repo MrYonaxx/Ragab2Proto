@@ -65,7 +65,7 @@ namespace Ragab
         private void ClampCamera()
         {
             this.transform.position = new Vector3(Mathf.Clamp(this.transform.position.x, clampLeft, clampRight),
-                                                Mathf.Clamp(this.transform.position.y, clampLeft, clampRight),
+                                                Mathf.Clamp(this.transform.position.y, clampDown, clampUp),
                                                 this.transform.position.z);
         }
 

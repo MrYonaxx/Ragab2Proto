@@ -4,6 +4,9 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: Sprite_Robo_0
     21300002: Sprite_Robo_1
+    21300004: Sprite_Robo_2
+    21300006: Sprite_Robo_3
+    21300008: Sprite_Robo_4
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -146,16 +149,16 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 22
+        width: 26
         height: 41
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c7f9b7650e1dd340ba6418f2a02897e
+      spriteID: c720cdc3574966e4c9cb6795fa646683
       vertices: []
       indices: 
       edges: []
@@ -164,18 +167,78 @@ TextureImporter:
       name: Sprite_Robo_1
       rect:
         serializedVersion: 2
-        x: 30
+        x: 26
         y: 0
-        width: 22
-        height: 31
+        width: 26
+        height: 41
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: accb7c9264a24034f90811b1900080e8
+      spriteID: 4f0cd6d10eadb7544a56c592f060b21f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Robo_2
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 26
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72e1ed9e83d5ac4449f61f517c761fd1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Robo_3
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 0
+        width: 26
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e746d8834d83f7439fbc08d4812f853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Robo_4
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 0
+        width: 26
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1536c37085923d40a21d11ae5eb30c0
       vertices: []
       indices: 
       edges: []

@@ -38,12 +38,6 @@ namespace Ragab
         [SerializeField]
         RagabMovement characterToControl;
 
-        [SerializeField]
-        UnityEvent eventTraceDash;
-
-
-        [SerializeField]
-        UnityEvent eventStopTraceDash;
 
         #endregion
 
@@ -116,7 +110,8 @@ namespace Ragab
                     break;
 
                 case State.TraceDashingAiming:
-
+                    InputTraceDash();
+                    InputReleaseTraceDash();
                     break;
             }
         }
@@ -208,8 +203,15 @@ namespace Ragab
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                characterToControl.TraceDash();
-                //eventTraceDash.Invoke();
+                characterToControl.TraceDashAim();
+            }
+        }
+
+        private void InputReleaseTraceDash()
+        {
+            if (Input.GetButton("Fire1") == false)
+            {
+                characterToControl.ReleaseTraceDashAim();
             }
         }
 

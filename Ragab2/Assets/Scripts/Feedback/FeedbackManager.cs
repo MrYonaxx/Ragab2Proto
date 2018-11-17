@@ -46,6 +46,11 @@ namespace Ragab
             feedbacks[feedbackID].StartFeedback();
         }
 
+        public void PlayFeedback(int feedbackID, string param)
+        {
+            feedbacks[feedbackID].StartFeedback(param);
+        }
+
         public void StopFeedback(int feedbackID)
         {
             feedbacks[feedbackID].StopFeedback();

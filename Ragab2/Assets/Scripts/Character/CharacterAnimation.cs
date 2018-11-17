@@ -22,10 +22,10 @@ namespace Ragab
         \* ======================================== */
 
         [SerializeField]
-        Animator animator;
+        Animator animator = null;
 
         [SerializeField]
-        SpriteRenderer spriteRenderer;
+        SpriteRenderer spriteRenderer = null;
 
         [Header("TraceDash")]
         [SerializeField]
@@ -34,6 +34,8 @@ namespace Ragab
         bool isTraceDashing = false;
 
         int direction = 0;
+
+        bool customAnim = false;
 
         #endregion
 
@@ -62,6 +64,9 @@ namespace Ragab
             else
                 spriteRenderer.flipX = true;
 
+            if (animator == null || customAnim == true)
+                return;
+
             if (actualState == State.Grouded)
             {
                 if(actualSpeedX == 0)
@@ -89,8 +94,23 @@ namespace Ragab
             {
                 animator.Play("Anim_Airdash");
             }
+
+            if (actualState == State.Knockback)
+            {
+                animator.Play("Anim_Hit");
+            }
         }
         
+        public void SetDefaultAnimation()
+        {
+            customAnim = false;
+        }
+
+        public void SetAnimation(string animName)
+        {
+            customAnim = true;
+            animator.Play(animName);
+        }
 
         public void SetSpriteRotation()
         {

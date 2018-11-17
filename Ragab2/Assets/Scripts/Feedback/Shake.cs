@@ -48,7 +48,7 @@ namespace Ragab
 
         #region Functions 
 
-        public override void StartFeedback()
+        public override void StartFeedback(string param = null)
         {
             ShakeScreen();
         }

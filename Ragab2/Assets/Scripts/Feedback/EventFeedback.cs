@@ -42,7 +42,7 @@ namespace Ragab
          *                FUNCTIONS                 *
         \* ======================================== */
 
-        public override void StartFeedback()
+        public override void StartFeedback(string param = null)
         {
             eventFeedback.Invoke();
         }

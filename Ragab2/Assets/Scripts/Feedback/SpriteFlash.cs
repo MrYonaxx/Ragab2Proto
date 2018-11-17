@@ -13,7 +13,7 @@ namespace Ragab
     /// <summary>
     /// Definition of the SpriteFlash class
     /// </summary>
-    public class SpriteFlash : MonoBehaviour
+    public class SpriteFlash : Feedback
     {
         #region Attributes 
 
@@ -56,6 +56,11 @@ namespace Ragab
         {
             propBlock = new MaterialPropertyBlock();
             spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        public override void StartFeedback(string param = null)
+        {
+            Flash();
         }
 
         // Potentiellement beaucoup de lag

@@ -43,7 +43,7 @@ namespace Ragab
          *                FUNCTIONS                 *
         \* ======================================== */
 
-        public virtual void StartFeedback()
+        public virtual void StartFeedback(string param = null)
         {
 
         }

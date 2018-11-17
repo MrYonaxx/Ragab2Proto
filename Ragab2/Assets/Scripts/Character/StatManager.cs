@@ -24,6 +24,13 @@ namespace Ragab
         [Header("")]
         [SerializeField]
         private float hp;
+
+        public float Hp
+        {
+            get { return hp; }
+            set { hp = value; }
+        }
+
         [SerializeField]
         private float hpMax;
 

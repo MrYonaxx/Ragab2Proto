@@ -68,6 +68,7 @@ namespace Ragab
         List<BaseProjectile> listObject = new List<BaseProjectile>(20);
 
 
+
         [Header("Ragab Autres")]
         [SerializeField]
         protected float secondBeforeJumpDisabled = 0.05f;
@@ -76,8 +77,9 @@ namespace Ragab
         public bool JumpAvailable { get { return jumpAvailable; } }
 
 
-
-
+        private IEnumerator traceDashCoroutine = null;
+        bool canRelease = false;
+        bool canComboTraceDash = true;
 
         #endregion
 
@@ -268,31 +270,79 @@ namespace Ragab
 
         public void TraceDashAim()
         {
-            SlowMotionManager.Instance.SetSlowMotionGradually(aimingBulletTimeRatio);
-            characterState = State.TraceDashingAiming;
-        }
+            if (canComboTraceDash == false)
+                return;
 
-        public void ReleaseTraceDashAim()
-        {
-            SlowMotionManager.Instance.SetSlowMotion(1f);
-            TraceDash();
-        }
-
-
-
-        public void TraceDash()
-        {
             if (crystals.getCrystalNumber() <= 1)
             {
                 return;
             }
-            crystals.ConsumeCrystal();
+            crystals.StartRecovery();
+            characterState = State.TraceDashingAiming;
+            SlowMotionManager.Instance.SetSlowMotion(0);
+
+            // test
+            if (comboTrace == -1)
+            {
+                cameraAim.ChangeOrthographicSize(3.5f);
+            }
+            if (comboTrace == 0)
+            {
+                cameraAim.ChangeOrthographicSize(3.25f);
+            }
+            if (comboTrace >= 1)
+            {
+                cameraAim.ChangeOrthographicSize(2.75f);
+                canComboTraceDash = false;
+            }
 
             comboTrace += 1;
             if (comboTrace == bulletTimeRatio.Count)
             {
                 comboTrace -= 1;
             }
+            canRelease = false;
+            cameraAim.FocusDefault();
+            feedbacks.PlayFeedback(2);
+
+            if (traceDashCoroutine != null)
+                StopCoroutine(traceDashCoroutine);
+
+            traceDashCoroutine = TraceDashAimingCoroutine();
+            StartCoroutine(traceDashCoroutine);
+        }
+
+        public void ReleaseTraceDashAim()
+        {
+            if (canRelease == false)
+                return;
+
+            StopCoroutine(traceDashCoroutine);
+            traceDashCoroutine = null;
+            if (comboTrace == 0)
+            {
+                SlowMotionManager.Instance.SetSlowMotion(1f);
+            }
+            canComboTraceDash = true;
+            TraceDash();
+        }
+
+        private IEnumerator TraceDashAimingCoroutine()
+        {
+            yield return new WaitForSeconds(0.4f);
+            canRelease = true;
+            yield return new WaitForSeconds(0.6f);
+            ReleaseTraceDashAim();
+        }
+
+        public void TraceDash()
+        {
+            feedbacks.StopFeedback(2);
+            feedbacks.PlayFeedback(3);
+
+            crystals.ConsumeCrystal();
+
+
             characterState = State.TraceDashing;
             SlowMotionManager.Instance.SetSlowMotionGradually(bulletTimeRatio[comboTrace]);
             SetSpeed(new Vector2(traceSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
@@ -301,7 +351,8 @@ namespace Ragab
             ragabArm.SetActive(true);
             CharacterAnimation.SetSpriteRotation(viseur);
             crystals.StartConsumptionTraceDashing();
-            feedbacks.PlayFeedback(1);
+            feedbacks.PlayFeedback(1); // Rémanence
+            cameraAim.ChangeOrthographicSize(4);
         }
 
         public void StopTraceDash()
@@ -317,6 +368,8 @@ namespace Ragab
                 characterAnimation.SetSpriteRotation();
                 crystals.StartRecovery();
                 feedbacks.StopFeedback(1);
+                feedbacks.StopFeedback(3);
+                cameraAim.ChangeOrthographicSize(5);
             }
         }
 
@@ -329,7 +382,7 @@ namespace Ragab
             if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
-                feedbacks.PlayFeedback(0);
+                feedbacks.PlayFeedback(0); // ShakeScreen
                 StopTraceDash();
                 //slideCollisionEvent.Invoke();
             }

@@ -94,6 +94,7 @@ namespace Ragab
                 StopCoroutine(slowMotionCoroutine);
             }
             playerTime = newValue;
+            enemyTime = playerTime;
         }
 
         public void SetSlowMotionGradually(float newValue)
@@ -115,10 +116,12 @@ namespace Ragab
             while (time != 0)
             {
                 playerTime -= rate;
+                enemyTime = playerTime;
                 time -= 1;
                 yield return null;
             }
             playerTime = newValue;
+            enemyTime = playerTime;
             slowMotionCoroutine = null;
         }
         

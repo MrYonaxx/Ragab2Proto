@@ -196,7 +196,7 @@ MonoBehaviour:
   characterAnimation: {fileID: 114641414962560318}
   trailDebug: {fileID: 0}
   activateDebugTrail: 0
-  statManager: {fileID: 0}
+  statManager: {fileID: 114711865202405046}
   feedback: {fileID: 114499204447002390}
   characterToKill: {fileID: 0}
   agressive: 0
@@ -229,8 +229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: 
   objectToShake: {fileID: 4303312530740680}
-  shakeForceX: 1
-  shakeForceY: 1
+  shakeForceX: 0
+  shakeForceY: 0
   shakeTime: 20
 --- !u!114 &114499204447002390
 MonoBehaviour:
@@ -272,8 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f73cab927a62b648aa42f07a0a07caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
-  hpMax: 0
+  hp: 10
+  hpMax: 10
 --- !u!114 &114852753654859734
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -58,6 +58,10 @@ namespace Ragab
                 return;
             StopCoroutine(remanenceCoroutine);
             remanenceCoroutine = null;
+            for (int i = 0; i < remanence.Length; i++)
+            {
+                remanence[i].color = new Color(1, 1, 1, 0);
+            }
         }
 
         public void RemanenceStart()

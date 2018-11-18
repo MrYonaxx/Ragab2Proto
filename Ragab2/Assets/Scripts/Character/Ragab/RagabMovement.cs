@@ -68,6 +68,12 @@ namespace Ragab
         List<BaseProjectile> listObject = new List<BaseProjectile>(20);
 
 
+        [Header("Ragab Knockback")]
+        [SerializeField]
+        float timeStop = 0.1f;
+        [SerializeField]
+        float timeKnockback = 0.1f;
+
 
         [Header("Ragab Autres")]
         [SerializeField]
@@ -117,7 +123,7 @@ namespace Ragab
         public override void SetOnGround(bool b)
         {
 
-            if (characterState == State.TraceDashing || characterState == State.TraceDashingAiming)
+            if (characterState == State.TraceDashing || characterState == State.TraceDashingAiming || characterState == State.Knockback)
             {
                 return;
             }
@@ -402,9 +408,50 @@ namespace Ragab
 
 
 
-        void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("touche");
+            if (collision.gameObject.tag == "ProjectileEnemy" && characterState != State.Knockback)
+            {
+                Hit();
+            }
+        }
+
+        protected virtual void Hit()
+        {
+            StartCoroutine(KnockbackCoroutine());
+            /*statManager.Hp -= 1;
+            if (statManager.Hp == 0)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+            feedback.PlayFeedback(0);
+            if (actualSuperArmor <= 0)
+            {
+                feedback.PlayFeedback(1);
+                characterAnimation.SetDefaultAnimation();
+                actualKnockbackTime = knockbackTime;
+                characterState = State.Knockback;
+                SetSpeed(new Vector2(knockbackForce * Mathf.Cos(angle * Mathf.PI / 180f),
+                                     knockbackForce * Mathf.Sin(angle * Mathf.PI / 180f)));
+            }
+            else
+            {
+                actualSuperArmor -= 1;
+            }*/
+        }
+
+        private IEnumerator KnockbackCoroutine()
+        {
+            StopSliding();
+            StopTraceDash();
+            characterState = State.Knockback;
+            feedbacks.PlayFeedback(0);
+            SlowMotionManager.Instance.SetSlowMotion(0);
+            yield return new WaitForSeconds(0.4f);
+            SlowMotionManager.Instance.SetSlowMotion(1);
+            yield return new WaitForSeconds(0.2f);
+            characterState = State.Falling;
         }
 
     }

@@ -134,11 +134,13 @@ namespace Ragab
 
         public void playSoundWalkRight()
         {
+            audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.PlayOneShot(sounds[0]); // Son droite
         }
 
         public void playSoundWalkLeft()
         {
+            audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.PlayOneShot(sounds[1]); // Son Gauche
         }
 

@@ -8465,6 +8465,8 @@ MonoBehaviour:
   animator: {fileID: 1895418558}
   spriteRenderer: {fileID: 1895418559}
   objectToRotate: {fileID: 0}
+  audioSource: {fileID: 0}
+  sounds: []
 --- !u!114 &1895418563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9455,6 +9457,10 @@ MonoBehaviour:
   animator: {fileID: 2017955337}
   spriteRenderer: {fileID: 2017955338}
   objectToRotate: {fileID: 752023505}
+  audioSource: {fileID: 2017955336}
+  sounds:
+  - {fileID: 8300000, guid: 3b64a5d78df49094eac20f1918938f63, type: 3}
+  - {fileID: 8300000, guid: 529024378405ebf43b3b72ed4df008d1, type: 3}
 --- !u!1 &2036333710
 GameObject:
   m_ObjectHideFlags: 0

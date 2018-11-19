@@ -45,6 +45,8 @@ namespace Ragab
         [SerializeField]
         protected float traceSpeed = 4;
         [SerializeField]
+        protected float tracePunchSpeed = 10;
+        [SerializeField]
         protected List<float> bulletTimeRatio = new List<float>();
         [SerializeField]
         protected float aimingBulletTimeRatio = 0;
@@ -127,7 +129,7 @@ namespace Ragab
         public override void SetOnGround(bool b)
         {
 
-            if (characterState == State.TraceDashing || characterState == State.TraceDashingAiming || characterState == State.Knockback)
+            if (characterState == State.TraceDashing || characterState == State.TraceDashingAiming || characterState == State.Knockback || characterState == State.TracePunching)
             {
                 return;
             }
@@ -388,6 +390,26 @@ namespace Ragab
         }
 
 
+        // =========== TRACE DASH PUNCH ============= //
+
+        public void TraceDashPunch()
+        {
+            StopTraceDash();
+            characterState = State.TracePunching;
+            SlowMotionManager.Instance.SetSlowMotion(1);
+            SetSpeed(new Vector2(tracePunchSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
+                                 tracePunchSpeed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
+            CharacterAnimation.SetSpriteRotation(viseur);
+        }
+
+        public void TraceDashPunchHit()
+        {
+            SlowMotionManager.Instance.SetSlowMotion(0.1f);
+            feedbacks.PlayFeedback(0);
+        }
+
+
+
 
 
 
@@ -398,6 +420,7 @@ namespace Ragab
                 characterAnimation.SetSpriteRotation();
                 feedbacks.PlayFeedback(0); // ShakeScreen
                 StopTraceDash();
+                TraceDashPunchHit();
                 //slideCollisionEvent.Invoke();
             }
         }
@@ -410,6 +433,7 @@ namespace Ragab
                 characterAnimation.SetSpriteRotation();
                 feedbacks.PlayFeedback(0);
                 StopTraceDash();
+                TraceDashPunchHit();
                 //slideCollisionEvent.Invoke();
             }
         }
@@ -422,7 +446,14 @@ namespace Ragab
             {
                 Hit();
             }
+            if (collision.gameObject.tag == "Enemy" && characterState == State.TracePunching)
+            {
+                TraceDashPunchHit();
+                collision.GetComponent<Enemy>().HitPunch();
+            }
         }
+
+
 
         protected virtual void Hit()
         {

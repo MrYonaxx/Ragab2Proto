@@ -105,13 +105,17 @@ namespace Ragab
                 case State.TraceDashing:
                     InputJump();
                     InputAim();
-                    InputShoot();
+                    InputPunch();
                     InputTraceDash();
                     break;
 
                 case State.TraceDashingAiming:
                     InputTraceDash();
                     InputReleaseTraceDash();
+                    break;
+
+                case State.TracePunching:
+                    characterToControl.NoAim();
                     break;
             }
         }
@@ -196,6 +200,14 @@ namespace Ragab
             if (Input.GetButton("Fire3"))
             {
                 characterToControl.Shoot(characterToControl.GetSpeed());
+            }
+        }
+
+        private void InputPunch()
+        {
+            if (Input.GetButton("Fire3"))
+            {
+                characterToControl.TraceDashPunch();
             }
         }
 

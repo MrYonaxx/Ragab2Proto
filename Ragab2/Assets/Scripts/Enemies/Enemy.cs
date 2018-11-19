@@ -99,6 +99,15 @@ namespace Ragab
 
         protected void UpdateKnockback()
         {
+            if(statManager.Hp <= 0)
+            {
+                this.transform.eulerAngles += new Vector3(0, 0, 1);
+                if(characterState == State.Grouded)
+                {
+                    Destroy(this.gameObject);
+                }
+                return;
+            }
             NoMoveOnAir();
             actualKnockbackTime -= Time.deltaTime * SlowMotionManager.Instance.enemyTime;
             if(actualKnockbackTime < 0)
@@ -236,12 +245,21 @@ namespace Ragab
         protected virtual void Hit(float angle)
         {
             statManager.Hp -= 1;
-            if(statManager.Hp == 0)
+            feedback.PlayFeedback(0);
+            if (statManager.Hp == 0)
             {
-                Destroy(this.gameObject);
+                characterState = State.Knockback;
+                actualSpeedY += 5;
                 return;
             }
-            feedback.PlayFeedback(0);
+            if (statManager.Hp <= 0)
+            {
+                characterState = State.Knockback;
+                SetSpeed(new Vector2(knockbackForce * Mathf.Cos(angle * Mathf.PI / 180f),
+                                     knockbackForce * Mathf.Sin(angle * Mathf.PI / 180f)));
+                //Destroy(this.gameObject);
+                return;
+            }
             if (actualSuperArmor <= 0)
             {
                 //feedback.PlayFeedback(1);
@@ -255,6 +273,11 @@ namespace Ragab
             {
                 actualSuperArmor -= 1;
             }
+        }
+
+        public void HitPunch()
+        {
+            feedback.PlayFeedback(0);
         }
 
         #endregion

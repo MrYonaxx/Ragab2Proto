@@ -106,6 +106,11 @@ namespace Ragab
             {
                 animator.Play("Anim_Hit");
             }
+
+            if (actualState == State.TracePunching)
+            {
+                animator.Play("Anim_DashPunch");
+            }
         }
         
         public void SetDefaultAnimation()

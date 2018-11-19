@@ -19,6 +19,7 @@ namespace Ragab
         Sliding,
         TraceDashing,
         TraceDashingAiming,
+        TracePunching,
         Knockback
     };
 
@@ -216,7 +217,7 @@ namespace Ragab
 
         private void ApplyGravity()
         {
-            if (characterState == State.TraceDashing || characterState == State.TraceDashingAiming)
+            if (characterState == State.TraceDashing || characterState == State.TraceDashingAiming || characterState == State.TracePunching)
                 return;
 
             actualSpeedY -= gravityForce * SlowMotionManager.Instance.playerTime;

@@ -244,7 +244,7 @@ namespace Ragab
             feedback.PlayFeedback(0);
             if (actualSuperArmor <= 0)
             {
-                feedback.PlayFeedback(1);
+                //feedback.PlayFeedback(1);
                 characterAnimation.SetDefaultAnimation();
                 actualKnockbackTime = knockbackTime;
                 characterState = State.Knockback;

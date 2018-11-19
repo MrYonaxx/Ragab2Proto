@@ -58,7 +58,7 @@ namespace Ragab
 
             if (currentPattern == 0) // Initialize
             {
-                currentPattern = Random.Range(1, 5);
+                currentPattern = Random.Range(1, 4);
             }
             else
             {
@@ -103,6 +103,7 @@ namespace Ragab
                 case 3: // 
                     characterAnimation.SetDefaultAnimation();
                     EnemyLookAtPlayer();
+                    actualSpeedX *= -1;
                     Move();
                     direction *= -1;
                     actualSpeedX *= -1;
@@ -123,7 +124,7 @@ namespace Ragab
         private void EnemyShoot()
         {
             CrapoProjectile projectile = Instantiate(crapoShootPrefab, this.transform.position, Quaternion.identity);
-            projectile.transform.position += new Vector3(0.2f * direction, 0, 0);
+            projectile.transform.position += new Vector3(0.8f * direction, 0, 0);
             if (direction == -1)
                 projectile.transform.eulerAngles += new Vector3(0, 0, 180);
             timePatternStartup = 0.2f;

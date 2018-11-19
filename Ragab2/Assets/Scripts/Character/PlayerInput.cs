@@ -112,6 +112,7 @@ namespace Ragab
 
                 case State.TraceDashingAiming:
                     InputAim();
+                    InputPunch();
                     InputTraceDash();
                     InputReleaseTraceDash();
                     break;

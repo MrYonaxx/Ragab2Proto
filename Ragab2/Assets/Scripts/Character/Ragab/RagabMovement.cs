@@ -287,7 +287,7 @@ namespace Ragab
         // =========== TRACE DASH ============= //
 
 
-        public void TraceDashAim()
+        public void TraceDashAim(float timeAim = 0.4f)
         {
             if (canComboTraceDash == false)
                 return;
@@ -327,7 +327,7 @@ namespace Ragab
             if (traceDashCoroutine != null)
                 StopCoroutine(traceDashCoroutine);
 
-            traceDashCoroutine = TraceDashAimingCoroutine();
+            traceDashCoroutine = TraceDashAimingCoroutine(timeAim);
             StartCoroutine(traceDashCoroutine);
         }
 
@@ -346,9 +346,9 @@ namespace Ragab
             TraceDash();
         }
 
-        private IEnumerator TraceDashAimingCoroutine()
+        private IEnumerator TraceDashAimingCoroutine(float time)
         {
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(time);
             canRelease = true;
             yield return new WaitForSeconds(0.6f);
             ReleaseTraceDashAim();
@@ -399,6 +399,7 @@ namespace Ragab
         {
             StopTraceDash();
             characterState = State.TracePunching;
+            canComboTraceDash = true;
             SlowMotionManager.Instance.SetSlowMotion(1);
             SetSpeed(new Vector2(tracePunchSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
                                  tracePunchSpeed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
@@ -463,7 +464,7 @@ namespace Ragab
                 }
                 else
                 {
-                    TraceDashAim();
+                    TraceDashAim(0.7f);
                     collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z);
                 }
             }

@@ -31,6 +31,13 @@ namespace Ragab
         [SerializeField]
         Transform objectToRotate;
 
+
+        [Header("Sound")]
+        [SerializeField]
+        AudioSource audioSource;
+        [SerializeField]
+        AudioClip[] sounds;
+
         bool isTraceDashing = false;
 
         int direction = 0;
@@ -122,6 +129,17 @@ namespace Ragab
             objectToRotate.eulerAngles = newRotation.eulerAngles;
             if (direction == -1)
                 objectToRotate.eulerAngles += new Vector3(0, 0, 180);
+        }
+
+
+        public void playSoundWalkRight()
+        {
+            audioSource.PlayOneShot(sounds[0]); // Son droite
+        }
+
+        public void playSoundWalkLeft()
+        {
+            audioSource.PlayOneShot(sounds[1]); // Son Gauche
         }
 
         #endregion

@@ -24,6 +24,10 @@ namespace Ragab
         // All the feedback applicable on this character
         [SerializeField]
         protected FeedbackManager feedbacks;
+        [SerializeField]
+        protected AudioSource audioSource;
+        [SerializeField]
+        protected AudioClip[] feedbacksSound;
 
 
 
@@ -131,6 +135,8 @@ namespace Ragab
             if (b == true)
             {
                 jumpAvailable = true;
+                if (characterState == State.Falling)
+                    audioSource.PlayOneShot(feedbacksSound[2]); // Son Fall
                 if (characterState != State.Sliding)
                     characterState = State.Grouded;
             }
@@ -165,6 +171,7 @@ namespace Ragab
             actualSpeedY += initialJumpForce;
             characterState = State.Jumping;
             jumpAvailable = false;
+            audioSource.PlayOneShot(feedbacksSound[1]); // Son jump
         }
 
         public virtual void NuanceJump()
@@ -211,6 +218,7 @@ namespace Ragab
             indexProjectile += 1;
             if (indexProjectile > maxNumberProjectile - 1)
                 indexProjectile = 0;
+            audioSource.PlayOneShot(feedbacksSound[0]); // Son tir
             StartCoroutine(WaitInterval());
 
         }

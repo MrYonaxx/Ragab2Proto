@@ -1927,6 +1927,77 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1001 &300564313
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 12.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 10.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_RootOrder
+      value: 68
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: characterToKill
+      value: 
+      objectReference: {fileID: 1546666549}
+    - target: {fileID: 1674596146479960, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_Name
+      value: RobotCrapo (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroX
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroY
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroAgressiveX
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroAgressiveY
+      value: 12
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &330302267
 GameObject:
   m_ObjectHideFlags: 0
@@ -3856,7 +3927,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.04
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5054,6 +5125,77 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &1000741846
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 13.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 6.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_RootOrder
+      value: 69
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: characterToKill
+      value: 
+      objectReference: {fileID: 1546666549}
+    - target: {fileID: 1674596146479960, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_Name
+      value: RobotCrapo (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroX
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroY
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroAgressiveX
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroAgressiveY
+      value: 12
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1009960783
 GameObject:
   m_ObjectHideFlags: 0
@@ -5124,7 +5266,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1009960783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.65, y: 4.3, z: 0}
+  m_LocalPosition: {x: -5.65, y: 3.22, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7299,7 +7441,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1546666548}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.3, y: 0.79, z: 0}
+  m_LocalPosition: {x: -10.3, y: 6.07, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 752023505}
@@ -7966,6 +8108,107 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -367.3}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1732091462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1732091465}
+  - component: {fileID: 1732091464}
+  - component: {fileID: 1732091463}
+  m_Layer: 8
+  m_Name: Sol (52)
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &1732091463
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1732091462}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.32, y: 0.32}
+  m_EdgeRadius: 0
+--- !u!212 &1732091464
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1732091462}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 67f36588389510941956eada4010a402, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.32, y: 0.32}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1732091465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1732091462}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.198, y: 4.47, z: 0}
+  m_LocalScale: {x: 170.3184, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 65
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1751517438
 Prefab:
   m_ObjectHideFlags: 0
@@ -8112,6 +8355,77 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1841969226
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 8.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 7.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_RootOrder
+      value: 67
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: characterToKill
+      value: 
+      objectReference: {fileID: 1546666549}
+    - target: {fileID: 1674596146479960, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_Name
+      value: RobotCrapo (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroX
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroY
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroAgressiveX
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroAgressiveY
+      value: 12
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1859307916
 GameObject:
   m_ObjectHideFlags: 0
@@ -8432,7 +8746,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1895418557}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.241, y: 1.437, z: 0}
+  m_LocalPosition: {x: 5.16, y: 6.16, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8600,7 +8914,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.07
+      value: 6.01
       objectReference: {fileID: 0}
     - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -9577,6 +9891,77 @@ Prefab:
     - target: {fileID: 1674596146479960, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
       propertyPath: m_Name
       value: RobotCrapo (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroX
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroY
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroAgressiveX
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: aggroAgressiveY
+      value: 12
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!1001 &2047842697
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 7.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 9.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4303312530740680, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_RootOrder
+      value: 66
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
+        type: 2}
+      propertyPath: characterToKill
+      value: 
+      objectReference: {fileID: 1546666549}
+    - target: {fileID: 1674596146479960, guid: 337ae80be5c9f2243b246be61817670e, type: 2}
+      propertyPath: m_Name
+      value: RobotCrapo (10)
       objectReference: {fileID: 0}
     - target: {fileID: 114039848591205522, guid: 337ae80be5c9f2243b246be61817670e,
         type: 2}

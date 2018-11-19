@@ -58,7 +58,7 @@ namespace Ragab
 
             if (currentPattern == 0) // Initialize
             {
-                currentPattern = Random.Range(1, 4);
+                currentPattern = Random.Range(1, 3);
             }
             else
             {

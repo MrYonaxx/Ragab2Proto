@@ -105,11 +105,13 @@ namespace Ragab
                 case State.TraceDashing:
                     InputJump();
                     InputAim();
+                    InputShoot();
                     InputPunch();
                     InputTraceDash();
                     break;
 
                 case State.TraceDashingAiming:
+                    InputAim();
                     InputTraceDash();
                     InputReleaseTraceDash();
                     break;
@@ -152,11 +154,11 @@ namespace Ragab
 
         private void InputJump()
         {
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("RagabJump"))
             {
                 characterToControl.Jump();
             }
-            else if (Input.GetButton("Jump"))
+            else if (Input.GetButton("RagabJump"))
             {
                 characterToControl.NuanceJump();
             }
@@ -185,7 +187,7 @@ namespace Ragab
 
         private void InputSliding()
         {
-            if (Input.GetButton("Fire2"))
+            if (Input.GetButton("RagabSlide"))
             {
                 characterToControl.Sliding();
             }
@@ -197,7 +199,7 @@ namespace Ragab
 
         private void InputShoot()
         {
-            if (Input.GetButton("Fire3"))
+            if (Input.GetAxis("RagabShoot") > 0.2f)
             {
                 characterToControl.Shoot(characterToControl.GetSpeed());
             }
@@ -205,7 +207,7 @@ namespace Ragab
 
         private void InputPunch()
         {
-            if (Input.GetButton("Fire3"))
+            if (Input.GetButton("RagabPunch"))
             {
                 characterToControl.TraceDashPunch();
             }
@@ -213,7 +215,7 @@ namespace Ragab
 
         private void InputTraceDash()
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("RagabTraceDash"))
             {
                 characterToControl.TraceDashAim();
             }
@@ -221,7 +223,7 @@ namespace Ragab
 
         private void InputReleaseTraceDash()
         {
-            if (Input.GetButton("Fire1") == false)
+            if (Input.GetButton("RagabTraceDash") == false)
             {
                 characterToControl.ReleaseTraceDashAim();
             }

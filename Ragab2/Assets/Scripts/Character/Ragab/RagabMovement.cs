@@ -451,11 +451,14 @@ namespace Ragab
             }
             if (collision.gameObject.tag == "Enemy" && characterState == State.TracePunching)
             {
+                audioSource.PlayOneShot(feedbacksSound[3]);
                 if(crystals.getCrystalNumber() <= 1)
                 {
                     TraceDashPunchHit();
                     feedbackDeOuf.enabled = true;
+                    collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z);
                     characterAnimation.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
+                    collision.GetComponent<SpriteRenderer>().sortingOrder = 2;
                     collision.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
                 }
                 else

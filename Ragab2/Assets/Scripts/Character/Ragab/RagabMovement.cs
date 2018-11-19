@@ -70,6 +70,9 @@ namespace Ragab
         [SerializeField]
         CameraScript cameraAim;
 
+        [SerializeField]
+        SpriteRenderer feedbackDeOuf;
+
         int indexProjectile = 0;
         List<BaseProjectile> listObject = new List<BaseProjectile>(20);
 
@@ -404,7 +407,7 @@ namespace Ragab
 
         public void TraceDashPunchHit()
         {
-            SlowMotionManager.Instance.SetSlowMotion(0.1f);
+            SlowMotionManager.Instance.SetSlowMotion(0.05f);
             feedbacks.PlayFeedback(0);
         }
 
@@ -448,8 +451,18 @@ namespace Ragab
             }
             if (collision.gameObject.tag == "Enemy" && characterState == State.TracePunching)
             {
-                TraceDashPunchHit();
-                collision.GetComponent<Enemy>().HitPunch();
+                if(crystals.getCrystalNumber() <= 1)
+                {
+                    TraceDashPunchHit();
+                    feedbackDeOuf.enabled = true;
+                    characterAnimation.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
+                    collision.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
+                }
+                else
+                {
+                    TraceDashAim();
+                    collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z);
+                }
             }
         }
 

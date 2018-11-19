@@ -275,9 +275,10 @@ namespace Ragab
             }
         }
 
-        public void HitPunch()
+        public void HitPunch(float angle)
         {
-            feedback.PlayFeedback(0);
+            Hit(angle);
+            //feedback.PlayFeedback(0);
         }
 
         #endregion

@@ -427,7 +427,7 @@ namespace Ragab
 
                 SetSpeed(new Vector2((actualKnockbackForce * forceMultiplier) * Mathf.Cos(angle * Mathf.PI / 180f),
                                      (actualKnockbackForce * forceMultiplier) * Mathf.Sin(angle * Mathf.PI / 180f)));
-                actualSpeedY += (actualKnockbackForce * forceMultiplier);
+                actualSpeedY += (actualKnockbackForce);
             }
             else if(actualBreakArmor > 0)
             {

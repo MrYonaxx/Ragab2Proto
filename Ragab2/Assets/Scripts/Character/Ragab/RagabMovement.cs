@@ -462,6 +462,7 @@ namespace Ragab
                     characterAnimation.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
                     collision.GetComponent<SpriteRenderer>().sortingOrder = 2;
                     collision.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
+                    this.GetComponent<BoxCollider2D>().enabled = false;
                 }
                 else
                 {

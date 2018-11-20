@@ -73,7 +73,7 @@ namespace Ragab
                     timePattern = 1f;
                     break;
                 case 2: // Tourelle regarde l'ennemi
-                    timePattern = Random.Range(0.4f, 0.8f);
+                    timePattern = Random.Range(1f, 2f);
                     break;
                 case 3: // Tourelle fuit l'ennemi
                     timePattern = 3f;

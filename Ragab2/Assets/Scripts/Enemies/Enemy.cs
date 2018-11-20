@@ -425,11 +425,9 @@ namespace Ragab
                 Knockback(breakTime);
                 bounce = false;
 
-                actualSpeedX = 0;
-                actualSpeedY = gravityMax / 1.5f;
-
-                //SetSpeed(new Vector2((actualKnockbackForce * forceMultiplier) * Mathf.Cos(angle * Mathf.PI / 180f),
-                 //                    (actualKnockbackForce * forceMultiplier) * Mathf.Sin(angle * Mathf.PI / 180f)));
+                SetSpeed(new Vector2((actualKnockbackForce * forceMultiplier) * Mathf.Cos(angle * Mathf.PI / 180f),
+                                     (actualKnockbackForce * forceMultiplier) * Mathf.Sin(angle * Mathf.PI / 180f)));
+                actualSpeedY += (actualKnockbackForce * forceMultiplier);
             }
             else if(actualBreakArmor > 0)
             {

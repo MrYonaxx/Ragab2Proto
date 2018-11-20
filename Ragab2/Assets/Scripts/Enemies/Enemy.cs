@@ -426,7 +426,7 @@ namespace Ragab
                 bounce = false;
 
                 actualSpeedX = 0;
-                actualSpeedY += gravityMax;
+                actualSpeedY = gravityMax / 1.5f;
 
                 //SetSpeed(new Vector2((actualKnockbackForce * forceMultiplier) * Mathf.Cos(angle * Mathf.PI / 180f),
                  //                    (actualKnockbackForce * forceMultiplier) * Mathf.Sin(angle * Mathf.PI / 180f)));

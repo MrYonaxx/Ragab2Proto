@@ -504,10 +504,10 @@ namespace Ragab
             StopTraceDash();
             characterState = State.Knockback;
             feedbacks.PlayFeedback(0);
-            SlowMotionManager.Instance.SetSlowMotion(0);
+            //SlowMotionManager.Instance.SetSlowMotion(0);
             yield return new WaitForSeconds(0.4f);
             SlowMotionManager.Instance.SetSlowMotion(1);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.4f);
             characterState = State.Falling;
         }
 

@@ -26,8 +26,11 @@ namespace Ragab
         [SerializeField]
         Transform pos;
 
+        [SerializeField]
+        bool poolOneObject = false;
+
         List<Animator> gameObjectPool = new List<Animator>();
-        
+
         #endregion
 
         #region GettersSetters 
@@ -35,7 +38,7 @@ namespace Ragab
         /* ======================================== *\
          *           GETTERS AND SETTERS            *
         \* ======================================== */
-        
+
 
         #endregion
 
@@ -44,11 +47,28 @@ namespace Ragab
         /* ======================================== *\
          *                FUNCTIONS                 *
         \* ======================================== */
+        //feedback.speed = SlowMotionManager.Instance.playerTime;
 
         public override void StartFeedback(string animName)
         {
-            Animator newObject = Instantiate(prefab, pos.position, Quaternion.identity);
-            gameObjectPool.Add(newObject);
+            if (poolOneObject == false)
+            {
+                Animator newObject = Instantiate(prefab, pos.position, Quaternion.identity);
+                gameObjectPool.Add(newObject);
+            }
+            else
+            {
+                if(gameObjectPool.Count == 0)
+                {
+                    Animator newObject = Instantiate(prefab, pos.position, Quaternion.identity);
+                    gameObjectPool.Add(newObject);
+                }
+                else
+                {
+                    gameObjectPool[0].gameObject.SetActive(true);
+                    gameObjectPool[0].transform.position = pos.position;
+                }
+            }
         }
 
         public override void StopFeedback()
@@ -59,7 +79,29 @@ namespace Ragab
             }
             gameObjectPool.Clear();
         }
-        
+
+
+
+
+
+
+
+
+
+
+
+        public void SetSpeedAnimation()
+        {
+            prefab.speed = SlowMotionManager.Instance.playerTime;
+        }
+
+        public void AnimationEnd()
+        {
+            prefab.gameObject.SetActive(false);
+            //prefab.enabled = false;
+        }
+
+
         #endregion
 
     } // InstantiateFeedback class

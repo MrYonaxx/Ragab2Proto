@@ -31,6 +31,8 @@ namespace Ragab
 
         float jumpSpeed = 0;
 
+        CrapoProjectile currentProjectile = null;
+
         #endregion
 
         #region GettersSetters 
@@ -145,10 +147,10 @@ namespace Ragab
             {
                 characterAnimation.SetAnimation("Anim_Shoot");
                 EnemyLookAtPlayer();
-                CrapoProjectile projectile = Instantiate(crapoShootPrefab, this.transform.position, Quaternion.identity);
-                projectile.transform.position += new Vector3(0.2f * direction, 0, 0);
+                currentProjectile = Instantiate(crapoShootPrefab, this.transform.position, Quaternion.identity);
+                currentProjectile.transform.position += new Vector3(0.2f * direction, 0, 0);
                 if (direction == -1)
-                    projectile.transform.eulerAngles += new Vector3(0, 0, 180);
+                    currentProjectile.transform.eulerAngles += new Vector3(0, 0, 180);
             }
         }
 
@@ -205,19 +207,20 @@ namespace Ragab
             }
         }
 
+
         private void NuanceJump()
         {
             actualSpeedY += additionalJumpForce * SlowMotionManager.Instance.playerTime;
         }
 
 
-
-
-
-
-        private void Hit()
+        protected override void Hit(float angle, float forceMultiplier = 1)
         {
-
+            base.Hit(angle, forceMultiplier);
+            if(knockbackTime > 0 && currentProjectile != null)
+            {
+                currentProjectile.gameObject.SetActive(false);
+            }
         }
 
 

@@ -145,6 +145,7 @@ namespace Ragab
         {
             if (characterState == State.Knockback)
                 return;
+
             if (b == true)
             {
                 characterState = State.Grouded;

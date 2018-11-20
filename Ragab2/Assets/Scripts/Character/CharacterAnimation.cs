@@ -44,6 +44,8 @@ namespace Ragab
 
         bool customAnim = false;
 
+        bool knockbackAnim = false;
+
         #endregion
 
         #region GettersSetters 
@@ -104,7 +106,10 @@ namespace Ragab
 
             if (actualState == State.Knockback)
             {
-                animator.Play("Anim_Hit");
+                if(knockbackAnim == false)
+                    animator.Play("Anim_Hit");
+                else
+                    animator.Play("Anim_Idle");
             }
 
             if (actualState == State.TracePunching)
@@ -134,6 +139,12 @@ namespace Ragab
             objectToRotate.eulerAngles = newRotation.eulerAngles;
             if (direction == -1)
                 objectToRotate.eulerAngles += new Vector3(0, 0, 180);
+        }
+
+
+        public void ChangeKnockbackAnim()
+        {
+            knockbackAnim = !knockbackAnim;
         }
 
 

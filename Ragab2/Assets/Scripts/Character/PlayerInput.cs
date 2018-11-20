@@ -38,6 +38,7 @@ namespace Ragab
         [SerializeField]
         RagabMovement characterToControl;
 
+        bool traceDashPushed = false;
 
         #endregion
 
@@ -100,6 +101,7 @@ namespace Ragab
                     InputJump();
                     InputAim();
                     InputShoot();
+                    InputTraceDash();
                     break;
 
                 case State.TraceDashing:
@@ -216,15 +218,20 @@ namespace Ragab
 
         private void InputTraceDash()
         {
-            if (Input.GetButtonDown("RagabTraceDash"))
+            if (Input.GetAxis("RagabTraceDash") > 0.2f && traceDashPushed == false)
             {
                 characterToControl.TraceDashAim();
+                traceDashPushed = true;
+            }
+            else if(Input.GetAxis("RagabTraceDash") <= 0.2f)
+            {
+                traceDashPushed = false;
             }
         }
 
         private void InputReleaseTraceDash()
         {
-            if (Input.GetButton("RagabTraceDash") == false)
+            if (Input.GetAxis("RagabTraceDash") <= 0.2f)
             {
                 characterToControl.ReleaseTraceDashAim();
             }

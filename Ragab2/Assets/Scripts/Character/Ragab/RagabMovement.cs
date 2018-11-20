@@ -416,15 +416,15 @@ namespace Ragab
 
 
 
-
         protected override void CollisionY()
         {
             if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
                 feedbacks.PlayFeedback(0); // ShakeScreen
-                StopTraceDash();
-                TraceDashPunchHit();
+                //StopTraceDash();
+                TraceDashAim();
+                //TraceDashPunchHit();
                 //slideCollisionEvent.Invoke();
             }
         }
@@ -436,15 +436,16 @@ namespace Ragab
             {
                 characterAnimation.SetSpriteRotation();
                 feedbacks.PlayFeedback(0);
-                StopTraceDash();
-                TraceDashPunchHit();
+                //StopTraceDash();
+                TraceDashAim();
+                //TraceDashPunchHit();
                 //slideCollisionEvent.Invoke();
             }
         }
 
 
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerStay2D(Collider2D collision)
         {
             if (collision.gameObject.tag == "ProjectileEnemy" && characterState != State.Knockback)
             {

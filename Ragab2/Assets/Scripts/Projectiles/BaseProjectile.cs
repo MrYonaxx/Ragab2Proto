@@ -29,6 +29,9 @@ namespace Ragab
         [SerializeField]
         protected float bulletFriction = 2;
 
+        [SerializeField]
+        protected Feedback feedback = null;
+
         int layerMask = 1 << 8;
 
         Vector3 initialSpeed;
@@ -91,7 +94,11 @@ namespace Ragab
         {
             if (collision.gameObject.tag == "Ground" ||
                 collision.gameObject.tag == "Enemy")
+            {
+                feedback.StartFeedback();
                 this.gameObject.SetActive(false);
+            }
+
         }
 
         #endregion

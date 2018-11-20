@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61119503534082024}
   - component: {fileID: 50688928681652018}
   - component: {fileID: 114826154436837572}
+  - component: {fileID: 114605915137170852}
   m_Layer: 9
   m_Name: Bullet
   m_TagString: ProjectilePlayer
@@ -88,6 +89,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.07, y: 0.07}
   m_EdgeRadius: 0
+--- !u!114 &114605915137170852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1365308876762760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38df8453de59e34f9f3c3e0849e36f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 
+  prefab: {fileID: 95365225062003480, guid: dff6c0b58d230af4186da9b4497ec17d, type: 2}
+  pos: {fileID: 4583835621372838}
+  poolOneObject: 1
 --- !u!114 &114826154436837572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,8 +117,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 18
   longevity: 1
-  damage: 1
   bulletFriction: 1
+  feedback: {fileID: 114605915137170852}
 --- !u!212 &212915678957627808
 SpriteRenderer:
   m_ObjectHideFlags: 1

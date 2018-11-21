@@ -6,6 +6,7 @@
 ******************************************************************/
 
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 namespace Ragab
@@ -20,7 +21,8 @@ namespace Ragab
         /* ======================================== *\
          *               ATTRIBUTES                 *
         \* ======================================== */
-        
+        [SerializeField]
+        UnityEvent eventTrigger;
         
         #endregion
 
@@ -43,7 +45,7 @@ namespace Ragab
         {
             if(other.gameObject.tag == "Player")
             {
-                Debug.Log("Tout va bien");
+                eventTrigger.Invoke();
             }
         }
         

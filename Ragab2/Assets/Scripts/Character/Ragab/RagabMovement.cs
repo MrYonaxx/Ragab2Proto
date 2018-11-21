@@ -453,9 +453,9 @@ namespace Ragab
             if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
-                feedbacks.PlayFeedback(0); // ShakeScreen
+                //feedbacks.PlayFeedback(0); // ShakeScreen
                 //StopTraceDash();
-                TraceDashAim();
+                TraceDashAim(1f);
                 //TraceDashPunchHit();
                 //slideCollisionEvent.Invoke();
             }
@@ -471,9 +471,9 @@ namespace Ragab
             if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
-                feedbacks.PlayFeedback(0);
+                //feedbacks.PlayFeedback(0);
                 //StopTraceDash();
-                TraceDashAim();
+                TraceDashAim(1f);
                 //TraceDashPunchHit();
                 //slideCollisionEvent.Invoke();
             }

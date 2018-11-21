@@ -57,6 +57,8 @@ namespace Ragab
             time += Time.deltaTime * SlowMotionManager.Instance.enemyTime;
             if(time >= timeWaiting)
             {
+                if(transform.parent != null)
+                    transform.parent = null;
                 transform.Translate((Vector3.right * speed) * Time.deltaTime * SlowMotionManager.Instance.enemyTime);
             }
             if(time >= longevity)

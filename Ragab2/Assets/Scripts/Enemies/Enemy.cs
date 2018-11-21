@@ -449,8 +449,11 @@ namespace Ragab
             timePattern = 0;
             timePatternStartup = 0;
 
-            characterAnimation.SetDefaultAnimation();
-            characterAnimation.ChangeKnockbackAnim();
+            if(characterAnimation != null)
+            {
+                characterAnimation.SetDefaultAnimation();
+                characterAnimation.ChangeKnockbackAnim();
+            }
             actualKnockbackTime = timeKnockback;
             characterState = State.Knockback;
         }

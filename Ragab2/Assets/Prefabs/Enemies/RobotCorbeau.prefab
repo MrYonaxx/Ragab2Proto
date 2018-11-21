@@ -43,7 +43,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973601305558222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.025, y: 7.974, z: 0}
+  m_LocalPosition: {x: -2.684, y: 8.952, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,7 +78,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.03}
@@ -156,7 +156,7 @@ MonoBehaviour:
   breakInitialYForce: 5
   breakAdditionalYForce: 0
   deathForce: 0.2
-  canComboBreak: 0
+  canComboBreak: 1
   groundForce: 0
   aerialForce: 3
   bounceGround: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
   timePattern: 0
   timePatternStartup: 0
   bounce: 0
-  shootStartup: 1
+  shootStartup: 3
   projectile: {fileID: 114320459831537754, guid: faefd2f59241aaa409765e1910fa77e8,
     type: 2}
   origin: {x: -2, y: 8, z: 0}
@@ -256,7 +256,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3053dbb26c91ebe498bdc2b1ca2ca202, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

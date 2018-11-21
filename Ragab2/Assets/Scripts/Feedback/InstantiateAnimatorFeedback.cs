@@ -101,6 +101,12 @@ namespace Ragab
             //prefab.enabled = false;
         }
 
+        public void AnimationDestroy()
+        {
+            Destroy(this.gameObject);
+            //prefab.enabled = false;
+        }
+
 
         #endregion
 

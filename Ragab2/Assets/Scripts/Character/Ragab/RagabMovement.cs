@@ -77,6 +77,10 @@ namespace Ragab
         List<BaseProjectile> listObject = new List<BaseProjectile>(20);
 
 
+        [Header("Ragab Punch")]
+        [SerializeField]
+        float timeTracePunch = 0.5f;
+
         [Header("Ragab Knockback")]
         [SerializeField]
         float timeStop = 0.1f;
@@ -287,17 +291,20 @@ namespace Ragab
         // =========== TRACE DASH ============= //
 
 
-        public void TraceDashAim(float timeAim = 0.4f)
+        public void TraceDashAim(float timeAim = 0.3f)
         {
             if (canComboTraceDash == false)
                 return;
+
 
             if (crystals.getCrystalNumber() <= 1)
             {
                 return;
             }
             crystals.StartRecovery();
+
             characterState = State.TraceDashingAiming;
+
             SlowMotionManager.Instance.SetSlowMotion(0);
 
             // test
@@ -323,6 +330,7 @@ namespace Ragab
             canRelease = false;
             cameraAim.FocusDefault();
             feedbacks.PlayFeedback(2);
+
 
             if (traceDashCoroutine != null)
                 StopCoroutine(traceDashCoroutine);
@@ -350,7 +358,7 @@ namespace Ragab
         {
             yield return new WaitForSeconds(time);
             canRelease = true;
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.7f);
             ReleaseTraceDashAim();
         }
 
@@ -361,7 +369,6 @@ namespace Ragab
 
             crystals.ConsumeCrystal();
 
-
             characterState = State.TraceDashing;
             SlowMotionManager.Instance.SetSlowMotionGradually(bulletTimeRatio[comboTrace]);
             SetSpeed(new Vector2(traceSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
@@ -369,9 +376,11 @@ namespace Ragab
 
             ragabArm.SetActive(true);
             CharacterAnimation.SetSpriteRotation(viseur);
+            Camera.main.transform.eulerAngles = new Vector3(0, 0, viseur.eulerAngles.z);
             crystals.StartConsumptionTraceDashing();
             feedbacks.PlayFeedback(1); // Rémanence
             cameraAim.ChangeOrthographicSize(4);
+            comboTrace = -1;
         }
 
         public void StopTraceDash()
@@ -385,6 +394,7 @@ namespace Ragab
 
                 ragabArm.SetActive(false);
                 characterAnimation.SetSpriteRotation();
+                Camera.main.transform.eulerAngles = new Vector3(0, 0, 0);
                 crystals.StartRecovery();
                 feedbacks.StopFeedback(1);
                 feedbacks.StopFeedback(3);
@@ -404,20 +414,42 @@ namespace Ragab
             SetSpeed(new Vector2(tracePunchSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
                                  tracePunchSpeed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
             CharacterAnimation.SetSpriteRotation(viseur);
+
+            if (traceDashCoroutine != null)
+            {
+                StopCoroutine(traceDashCoroutine);
+            }
+            traceDashCoroutine = WaitTracePunch(timeTracePunch);
+            StartCoroutine(traceDashCoroutine);
         }
 
         public void TraceDashPunchHit()
         {
+            if (traceDashCoroutine != null)
+            {
+                StopCoroutine(traceDashCoroutine);
+            }
             SlowMotionManager.Instance.SetSlowMotion(0.05f);
             feedbacks.PlayFeedback(0);
         }
 
+        private IEnumerator WaitTracePunch(float second)
+        {
+            yield return new WaitForSeconds(second);
+            traceDashCoroutine = null;
+            characterState = State.Falling;
+            characterAnimation.SetSpriteRotation();
 
+        }
 
 
 
         protected override void CollisionY()
         {
+            if (characterState == State.TracePunching)
+            {
+                TraceDashAim(1f);
+            }
             if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
@@ -432,6 +464,10 @@ namespace Ragab
 
         protected override void CollisionX()
         {
+            if (characterState == State.TracePunching)
+            {
+                TraceDashAim(1f);
+            }
             if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
@@ -447,9 +483,12 @@ namespace Ragab
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (collision.gameObject.tag == "ProjectileEnemy" && characterState != State.Knockback)
+            if (collision.gameObject.tag == "ProjectileEnemy")
             {
-                Hit();
+                collision.gameObject.SetActive(false);
+                if(characterState != State.Knockback || characterState != State.TracePunching)
+                    Hit();
+                // faire un truc si le joueur se prend des dégats durant le punch
             }
             if (collision.gameObject.tag == "Enemy" && characterState == State.TracePunching)
             {
@@ -466,7 +505,7 @@ namespace Ragab
                 }
                 else
                 {
-                    TraceDashAim(0.7f);
+                    TraceDashAim(1f);
                     collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z);
                 }
             }

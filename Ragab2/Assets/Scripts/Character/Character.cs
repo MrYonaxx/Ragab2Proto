@@ -84,9 +84,9 @@ namespace Ragab
         public CharacterAnimation CharacterAnimation { get { return characterAnimation; } }
 
 
-        [Header("Debug")]
+        /*[Header("Debug")]
         public GameObject trailDebug = null;
-        public bool activateDebugTrail = false;
+        public bool activateDebugTrail = false;*/
 
 
         protected float actualAerialDecceleration = 0;

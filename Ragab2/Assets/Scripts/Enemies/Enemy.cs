@@ -294,6 +294,7 @@ namespace Ragab
 
             if(statManager.Hp <= 0)
             {
+                feedback.PlayFeedback(1);
                 Destroy(this.gameObject);
             }
         }
@@ -352,6 +353,7 @@ namespace Ragab
             feedback.PlayFeedback(0);
             if (statManager.Hp == 0)
             {
+                //feedback.PlayFeedback(1);
                 characterState = State.Knockback;
                 actualBreakArmor = 0;
                 GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);

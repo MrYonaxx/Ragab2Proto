@@ -11,6 +11,21 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1674596146479960}
   m_IsPrefabAsset: 1
+--- !u!1 &1087455306088586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4291468963683270}
+  m_Layer: 12
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1140371251200922
 GameObject:
   m_ObjectHideFlags: 0
@@ -22,6 +37,21 @@ GameObject:
   - component: {fileID: 61698122821386112}
   m_Layer: 12
   m_Name: HitboxJump
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1613878271438858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4722983167690490}
+  m_Layer: 12
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,8 +74,9 @@ GameObject:
   - component: {fileID: 114499204447002390}
   - component: {fileID: 114852753654859734}
   - component: {fileID: 95112669278799724}
-  - component: {fileID: 114064080361369294}
   - component: {fileID: 114983590928142226}
+  - component: {fileID: 114214078221367272}
+  - component: {fileID: 114447579562995334}
   m_Layer: 12
   m_Name: RobotCrapo
   m_TagString: Enemy
@@ -53,6 +84,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4291468963683270
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1087455306088586}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4303312530740680}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4303312530740680
 Transform:
   m_ObjectHideFlags: 1
@@ -60,10 +104,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674596146479960}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.04, y: 12.59, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: -3.521, y: 7.2269998, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4629819588393530}
+  - {fileID: 4291468963683270}
+  - {fileID: 4722983167690490}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -79,6 +125,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4303312530740680}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4722983167690490
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1613878271438858}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4303312530740680}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50023735569029194
 Rigidbody2D:
@@ -185,8 +244,8 @@ MonoBehaviour:
   aerialInertia: 0.3
   gravityForce: 0.5
   gravityMax: 5
-  initialJumpForce: 11
-  additionalJumpForce: 0.2
+  initialJumpForce: 10
+  additionalJumpForce: 0.3
   maxAngle: 40
   offsetRaycastX: 0.0001
   offsetRaycastY: 0.0001
@@ -194,29 +253,36 @@ MonoBehaviour:
   numberRaycastHorizontal: 2
   characterState: 0
   characterAnimation: {fileID: 114641414962560318}
-  trailDebug: {fileID: 0}
-  activateDebugTrail: 0
   statManager: {fileID: 114711865202405046}
   feedback: {fileID: 114499204447002390}
   characterToKill: {fileID: 0}
   agressive: 0
-  aggroX: 10
-  aggroY: 10
-  aggroAgressiveX: 20
-  aggroAgressiveY: 20
+  aggroX: 7
+  aggroY: 7
+  aggroAgressiveX: 12
+  aggroAgressiveY: 12
   distanceCacX: 6
   distanceCacY: 6
-  superArmor: 3
-  knockbackTime: 1
-  knockbackForce: 5
+  superArmor: 0
+  knockbackTime: 0.2
+  canCombo: 1
+  breakSuperArmor: 1
+  breakTime: 5000
+  breakInitialYForce: 10
+  breakAdditionalYForce: 0.3
+  canComboBreak: 1
+  groundForce: 10
+  aerialForce: 2
+  bounceGround: 1
   currentPattern: 0
   timePattern: 0
   timePatternStartup: 0
+  bounce: 0
   jumpStartup: 1
   shootStartup: 1.5
   crapoShootPrefab: {fileID: 114320459831537754, guid: 240b4310273311c4593c93044e80a837,
     type: 2}
---- !u!114 &114064080361369294
+--- !u!114 &114214078221367272
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -224,14 +290,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674596146479960}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab3393006d7063847b28d18268b43d9c, type: 3}
+  m_Script: {fileID: 11500000, guid: e38df8453de59e34f9f3c3e0849e36f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   name: 
-  objectToShake: {fileID: 4303312530740680}
-  shakeForceX: 0
-  shakeForceY: 0
-  shakeTime: 20
+  prefab: {fileID: 95198033815890610, guid: 17f2f87425d5c6b40870a2179a9157a7, type: 2}
+  pos: {fileID: 4303312530740680}
+  poolOneObject: 0
+--- !u!114 &114447579562995334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674596146479960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38df8453de59e34f9f3c3e0849e36f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 
+  prefab: {fileID: 0}
+  pos: {fileID: 0}
+  poolOneObject: 0
 --- !u!114 &114499204447002390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -245,7 +325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   feedbacks:
   - {fileID: 114852753654859734}
-  - {fileID: 114064080361369294}
+  - {fileID: 114214078221367272}
   - {fileID: 114983590928142226}
 --- !u!114 &114641414962560318
 MonoBehaviour:

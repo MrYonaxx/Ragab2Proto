@@ -92,8 +92,11 @@ namespace Ragab
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.tag == "Ground" ||
-                collision.gameObject.tag == "Enemy")
+            if (collision.gameObject.tag == "Ground")
+            {
+                this.transform.eulerAngles = new Vector3(0, 0, -transform.eulerAngles.z);
+            }
+            if (collision.gameObject.tag == "Enemy")
             {
                 feedback.StartFeedback();
                 this.gameObject.SetActive(false);

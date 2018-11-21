@@ -376,7 +376,7 @@ namespace Ragab
 
             ragabArm.SetActive(true);
             CharacterAnimation.SetSpriteRotation(viseur);
-            Camera.main.transform.eulerAngles = new Vector3(0, 0, viseur.eulerAngles.z);
+            //Camera.main.transform.eulerAngles = new Vector3(0, 0, viseur.eulerAngles.z);
             crystals.StartConsumptionTraceDashing();
             feedbacks.PlayFeedback(1); // Rémanence
             cameraAim.ChangeOrthographicSize(4);
@@ -394,7 +394,7 @@ namespace Ragab
 
                 ragabArm.SetActive(false);
                 characterAnimation.SetSpriteRotation();
-                Camera.main.transform.eulerAngles = new Vector3(0, 0, 0);
+                //Camera.main.transform.eulerAngles = new Vector3(0, 0, 0);
                 crystals.StartRecovery();
                 feedbacks.StopFeedback(1);
                 feedbacks.StopFeedback(3);

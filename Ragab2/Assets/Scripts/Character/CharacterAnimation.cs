@@ -142,10 +142,26 @@ namespace Ragab
         }
 
 
+
+
+
+
+
+
+
         public void ChangeKnockbackAnim()
         {
             knockbackAnim = !knockbackAnim;
         }
+
+
+
+
+
+
+
+
+
 
 
         public void playSoundWalkRight()

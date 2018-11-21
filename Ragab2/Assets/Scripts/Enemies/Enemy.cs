@@ -66,6 +66,8 @@ namespace Ragab
         [SerializeField]
         protected float breakAdditionalYForce = 1;
         [SerializeField]
+        protected float deathForce = 1;
+        [SerializeField]
         protected bool canComboBreak = false;
 
         [Header("---  Knockback Force  ---")]
@@ -305,6 +307,7 @@ namespace Ragab
         {
             if (statManager.Hp <= 0)
             {
+                actualSpeedY -= deathForce * SlowMotionManager.Instance.playerTime;
                 return;
             }
 

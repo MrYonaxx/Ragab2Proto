@@ -23,9 +23,16 @@ namespace Ragab
 
         [Header("Robot Corbeau")]
         [SerializeField]
-        float shootStartup;
+        float shootStartup = 1f;
         [SerializeField]
         CrapoProjectile projectile;
+
+        [SerializeField]
+        Vector3 origin;
+        [SerializeField]
+        float originRadius;
+
+        Vector3 MovementTarget;
 
         #endregion
 
@@ -48,27 +55,38 @@ namespace Ragab
         protected override void InitializePattern(int valMin = 0, int valMax = 0)
         {
             actualSpeedX = 0;
+            actualSpeedY = 0;
 
+            if (currentPattern == 3) // Initialize
+            {
+                currentPattern = 2;
+                if (CheckCac() == true)
+                {
+                    currentPattern = 4;
+                }
+            }
             if (currentPattern == 0) // Initialize
             {
-                currentPattern = Random.Range(1, 3);
-            }
-            else
-            {
-                currentPattern = Random.Range(valMin, valMax);
+                currentPattern = Random.Range(1, 4);
+                if(CheckCac() == true)
+                {
+                    currentPattern = 4;
+                }
             }
 
             switch (currentPattern)
             {
                 case 1: // Corbeau tire sur l'ennemi
-                    timePatternStartup = shootStartup;
-                    timePattern = 1f;
+                    timePattern = shootStartup;
                     break;
                 case 2: // Corbeau se pose des questions sur son existence
-                    timePattern = Random.Range(1f, 2f);
+                    timePattern = Random.Range(0.2f, 1f);
                     break;
                 case 3: // Corbeau se promène
-                    timePattern = 3f;
+                    timePattern = Random.Range(0.5f, 1f);
+                    MovementTarget = origin + new Vector3(Random.Range(-originRadius, originRadius), Random.Range(-originRadius, originRadius), 0);
+                    //actualSpeedX = Random.Range(-speedMax, speedMax);
+                    //actualSpeedY = Random.Range(-speedMax, speedMax);
                     break;
                 case 4: // Corbeau kamikaze
                     timePatternStartup = shootStartup;
@@ -87,42 +105,29 @@ namespace Ragab
         {
             switch (currentPattern)
             {
-                case 1: // Tourelle tire
-                    if (timePatternStartup > 0)
-                        EnemyShootStartup();
-                    else
-                        EnemyShoot();
+                case 1: // Corbeau tire
+                    EnemyShoot();
                     break;
-                case 2: // Tourelle regarde l'ennemi
+                case 2: // Corbeau regarde l'ennemi
                     EnemyLookAtPlayer();
                     break;
-                case 3: // 
-                    characterAnimation.SetDefaultAnimation();
+                case 3: // Corbeau se ballade
+                    this.transform.position = Vector3.MoveTowards(this.transform.position, MovementTarget, speedMax * Time.deltaTime * SlowMotionManager.Instance.enemyTime);
                     EnemyLookAtPlayer();
-                    actualSpeedX *= -1;
-                    Move();
-                    direction *= -1;
-                    actualSpeedX *= -1;
                     break;
             }
         }
 
-
-
-        private void EnemyShootStartup()
-        {
-            if (timePatternStartup == shootStartup)
-            {
-                characterAnimation.SetAnimation("Anim_Shoot");
-                EnemyLookAtPlayer();
-            }
-        }
 
         private void EnemyShoot()
         {
-            CrapoProjectile proj = Instantiate(projectile, this.transform.position, Quaternion.identity);
-            float angle = Vector3.Angle(characterToKill.transform.position, this.transform.position);
-            projectile.transform.eulerAngles = new Vector3(0,0,angle);
+            if (timePattern == shootStartup)
+            {
+                CrapoProjectile proj = Instantiate(projectile, this.transform.position, Quaternion.identity);
+                float angle = Vector2.Angle((characterToKill.transform.position - this.transform.position).normalized, transform.right);
+                proj.transform.eulerAngles = new Vector3(0, 0, -angle);
+                //proj.transform.LookAt(characterToKill.transform, Vector3.right);
+            }
 
         }
 

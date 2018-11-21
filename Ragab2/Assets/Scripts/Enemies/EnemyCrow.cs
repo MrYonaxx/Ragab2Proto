@@ -23,6 +23,8 @@ namespace Ragab
 
         [Header("Robot Corbeau")]
         [SerializeField]
+        float shootStartup;
+        [SerializeField]
         CrapoProjectile projectile;
 
         #endregion
@@ -59,7 +61,6 @@ namespace Ragab
             switch (currentPattern)
             {
                 case 1: // Corbeau tire sur l'ennemi
-                    actualShootNumber = 3;
                     timePatternStartup = shootStartup;
                     timePattern = 1f;
                     break;
@@ -104,6 +105,25 @@ namespace Ragab
                     actualSpeedX *= -1;
                     break;
             }
+        }
+
+
+
+        private void EnemyShootStartup()
+        {
+            if (timePatternStartup == shootStartup)
+            {
+                characterAnimation.SetAnimation("Anim_Shoot");
+                EnemyLookAtPlayer();
+            }
+        }
+
+        private void EnemyShoot()
+        {
+            CrapoProjectile proj = Instantiate(projectile, this.transform.position, Quaternion.identity);
+            float angle = Vector3.Angle(characterToKill.transform.position, this.transform.position);
+            projectile.transform.eulerAngles = new Vector3(0,0,angle);
+
         }
 
 

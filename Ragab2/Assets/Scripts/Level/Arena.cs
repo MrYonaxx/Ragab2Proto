@@ -6,14 +6,25 @@
 ******************************************************************/
 
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 namespace Ragab
 {
+
+    [System.Serializable]
+    public class ArenaWave
+    {
+        [SerializeField]
+        public int numberEnemies = 0;
+        [SerializeField]
+        public UnityEvent eventWave;
+    }
+
     /// <summary>
-    /// Definition of the Elevator class
+    /// Definition of the Arena class
     /// </summary>
-    public class Elevator : MonoBehaviour
+    public class Arena : MonoBehaviour
     {
         #region Attributes 
 
@@ -21,12 +32,11 @@ namespace Ragab
          *               ATTRIBUTES                 *
         \* ======================================== */
         [SerializeField]
-        private float scrollSpeed;
-        [SerializeField]
-        private float tileSizeZ;
-        [SerializeField]
-        private bool loop = true;
+        ArenaWave[] waves;
 
+        int step = 0;
+        int killNumber = 0;
+        
         #endregion
 
         #region GettersSetters 
@@ -34,7 +44,7 @@ namespace Ragab
         /* ======================================== *\
          *           GETTERS AND SETTERS            *
         \* ======================================== */
-
+        
 
         #endregion
 
@@ -44,26 +54,18 @@ namespace Ragab
          *                FUNCTIONS                 *
         \* ======================================== */
 
-        private Vector3 startPosition;
-
-        void Start()
+        public void AddKill()
         {
-            startPosition = transform.position;
-        }
-
-        void Update()
-        {
-            //float newPosition = Mathf.Repeat(Time.time * scrollSpeed * SlowMotionManager.Instance.playerTime, tileSizeZ);
-            transform.position += new Vector3(0, scrollSpeed * Time.deltaTime * SlowMotionManager.Instance.playerTime, 0);
-            if (transform.position.y < tileSizeZ - (scrollSpeed * Time.deltaTime * SlowMotionManager.Instance.playerTime))
+            killNumber += 1;
+            if(killNumber >= waves[step].numberEnemies)
             {
-                if(loop == true)
-                    transform.position = startPosition;
+                waves[step].eventWave.Invoke();
+                step += 1;
             }
         }
-
+        
         #endregion
 
-    } // Elevator class
+    } // Arena class
 
 } // #PROJECTNAME# namespace

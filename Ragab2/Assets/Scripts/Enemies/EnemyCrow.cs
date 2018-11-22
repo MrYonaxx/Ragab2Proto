@@ -62,6 +62,11 @@ namespace Ragab
          *                FUNCTIONS                 *
         \* ======================================== */
 
+        protected override void Start()
+        {
+            base.Start();
+            MovementTarget = origin + new Vector3(Random.Range(-originRadius, originRadius), Random.Range(-originRadius, originRadius), 0);
+        }
 
         protected override void InitializePattern(int valMin = 0, int valMax = 0)
         {
@@ -171,14 +176,28 @@ namespace Ragab
         protected override void CollisionY()
         {
             if (kamikaze == true)
+            {
                 statManager.Hp = 0;
+                if (arena != null)
+                {
+                    arena.AddKill();
+                    arena = null;
+                }
+            }
             base.CollisionY();
         }
 
         protected override void CollisionX()
         {
             if (kamikaze == true)
+            {
                 statManager.Hp = 0;
+                if (arena != null)
+                {
+                    arena.AddKill();
+                    arena = null;
+                }
+            }
             base.CollisionY();
         }
 

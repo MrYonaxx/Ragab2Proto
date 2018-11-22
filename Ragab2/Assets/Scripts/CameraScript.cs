@@ -45,6 +45,8 @@ namespace Ragab
 
         private IEnumerator orthographicCoroutine = null;
 
+        bool focusCinematic = false;
+
 
         private void Start()
         {
@@ -71,7 +73,8 @@ namespace Ragab
 
         private void ClampCamera()
         {
-            this.transform.position = new Vector3(Mathf.Clamp(this.transform.position.x, clampLeft, clampRight),
+            if (focusCinematic == false)
+                this.transform.position = new Vector3(Mathf.Clamp(this.transform.position.x, clampLeft, clampRight),
                                                 Mathf.Clamp(this.transform.position.y, clampDown, clampUp),
                                                 this.transform.position.z);
         }
@@ -82,12 +85,14 @@ namespace Ragab
 
         public void FocusDefault()
         {
-            actualFocusPosition = focusTarget.position;
+            if(focusCinematic == false)
+                actualFocusPosition = focusTarget.position;
         }
 
         public void FocusOnAim(Vector2 pos)
         {
-            actualFocusPosition = focusTarget.position + new Vector3(pos.x * AimCameraMultiplier, pos.y * AimCameraMultiplier, 0);
+            if (focusCinematic == false)
+                actualFocusPosition = focusTarget.position + new Vector3(pos.x * AimCameraMultiplier, pos.y * AimCameraMultiplier, 0);
         }
 
 
@@ -116,6 +121,18 @@ namespace Ragab
 
             camera.orthographicSize = orthographicDefaultValue + addValue;
             orthographicCoroutine = null;
+        }
+
+
+        public void ChangeSmoothCamera(float newValue)
+        {
+            smoothCamera = newValue;
+        }
+
+        public void FocusCinematic(Transform focus)
+        {
+            focusCinematic = true;
+            actualFocusPosition = focus.position;
         }
 
 

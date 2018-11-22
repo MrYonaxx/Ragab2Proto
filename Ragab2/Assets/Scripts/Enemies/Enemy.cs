@@ -78,6 +78,9 @@ namespace Ragab
         [SerializeField]
         protected bool bounceGround = true;
 
+        [Header("---  Arena  ---")]
+        [SerializeField]
+        protected Arena arena = null;
 
         [Header("Pattern Debug")]
         public int currentPattern = 0;
@@ -360,6 +363,8 @@ namespace Ragab
                 characterState = State.Knockback;
                 actualBreakArmor = 0;
                 GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);
+                if (arena != null)
+                    arena.AddKill();
             }
 
             if (characterState == State.Grouded)

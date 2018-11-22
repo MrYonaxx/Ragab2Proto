@@ -85,7 +85,7 @@ namespace Ragab
 
         public void FocusDefault()
         {
-            if(focusCinematic == false)
+            if (focusCinematic == false)
                 actualFocusPosition = focusTarget.position;
         }
 
@@ -133,6 +133,11 @@ namespace Ragab
         {
             focusCinematic = true;
             actualFocusPosition = focus.position;
+        }
+
+        public void FocusCinematicOff()
+        {
+            focusCinematic = false;
         }
 
 

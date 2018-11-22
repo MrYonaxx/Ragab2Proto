@@ -32,12 +32,16 @@ namespace Ragab
 
         private IEnumerator slowMotionCoroutine = null;
 
-
         [Header("Event")]
         [SerializeField]
         UnityEvent eventSlowMotionActive;
         [SerializeField]
         UnityEvent eventSlowMotionUnactive;
+
+        [SerializeField]
+        UnityEvent eventMusique;
+        [SerializeField]
+        UnityEvent eventMusiqueStop;
 
         #endregion
 
@@ -84,6 +88,18 @@ namespace Ragab
                 eventSlowMotionActive.Invoke();
             }
         }
+
+
+        public void PlayBulletTimeOST(bool b)
+        {
+            if (b == true)
+                eventMusique.Invoke();
+            else
+                eventMusiqueStop.Invoke();
+        }
+
+
+
 
         public void SetSlowMotion(float newValue)
         {

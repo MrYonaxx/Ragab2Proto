@@ -47,7 +47,7 @@ namespace Ragab
 
         private void Update()
         {
-            transform.position = Vector3.MoveTowards(transform.position, waymarkers[i].position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, waymarkers[i].position, speed * Time.deltaTime * SlowMotionManager.Instance.playerTime);
             if (transform.position == waymarkers[i].position)
             {
                 i += 1;

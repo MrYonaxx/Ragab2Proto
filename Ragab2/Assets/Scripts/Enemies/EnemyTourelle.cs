@@ -127,6 +127,7 @@ namespace Ragab
             projectile.transform.position += new Vector3(0.8f * direction, 0, 0);
             if (direction == -1)
                 projectile.transform.eulerAngles += new Vector3(0, 0, 180);
+            projectile.transform.parent = this.transform;
             timePatternStartup = 0.2f;
             actualShootNumber -= 1;
             if(actualShootNumber == 0)

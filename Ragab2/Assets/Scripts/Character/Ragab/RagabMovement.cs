@@ -290,7 +290,6 @@ namespace Ragab
 
         // =========== TRACE DASH ============= //
 
-
         public void TraceDashAim(float timeAim = 0.3f)
         {
             if (canComboTraceDash == false)
@@ -302,6 +301,8 @@ namespace Ragab
                 return;
             }
             crystals.StartRecovery();
+            if(characterState != State.TraceDashing && characterState != State.TracePunching)
+                SlowMotionManager.Instance.PlayBulletTimeOST(true);
 
             characterState = State.TraceDashingAiming;
 
@@ -310,15 +311,15 @@ namespace Ragab
             // test
             if (comboTrace == -1)
             {
-                cameraAim.ChangeOrthographicSize(3.5f);
+                cameraAim.ChangeOrthographicSize(-1.5f);
             }
             if (comboTrace == 0)
             {
-                cameraAim.ChangeOrthographicSize(3.25f);
+                cameraAim.ChangeOrthographicSize(-1.75f);
             }
             if (comboTrace >= 1)
             {
-                cameraAim.ChangeOrthographicSize(2.75f);
+                cameraAim.ChangeOrthographicSize(-2.25f);
                 canComboTraceDash = false;
             }
 
@@ -362,6 +363,10 @@ namespace Ragab
             ReleaseTraceDashAim();
         }
 
+
+
+
+
         public void TraceDash()
         {
             feedbacks.StopFeedback(2);
@@ -376,11 +381,10 @@ namespace Ragab
 
             ragabArm.SetActive(true);
             CharacterAnimation.SetSpriteRotation(viseur);
-            //Camera.main.transform.eulerAngles = new Vector3(0, 0, viseur.eulerAngles.z);
             crystals.StartConsumptionTraceDashing();
             feedbacks.PlayFeedback(1); // Rémanence
-            cameraAim.ChangeOrthographicSize(4);
-            comboTrace = -1;
+            cameraAim.ChangeOrthographicSize(-1);
+            //comboTrace = -1;
         }
 
         public void StopTraceDash()
@@ -390,25 +394,33 @@ namespace Ragab
                 comboTrace = -1;
                 SlowMotionManager.Instance.SetSlowMotionGradually(1f);
 
-                characterState = State.Falling;
 
                 ragabArm.SetActive(false);
                 characterAnimation.SetSpriteRotation();
-                //Camera.main.transform.eulerAngles = new Vector3(0, 0, 0);
                 crystals.StartRecovery();
                 feedbacks.StopFeedback(1);
                 feedbacks.StopFeedback(3);
-                cameraAim.ChangeOrthographicSize(5);
+                cameraAim.ChangeOrthographicSize(0);
+                if(characterState != State.TracePunching)
+                {
+                    SlowMotionManager.Instance.PlayBulletTimeOST(false);
+                    characterState = State.Falling;
+                }
+
             }
         }
+
+
+
 
 
         // =========== TRACE DASH PUNCH ============= //
 
         public void TraceDashPunch()
         {
-            StopTraceDash();
             characterState = State.TracePunching;
+            StopTraceDash();
+            //characterState = State.TracePunching;
             canComboTraceDash = true;
             SlowMotionManager.Instance.SetSlowMotion(1);
             SetSpeed(new Vector2(tracePunchSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),

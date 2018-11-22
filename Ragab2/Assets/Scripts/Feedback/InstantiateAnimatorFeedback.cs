@@ -62,11 +62,13 @@ namespace Ragab
                 {
                     Animator newObject = Instantiate(prefab, pos.position, Quaternion.identity);
                     gameObjectPool.Add(newObject);
+                    newObject.speed = SlowMotionManager.Instance.playerTime;
                 }
                 else
                 {
                     gameObjectPool[0].gameObject.SetActive(true);
                     gameObjectPool[0].transform.position = pos.position;
+                    gameObjectPool[0].speed = SlowMotionManager.Instance.playerTime;
                 }
             }
         }
@@ -92,7 +94,7 @@ namespace Ragab
 
         public void SetSpeedAnimation()
         {
-            prefab.speed = SlowMotionManager.Instance.playerTime;
+            //prefab.speed = SlowMotionManager.Instance.playerTime;
         }
 
         public void AnimationEnd()

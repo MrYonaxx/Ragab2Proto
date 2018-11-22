@@ -41,8 +41,15 @@ namespace Ragab
 
         Vector3 actualFocusPosition;
 
+        float orthographicDefaultValue = 5;
+
         private IEnumerator orthographicCoroutine = null;
 
+
+        private void Start()
+        {
+            orthographicDefaultValue = camera.orthographicSize;
+        }
 
         private void Update()
         {
@@ -86,28 +93,28 @@ namespace Ragab
 
 
 
-        public void ChangeOrthographicSize(float newValue)
+        public void ChangeOrthographicSize(float addValue)
         {
             if(orthographicCoroutine != null)
             {
                 StopCoroutine(orthographicCoroutine);
             }
-            orthographicCoroutine = OrthographicSizeTransition(newValue);
+            orthographicCoroutine = OrthographicSizeTransition(addValue);
             StartCoroutine(orthographicCoroutine);
         }
 
-        private IEnumerator OrthographicSizeTransition(float newValue)
+        private IEnumerator OrthographicSizeTransition(float addValue)
         {
             float time = timeTransition;
-            float rate = (camera.orthographicSize - newValue) / timeTransition;
+            float rate = ((orthographicDefaultValue + addValue) - camera.orthographicSize)  / timeTransition;
             while (time != 0)
             {
-                camera.orthographicSize -= rate;
+                camera.orthographicSize += rate;
                 time -= 1;
                 yield return null;
             }
 
-            camera.orthographicSize = newValue;
+            camera.orthographicSize = orthographicDefaultValue + addValue;
             orthographicCoroutine = null;
         }
 

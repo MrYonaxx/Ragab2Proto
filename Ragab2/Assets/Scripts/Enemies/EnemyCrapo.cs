@@ -151,6 +151,7 @@ namespace Ragab
                 currentProjectile.transform.position += new Vector3(0.2f * direction, 0, 0);
                 if (direction == -1)
                     currentProjectile.transform.eulerAngles += new Vector3(0, 0, 180);
+                currentProjectile.transform.parent = this.transform;
             }
         }
 

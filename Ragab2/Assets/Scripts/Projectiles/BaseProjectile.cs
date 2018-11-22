@@ -94,13 +94,27 @@ namespace Ragab
         {
             if (collision.gameObject.tag == "Ground")
             {
-                if (SlowMotionManager.Instance.playerTime < 1)
-                    this.transform.eulerAngles = new Vector3(0, 0, -transform.eulerAngles.z);
+                /*if (SlowMotionManager.Instance.playerTime < 1)
+                {
+                    if (this.transform.eulerAngles.z < 90 && this.transform.eulerAngles.z < -90)
+                    {
+                        float reste = transform.eulerAngles.z % 90;
+                        reste = 90 - reste;
+                        this.transform.eulerAngles += new Vector3(0, 0, reste * 2);
+                    }
+                    else
+                    {
+                        float reste = transform.eulerAngles.z % 90;
+                        this.transform.eulerAngles += new Vector3(0, 0, -reste * 2);
+                    }
+                    //this.transform.eulerAngles += new Vector3(0, 0, -transform.eulerAngles.z);
+                }
                 else
                 {
-                    feedback.StartFeedback();
-                    this.gameObject.SetActive(false);
-                }
+                    //this.transform.position = Vector3.Reflect(this.transform.position, Vector3.right);
+                }*/
+                feedback.StartFeedback();
+                this.gameObject.SetActive(false);
             }
             if (collision.gameObject.tag == "Enemy")
             {

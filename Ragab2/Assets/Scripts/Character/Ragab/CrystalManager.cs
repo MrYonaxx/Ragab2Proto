@@ -64,6 +64,9 @@ namespace Ragab
 
         bool traceDashing = false;
 
+
+        private IEnumerator shakeCoroutine = null;
+
         #endregion
 
         #region GettersSetters 
@@ -251,6 +254,40 @@ namespace Ragab
             consumptionCoroutine = null;
         }
 
+
+
+        public void ShakeHUD(float force, float time)
+        {
+            if(shakeCoroutine != null)
+            {
+                return;
+            }
+            shakeCoroutine = ShakeHUDCoroutine(force, time);
+            StartCoroutine(shakeCoroutine);
+        }
+
+        private IEnumerator ShakeHUDCoroutine(float force, float time)
+        {
+            Vector3[] origin = new Vector3[crystals.Length];
+            for (int i = 0; i < crystals.Length; i++)
+            {
+                origin[i] = crystals[i].parent.transform.position;
+            }
+            while (time > 0)
+            {
+                for (int i = 0; i < crystals.Length; i++)
+                {
+                    crystals[i].parent.transform.position = origin[i] + new Vector3(Random.Range(-force, force), Random.Range(-force, force), 0);
+                }
+                time -= 1;
+                yield return null;
+            }
+            for (int i = 0; i < crystals.Length; i++)
+            {
+                crystals[i].parent.transform.position = origin[i];
+            }
+            shakeCoroutine = null;
+        }
 
 
         #endregion

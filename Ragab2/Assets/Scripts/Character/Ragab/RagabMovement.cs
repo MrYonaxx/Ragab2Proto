@@ -268,9 +268,22 @@ namespace Ragab
                 StopSliding();
                 return;
             }
-            characterState = State.Sliding;
+
+            if (characterState == State.Knockback)
+            {
+                if (crystals.getCrystalNumber() <= 1)
+                {
+                    return;
+                }
+                feedbacks.PlayFeedback(3);
+                crystals.ConsumeCrystal();
+            }
+
             actualSpeedX = slideSpeed * direction;
             bonusSpeedY += -(slideSpeed * 2);
+
+            characterState = State.Sliding;
+
             ChangeCollider(slideCollider);
             crystals.StartConsumptionSlide();
         }
@@ -498,8 +511,9 @@ namespace Ragab
             if (collision.gameObject.tag == "ProjectileEnemy")
             {
                 collision.gameObject.SetActive(false);
-                if(characterState != State.Knockback || characterState != State.TracePunching)
-                    Hit();
+                Hit();
+                /*if (characterState != State.Knockback )//|| characterState != State.TracePunching)
+                    Hit();*/
                 // faire un truc si le joueur se prend des dégats durant le punch
             }
             if (collision.gameObject.tag == "Enemy" && characterState == State.TracePunching)
@@ -527,39 +541,25 @@ namespace Ragab
 
         protected virtual void Hit()
         {
+            stats.LoseHP(1);
             StartCoroutine(KnockbackCoroutine());
-            /*statManager.Hp -= 1;
-            if (statManager.Hp == 0)
-            {
-                Destroy(this.gameObject);
-                return;
-            }
-            feedback.PlayFeedback(0);
-            if (actualSuperArmor <= 0)
-            {
-                feedback.PlayFeedback(1);
-                characterAnimation.SetDefaultAnimation();
-                actualKnockbackTime = knockbackTime;
-                characterState = State.Knockback;
-                SetSpeed(new Vector2(knockbackForce * Mathf.Cos(angle * Mathf.PI / 180f),
-                                     knockbackForce * Mathf.Sin(angle * Mathf.PI / 180f)));
-            }
-            else
-            {
-                actualSuperArmor -= 1;
-            }*/
         }
 
         private IEnumerator KnockbackCoroutine()
         {
             StopSliding();
             StopTraceDash();
+            actualSpeedX = 0;
+            actualSpeedY = 0;
             characterState = State.Knockback;
             feedbacks.PlayFeedback(0);
-            //SlowMotionManager.Instance.SetSlowMotion(0);
-            yield return new WaitForSeconds(0.4f);
+            crystals.ShakeHUD(20, 12);
+            stats.ShakeHUD(30, 20);
+            SlowMotionManager.Instance.SetSlowMotion(0);
+            yield return new WaitForSeconds(0.2f);
+            jumpAvailable = true;
             SlowMotionManager.Instance.SetSlowMotion(1);
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.7f);
             characterState = State.Falling;
         }
 

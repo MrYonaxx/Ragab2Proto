@@ -102,6 +102,7 @@ MonoBehaviour:
   speed: 3
   longevity: 5
   timeWaiting: 0
+  coll: {fileID: 61388975506390740}
 --- !u!212 &212533779727514790
 SpriteRenderer:
   m_ObjectHideFlags: 1

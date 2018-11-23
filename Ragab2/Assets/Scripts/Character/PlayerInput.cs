@@ -122,6 +122,14 @@ namespace Ragab
                 case State.TracePunching:
                     characterToControl.NoAim();
                     break;
+
+                case State.Knockback:
+                    if (SlowMotionManager.Instance.playerTime != 0)
+                    {
+                        InputJump();
+                        InputSliding();
+                    }
+                    break;
             }
         }
 

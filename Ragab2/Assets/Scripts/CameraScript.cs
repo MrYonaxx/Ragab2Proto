@@ -96,7 +96,11 @@ namespace Ragab
         }
 
 
-
+        public void SetOrthographicSize(float newValue)
+        {
+            camera.orthographicSize = newValue;
+            orthographicDefaultValue = newValue;
+        }
 
         public void ChangeOrthographicSize(float addValue)
         {

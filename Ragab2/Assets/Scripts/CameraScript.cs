@@ -45,7 +45,10 @@ namespace Ragab
 
         private IEnumerator orthographicCoroutine = null;
 
+
+
         bool focusCinematic = false;
+        Transform focusTargetCinematic = null;
 
 
         private void Start()
@@ -60,13 +63,8 @@ namespace Ragab
 
         public void FocusOnTarget(Vector3 targetPos)
         {
-            /*actualViewX = focusTarget.transform.position.x;
-            actualViewY = focusTarget.transform.position.y;
-            //this.transform.position = new Vector3(focusTarget.position.x, focusTarget.position.y, this.transform.position.z);
-            transform.position -= new Vector3(((transform.position.x - actualViewX) * smoothCamera * 3) * Time.deltaTime, 
-                                              ((transform.position.y - actualViewY) * smoothCamera * 3) * Time.deltaTime,
-                                               0);*/
-
+            if (focusCinematic == true)
+                targetPos = focusTargetCinematic.position;
             transform.position = Vector3.SmoothDamp(transform.position, targetPos + new Vector3(0, 0, this.transform.position.z), ref velocity, smoothCamera);
             ClampCamera();
         }
@@ -133,15 +131,28 @@ namespace Ragab
             smoothCamera = newValue;
         }
 
+
+
+
         public void FocusCinematic(Transform focus)
         {
             focusCinematic = true;
-            actualFocusPosition = focus.position;
+            focusTargetCinematic = focus;
         }
 
         public void FocusCinematicOff()
         {
             focusCinematic = false;
+        }
+
+        public void newClampValueUp(float newValue)
+        {
+            clampUp = newValue;
+        }
+
+        public void newClampValueDown(float newValue)
+        {
+            clampDown = newValue;
         }
 
 

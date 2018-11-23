@@ -62,6 +62,12 @@ namespace Ragab
             }
         }
 
+
+        public void Stop()
+        {
+            scrollSpeed = 0;
+        }
+
         #endregion
 
     } // Elevator class

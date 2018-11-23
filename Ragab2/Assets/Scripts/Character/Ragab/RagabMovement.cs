@@ -100,6 +100,10 @@ namespace Ragab
         bool canRelease = false;
         bool canComboTraceDash = true;
 
+
+
+        Vector3 lastGroundPosition = new Vector3(0, 0, 0);
+
         #endregion
 
         // =============================================
@@ -144,6 +148,7 @@ namespace Ragab
             if (b == true)
             {
                 jumpAvailable = true;
+                lastGroundPosition = this.transform.position;
                 if (characterState == State.Falling)
                     audioSource.PlayOneShot(feedbacksSound[2]); // Son Fall
                 if (characterState != State.Sliding)
@@ -486,7 +491,6 @@ namespace Ragab
             }
         }
 
-
         protected override void CollisionX()
         {
             if (characterState == State.TracePunching)
@@ -516,6 +520,17 @@ namespace Ragab
                     Hit();*/
                 // faire un truc si le joueur se prend des dégats durant le punch
             }
+
+            if (collision.gameObject.tag == "Spike")
+            {
+                //collision.gameObject.SetActive(false);
+                Hit();
+                this.transform.position = lastGroundPosition;
+
+                /*if (characterState != State.Knockback )//|| characterState != State.TracePunching)
+                    Hit();*/
+                // faire un truc si le joueur se prend des dégats durant le punch
+            }
             if (collision.gameObject.tag == "Enemy" && characterState == State.TracePunching)
             {
                 audioSource.PlayOneShot(feedbacksSound[3]);
@@ -536,6 +551,8 @@ namespace Ragab
                 }
             }
         }
+
+
 
 
 

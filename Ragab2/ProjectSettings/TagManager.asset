@@ -11,6 +11,7 @@ TagManager:
   - ProjectileEnemy
   - Enemy
   - Spike
+  - PunchDestructible
   layers:
   - Default
   - TransparentFX

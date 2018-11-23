@@ -469,6 +469,7 @@ namespace Ragab
             traceDashCoroutine = null;
             characterState = State.Falling;
             characterAnimation.SetSpriteRotation();
+            StopTraceDash();
 
         }
 
@@ -476,10 +477,10 @@ namespace Ragab
 
         protected override void CollisionY()
         {
-            if (characterState == State.TracePunching)
+            /*if (characterState == State.TracePunching)
             {
                 TraceDashAim(1f);
-            }
+            }*/
             if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
@@ -493,10 +494,10 @@ namespace Ragab
 
         protected override void CollisionX()
         {
-            if (characterState == State.TracePunching)
+            /*if (characterState == State.TracePunching)
             {
                 TraceDashAim(1f);
-            }
+            }*/
             if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
@@ -523,36 +524,50 @@ namespace Ragab
 
             if (collision.gameObject.tag == "Spike")
             {
-                //collision.gameObject.SetActive(false);
                 Hit();
                 this.transform.position = lastGroundPosition;
+            }
 
-                /*if (characterState != State.Knockback )//|| characterState != State.TracePunching)
-                    Hit();*/
-                // faire un truc si le joueur se prend des dégats durant le punch
-            }
-            if (collision.gameObject.tag == "Enemy" && characterState == State.TracePunching)
+            if(characterState == State.TracePunching)
             {
-                audioSource.PlayOneShot(feedbacksSound[3]);
-                if(crystals.getCrystalNumber() <= 1)
+                if (collision.gameObject.tag == "Enemy")
                 {
-                    TraceDashPunchHit();
-                    feedbackDeOuf.enabled = true;
-                    collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z);
-                    characterAnimation.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
-                    collision.GetComponent<SpriteRenderer>().sortingOrder = 2;
-                    collision.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
-                    this.GetComponent<BoxCollider2D>().enabled = false;
+                    audioSource.PlayOneShot(feedbacksSound[3]);
+                    if (crystals.getCrystalNumber() <= 1)
+                    {
+                        TraceDashPunchHit();
+                        feedbackDeOuf.enabled = true;
+                        collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z);
+                        characterAnimation.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
+                        collision.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        collision.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
+                        this.GetComponent<BoxCollider2D>().enabled = false;
+                    }
+                    else
+                    {
+                        TraceDashAim(1f);
+                        collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z);
+                    }
                 }
-                else
+
+                if (collision.gameObject.tag == "PunchDestructible")
                 {
-                    TraceDashAim(1f);
-                    collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z);
+                    collision.gameObject.SetActive(false);
+                    SlowMotionManager.Instance.SetSlowMotion(0);
+                    feedbacks.PlayFeedback(0);
+                    StartCoroutine(Wait(0.4f));
                 }
+
+
             }
+
         }
 
-
+        private IEnumerator Wait(float time)
+        {
+            yield return new WaitForSeconds(time);
+            TraceDashPunch();
+        }
 
 
 

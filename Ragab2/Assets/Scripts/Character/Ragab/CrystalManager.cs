@@ -215,6 +215,15 @@ namespace Ragab
         {
             actualCrystalAmount = crystalAmount;
             actualCrystalNumber -= 1;
+            DrawCrystals();
+        }
+
+
+        public void RecoverCrystal()
+        {
+            actualCrystalAmount = crystalAmount;
+            actualCrystalNumber += 1;
+            DrawCrystals();
         }
 
 
@@ -253,6 +262,24 @@ namespace Ragab
             DrawCrystals();
             consumptionCoroutine = null;
         }
+
+
+
+
+        public void StopConsumption()
+        {
+            if (recoveryCoroutine != null)
+            {
+                StopCoroutine(recoveryCoroutine);
+                recoveryCoroutine = null;
+            }
+            if (consumptionCoroutine != null)
+            {
+                StopCoroutine(consumptionCoroutine);
+                consumptionCoroutine = null;
+            }
+        }
+
 
 
 

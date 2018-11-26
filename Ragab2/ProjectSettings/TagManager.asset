@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - Spike
   - PunchDestructible
+  - Crystal
   layers:
   - Default
   - TransparentFX

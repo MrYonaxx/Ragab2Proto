@@ -50,6 +50,8 @@ namespace Ragab
         protected List<float> bulletTimeRatio = new List<float>();
         [SerializeField]
         protected float aimingBulletTimeRatio = 0;
+        [SerializeField]
+        protected GameObject crystalObject = null;
 
         int comboTrace = -1;
 
@@ -100,9 +102,11 @@ namespace Ragab
         bool canRelease = false;
         bool canComboTraceDash = true;
 
-
+        GameObject lastGameObjectPunched = null;
 
         Vector3 lastGroundPosition = new Vector3(0, 0, 0);
+
+        List<GameObject> listCrystal = new List<GameObject>();
 
         #endregion
 
@@ -306,25 +310,44 @@ namespace Ragab
 
 
 
+
+
+
+
+
+
+
+
         // =========== TRACE DASH ============= //
 
-        public void TraceDashAim(float timeAim = 0.3f)
+        public void TraceDashAim(float timeAim = 0.2f, bool free = false)
         {
+
+            if (traceDashCoroutine != null)
+                StopCoroutine(traceDashCoroutine);
+
             if (canComboTraceDash == false)
                 return;
 
+            crystals.StopConsumption();
 
-            if (crystals.getCrystalNumber() <= 1)
+            if (free == false)
             {
-                return;
+                if (crystals.getCrystalNumber() <= 1)
+                {
+                    return;
+                }
+                crystals.ConsumeCrystal();
             }
-            crystals.StartRecovery();
-            if(characterState != State.TraceDashing && characterState != State.TracePunching)
+
+            if(characterState != State.TraceDashing && characterState != State.TracePunching && comboTrace == -1)
                 SlowMotionManager.Instance.PlayBulletTimeOST(true);
 
             characterState = State.TraceDashingAiming;
 
+            Debug.Log("J'arrête le temps");
             SlowMotionManager.Instance.SetSlowMotion(0);
+            cameraAim.ChangeOrthographicSize(-1.5f);
 
             // test
             if (comboTrace == -1)
@@ -351,8 +374,6 @@ namespace Ragab
             feedbacks.PlayFeedback(2);
 
 
-            if (traceDashCoroutine != null)
-                StopCoroutine(traceDashCoroutine);
 
             traceDashCoroutine = TraceDashAimingCoroutine(timeAim);
             StartCoroutine(traceDashCoroutine);
@@ -365,10 +386,11 @@ namespace Ragab
 
             StopCoroutine(traceDashCoroutine);
             traceDashCoroutine = null;
-            if (comboTrace == 0)
+            SlowMotionManager.Instance.SetSlowMotion(1f);
+            /*if (comboTrace == 0)
             {
                 SlowMotionManager.Instance.SetSlowMotion(1f);
-            }
+            }*/
             canComboTraceDash = true;
             TraceDash();
         }
@@ -387,10 +409,11 @@ namespace Ragab
 
         public void TraceDash()
         {
+            feedbacks.PlayFeedback(1); // Rémanence
             feedbacks.StopFeedback(2);
             feedbacks.PlayFeedback(3);
 
-            crystals.ConsumeCrystal();
+            crystals.StartConsumptionTraceDashing();
 
             characterState = State.TraceDashing;
             SlowMotionManager.Instance.SetSlowMotionGradually(bulletTimeRatio[comboTrace]);
@@ -399,10 +422,12 @@ namespace Ragab
 
             ragabArm.SetActive(true);
             CharacterAnimation.SetSpriteRotation(viseur);
-            crystals.StartConsumptionTraceDashing();
-            feedbacks.PlayFeedback(1); // Rémanence
             cameraAim.ChangeOrthographicSize(-1);
-            //comboTrace = -1;
+            comboTrace = -1;
+
+            lastGameObjectPunched = null;
+            GameObject crystal = Instantiate(crystalObject, this.transform.position + new Vector3(0f,0.64f,0), Quaternion.identity);
+            listCrystal.Add(crystal);
         }
 
         public void StopTraceDash()
@@ -424,6 +449,9 @@ namespace Ragab
                     SlowMotionManager.Instance.PlayBulletTimeOST(false);
                     characterState = State.Falling;
                 }
+                for (int i = 0; i < listCrystal.Count; i++)
+                    Destroy(listCrystal[i]);
+                listCrystal.Clear();
 
             }
         }
@@ -436,76 +464,104 @@ namespace Ragab
 
         public void TraceDashPunch()
         {
+            if (crystals.getCrystalNumber() <= 0)
+            {
+                return;
+            }
+            crystals.StopConsumption();
+            //crystals.ConsumeCrystal();
+            canRelease = false;
             characterState = State.TracePunching;
-            StopTraceDash();
-            //characterState = State.TracePunching;
             canComboTraceDash = true;
-            SlowMotionManager.Instance.SetSlowMotion(1);
-            SetSpeed(new Vector2(tracePunchSpeed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
-                                 tracePunchSpeed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
+            SlowMotionManager.Instance.SetSlowMotion(bulletTimeRatio[0]);
+            cameraAim.ChangeOrthographicSize(0);
+
+            float speed = tracePunchSpeed;
+            SetSpeed(new Vector2(speed * Mathf.Cos(viseur.eulerAngles.z * Mathf.PI / 180f),
+                                 speed * Mathf.Sin(viseur.eulerAngles.z * Mathf.PI / 180f)));
+
             CharacterAnimation.SetSpriteRotation(viseur);
 
             if (traceDashCoroutine != null)
             {
                 StopCoroutine(traceDashCoroutine);
             }
-            traceDashCoroutine = WaitTracePunch(timeTracePunch);
+
+            traceDashCoroutine = WaitTracePunch(timeTracePunch, true);
             StartCoroutine(traceDashCoroutine);
         }
 
+        private IEnumerator WaitTracePunch(float second, bool activateCollider = false)
+        {
+            yield return new WaitForSeconds(second);
+            traceDashCoroutine = null;
+            characterState = State.TraceDashing;
+            actualSpeedX *= 0.1f;
+            actualSpeedY *= 0.1f;
+            StopTraceDash();
+            characterCollider.enabled = true;
+            //characterAnimation.SetSpriteRotation();
+
+        }
+
+        // =====
+        // Finishing Move
+        // ===
         public void TraceDashPunchHit()
         {
             if (traceDashCoroutine != null)
             {
                 StopCoroutine(traceDashCoroutine);
             }
-            SlowMotionManager.Instance.SetSlowMotion(0.05f);
+            characterCollider.enabled = false;
+            SlowMotionManager.Instance.SetSlowMotion(0.01f);
             feedbacks.PlayFeedback(0);
-        }
 
-        private IEnumerator WaitTracePunch(float second)
-        {
-            yield return new WaitForSeconds(second);
-            traceDashCoroutine = null;
-            characterState = State.Falling;
-            characterAnimation.SetSpriteRotation();
-            StopTraceDash();
-
+            traceDashCoroutine = WaitTracePunch(timeTracePunch * 3);
+            StartCoroutine(traceDashCoroutine);
         }
 
 
 
         protected override void CollisionY()
         {
+            Collision();
             /*if (characterState == State.TracePunching)
             {
                 TraceDashAim(1f);
             }*/
-            if (characterState == State.TraceDashing)
+            /*if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
-                //feedbacks.PlayFeedback(0); // ShakeScreen
-                //StopTraceDash();
                 TraceDashAim(1f);
-                //TraceDashPunchHit();
-                //slideCollisionEvent.Invoke();
-            }
+            }*/
         }
 
         protected override void CollisionX()
         {
+            Collision();
             /*if (characterState == State.TracePunching)
             {
                 TraceDashAim(1f);
             }*/
+            /*if (characterState == State.TraceDashing)
+            {
+                characterAnimation.SetSpriteRotation();
+                TraceDashAim(1f);
+            }*/
+        }
+
+        private void Collision()
+        {
+            /*if (characterState == State.TracePunching)
+            {
+                actualSpeedX /= 2;
+                actualSpeedY /= 2;
+            }*/
             if (characterState == State.TraceDashing)
             {
                 characterAnimation.SetSpriteRotation();
-                //feedbacks.PlayFeedback(0);
-                //StopTraceDash();
-                TraceDashAim(1f);
-                //TraceDashPunchHit();
-                //slideCollisionEvent.Invoke();
+                TraceDashAim(1f, true);
             }
         }
 
@@ -513,14 +569,14 @@ namespace Ragab
 
         private void OnTriggerStay2D(Collider2D collision)
         {
+
+
             if (collision.gameObject.tag == "ProjectileEnemy")
             {
                 collision.gameObject.SetActive(false);
                 Hit();
-                /*if (characterState != State.Knockback )//|| characterState != State.TracePunching)
-                    Hit();*/
-                // faire un truc si le joueur se prend des dégats durant le punch
             }
+
 
             if (collision.gameObject.tag == "Spike")
             {
@@ -528,12 +584,25 @@ namespace Ragab
                 this.transform.position = lastGroundPosition;
             }
 
+
             if(characterState == State.TracePunching)
             {
                 if (collision.gameObject.tag == "Enemy")
                 {
+                    if (collision.gameObject == lastGameObjectPunched)
+                        return;
                     audioSource.PlayOneShot(feedbacksSound[3]);
+                    collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z, 5);
                     if (crystals.getCrystalNumber() <= 1)
+                    {
+                        TraceDashPunchHit();
+                    }
+                    else
+                    {
+                        TraceDashAim(1f);
+                    }
+                    lastGameObjectPunched = collision.gameObject;
+                    /*if (crystals.getCrystalNumber() <= 1)
                     {
                         TraceDashPunchHit();
                         feedbackDeOuf.enabled = true;
@@ -547,7 +616,7 @@ namespace Ragab
                     {
                         TraceDashAim(1f);
                         collision.GetComponent<Enemy>().HitPunch(viseur.eulerAngles.z);
-                    }
+                    }*/
                 }
 
                 if (collision.gameObject.tag == "PunchDestructible")
@@ -556,6 +625,12 @@ namespace Ragab
                     SlowMotionManager.Instance.SetSlowMotion(0);
                     feedbacks.PlayFeedback(0);
                     StartCoroutine(Wait(0.4f));
+                }
+
+                if (collision.gameObject.tag == "Crystal")
+                {
+                    collision.gameObject.SetActive(false);
+                    crystals.RecoverCrystal();
                 }
 
 

@@ -215,7 +215,7 @@ namespace Ragab
         }
 
 
-        protected override void Hit(float angle, float forceMultiplier = 1)
+        protected override void Hit(float angle, float forceMultiplier = 1, int damage = 1)
         {
             base.Hit(angle, forceMultiplier);
             if(knockbackTime > 0 && currentProjectile != null)

@@ -93,6 +93,7 @@ namespace Ragab
         protected float actualKnockbackForce = 0;
         public bool bounce = false;
 
+        bool isDead = false;
         bool isKnockbackGround = true;
 
         #endregion
@@ -353,11 +354,11 @@ namespace Ragab
             }
         }
 
-        protected virtual void Hit(float angle, float forceMultiplier = 1)
+        protected virtual void Hit(float angle, float forceMultiplier = 1, int damage = 1)
         {
-            statManager.Hp -= 1;
+            statManager.Hp -= damage;
             feedback.PlayFeedback(0);
-            if (statManager.Hp == 0)
+            if (statManager.Hp <= 0 && isDead == false)
             {
                 //feedback.PlayFeedback(1);
                 characterState = State.Knockback;
@@ -365,6 +366,7 @@ namespace Ragab
                 GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);
                 if (arena != null)
                     arena.AddKill();
+                isDead = true;
             }
 
             if (characterState == State.Grouded)
@@ -375,7 +377,7 @@ namespace Ragab
             if (isKnockbackGround == true)
                 actualKnockbackForce = groundForce;
             else
-                actualKnockbackForce = aerialForce;
+                actualKnockbackForce = aerialForce * (1 + (1-SlowMotionManager.Instance.enemyTime));
 
 
             if (actualBreakArmor > 0)
@@ -466,9 +468,9 @@ namespace Ragab
 
 
 
-        public void HitPunch(float angle)
+        public void HitPunch(float angle, int damage)
         {
-            Hit(angle,3);
+            Hit(angle,3, damage);
         }
 
         #endregion

@@ -6,25 +6,14 @@
 ******************************************************************/
 
 using UnityEngine;
-using UnityEngine.Events;
 using System.Collections;
 
 namespace Ragab
 {
-
-    [System.Serializable]
-    public class ArenaWave
-    {
-        [SerializeField]
-        public int numberEnemies = 0;
-        [SerializeField]
-        public UnityEvent eventWave;
-    }
-
     /// <summary>
-    /// Definition of the Arena class
+    /// Definition of the ChangeRotation class
     /// </summary>
-    public class Arena : MonoBehaviour
+    public class ChangeRotation : MonoBehaviour
     {
         #region Attributes 
 
@@ -32,13 +21,11 @@ namespace Ragab
          *               ATTRIBUTES                 *
         \* ======================================== */
         [SerializeField]
-        ArenaWave[] waves;
+        float speed = 0.5f;
 
-        int step = 0;
-        int killNumber = 0;
+        float rotation = 0;
 
-        [SerializeField]
-        int debug = 6;
+        bool active = false;
         #endregion
 
         #region GettersSetters 
@@ -46,7 +33,7 @@ namespace Ragab
         /* ======================================== *\
          *           GETTERS AND SETTERS            *
         \* ======================================== */
-        
+
 
         #endregion
 
@@ -56,24 +43,29 @@ namespace Ragab
          *                FUNCTIONS                 *
         \* ======================================== */
 
-        public void AddKill()
+        private void Update()
         {
-            killNumber += 1;
-            if(killNumber >= waves[step].numberEnemies)
+            if (active == true)
             {
-                waves[step].eventWave.Invoke();
-                step += 1;
+                transform.Rotate(new Vector3(0, 0, speed * Time.deltaTime * SlowMotionManager.Instance.playerTime));
+
+                if (rotation - Mathf.Abs(speed) * Time.deltaTime * SlowMotionManager.Instance.playerTime < transform.eulerAngles.z &&
+                    transform.eulerAngles.z < rotation + Mathf.Abs(speed) * Time.deltaTime * SlowMotionManager.Instance.playerTime)
+                {
+                    transform.eulerAngles = new Vector3(0, 0, rotation);
+                    active = false;
+                }
             }
         }
 
-        [ContextMenu("Debug")]
-        public void Debug()
+        public void NewRotation(float newValue)
         {
-            waves[debug].eventWave.Invoke();
+            rotation = newValue;
+            active = true;
         }
-        
+
         #endregion
 
-    } // Arena class
+    } // ChangeRotation class
 
 } // #PROJECTNAME# namespace

@@ -125,9 +125,9 @@ namespace Ragab
         }
 
 
-        protected override void Hit(float angle, float forceMultiplier = 1)
+        protected override void Hit(float angle, float forceMultiplier = 1, int damage = 1)
         {
-            if(statManager.Hp == 0)
+            if(statManager.Hp <= 0)
             {
                 movingPlatform.enabled = false;
             }

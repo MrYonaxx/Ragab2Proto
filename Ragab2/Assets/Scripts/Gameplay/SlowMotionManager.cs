@@ -113,6 +113,7 @@ namespace Ragab
             enemyTime = playerTime;
         }
 
+
         public void SetSlowMotionGradually(float newValue)
         {
             CheckIfSlowMotion(newValue);

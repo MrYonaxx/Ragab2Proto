@@ -37,6 +37,11 @@ namespace Ragab
         int timeTransition = 10;
 
 
+        [Header("Boss Camera")]
+        [SerializeField]
+        Transform focusBetween;
+
+
         Vector3 velocity = Vector3.zero;
 
         Vector3 actualFocusPosition;
@@ -65,6 +70,8 @@ namespace Ragab
         {
             if (focusCinematic == true)
                 targetPos = focusTargetCinematic.position;
+            if (focusBetween != null)
+                targetPos = targetPos + ((focusBetween.position - focusTarget.position) / 2);
             transform.position = Vector3.SmoothDamp(transform.position, targetPos + new Vector3(0, 0, this.transform.position.z), ref velocity, smoothCamera);
             ClampCamera();
         }
@@ -89,6 +96,10 @@ namespace Ragab
 
         public void FocusOnAim(Vector2 pos)
         {
+            if (focusBetween != null) {
+                actualFocusPosition = focusTarget.position;
+                return;
+            }
             if (focusCinematic == false)
                 actualFocusPosition = focusTarget.position + new Vector3(pos.x * AimCameraMultiplier, pos.y * AimCameraMultiplier, 0);
         }
@@ -126,12 +137,22 @@ namespace Ragab
         }
 
 
+
+
+        public void ChangeFocusBetween(Transform newValue = null)
+        {
+            focusBetween = newValue;
+        }
+
+
+
+
+
+
         public void ChangeSmoothCamera(float newValue)
         {
             smoothCamera = newValue;
         }
-
-
 
 
         public void FocusCinematic(Transform focus)
@@ -153,6 +174,11 @@ namespace Ragab
         public void newClampValueDown(float newValue)
         {
             clampDown = newValue;
+        }
+
+        public void newClampValueRight(float newValue)
+        {
+            clampRight = newValue;
         }
 
 

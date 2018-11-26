@@ -218,7 +218,7 @@ namespace Ragab
 
         private void InputPunch()
         {
-            if (Input.GetButton("RagabPunch"))
+            if (Input.GetButtonDown("RagabPunch"))
             {
                 characterToControl.TraceDashPunch();
             }
